@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs";
 import Sidebar from "@/components/layout/sidebar";
+import { prisma } from "@/lib/prismadb";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -19,6 +20,18 @@ export default async function DashboardLayout({
   if (!userId) {
     redirect("/sign-in");
   }
+
+  const store = await prisma.store.findFirst({
+    where: {
+      id: params.storeId,
+      userId,
+    },
+  });
+
+  if (!store) {
+    redirect("/");
+  }
+
   return (
     <div className="flex">
       <Sidebar />
