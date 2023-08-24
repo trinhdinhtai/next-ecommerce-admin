@@ -1,5 +1,14 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+Tech Stack:
+
+- Next.js 13.4 with Server Side Rendering
+- Clerk for authentication
+- TailwindCSS (ShadcnUI) for create layouts
+- Zustand for state management
+- UploadThing for handle file uploads
+- Zod for data validation
+
 ## Getting Started
 
 First, run the development server:
