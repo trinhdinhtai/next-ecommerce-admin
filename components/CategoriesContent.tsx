@@ -6,7 +6,6 @@ import { categoryColumns } from "@/components/tables/TableColumnDef";
 import DataTable from "@/components/ui/data-table";
 import { CategoryColumn } from "@/types/columns";
 import { Button } from "@/components/ui/button";
-import { Grid, Plus } from "lucide-react";
 import CategoryAddIcon from "@/components/icons/CategoryAddIcon";
 
 interface CategoriesContentProps {
@@ -35,6 +34,7 @@ const CategoriesContent = ({ data }: CategoriesContentProps) => {
             Add Category
           </Button>
         }
+        searchKey="name"
       />
     </div>
   );

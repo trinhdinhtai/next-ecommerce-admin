@@ -1,14 +1,29 @@
 import PageHeading from "@/components/PageHeading";
 import CategoryForm from "@/components/forms/CategoryForm";
+import { prisma } from "@/lib/prismadb";
 
-const CategoryIdPage = () => {
+interface CategoryIdPageProps {
+  params: {
+    storeId: string;
+    categoryId: string;
+  };
+}
+
+const CategoryIdPage = async ({ params }: CategoryIdPageProps) => {
+  const category = await prisma.category.findUnique({
+    where: {
+      id: params.categoryId,
+      storeId: params.storeId,
+    },
+  });
+
   return (
     <>
       <PageHeading
-        title="Categories"
-        description="Manage categories for your store"
+        title={category ? category.name : "Add Category"}
+        description={category ? "Edit category" : "Add a new category"}
       />
-      <CategoryForm />
+      <CategoryForm category={category} />
     </>
   );
 };
