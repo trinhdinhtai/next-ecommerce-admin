@@ -4,6 +4,9 @@ import {
   LayoutDashboard,
   ShoppingBasket,
   ShoppingBag,
+  Users,
+  Truck,
+  Zap,
 } from "lucide-react";
 
 export const SidebarLinks: SidebarLink[] = [
@@ -26,5 +29,20 @@ export const SidebarLinks: SidebarLink[] = [
     icon: ShoppingBag,
     href: "orders",
     label: "Orders",
+  },
+  {
+    icon: Users,
+    href: "customers",
+    label: "Customers",
+  },
+  {
+    icon: Truck,
+    href: "shipments",
+    label: "Shipments",
+  },
+  {
+    icon: Zap,
+    href: "api-list",
+    label: "APIs",
   },
 ];

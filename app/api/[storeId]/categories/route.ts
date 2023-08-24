@@ -2,6 +2,28 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 import { prisma } from "@/lib/prismadb";
 
+export async function GET(
+  _: Request,
+  { params }: { params: { storeId: string } }
+) {
+  try {
+    if (!params.storeId) {
+      return new NextResponse("Store id is required", { status: 400 });
+    }
+
+    const categories = await prisma.category.findMany({
+      where: {
+        storeId: params.storeId,
+      },
+    });
+
+    return NextResponse.json(categories);
+  } catch (error) {
+    console.log("[CATEGORIES_GET]", error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}
+
 export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }

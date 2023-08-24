@@ -3,7 +3,6 @@ import { auth, currentUser } from "@clerk/nextjs";
 import { prisma } from "@/lib/prismadb";
 import StoreSwitcher from "@/components/StoreSwitcher";
 import Links from "@/components/layout/sidebar/Links";
-import { Separator } from "@/components/ui/separator";
 import UserButton from "@/components/UserButton";
 import { User } from "@/types";
 
@@ -29,7 +28,7 @@ const Sidebar = async () => {
   };
 
   return (
-    <nav className="sticky top-0 left-0 h-screen w-fit flex flex-col bg-[#F7F8FB] dark:bg-background border-r justify-between overflow-auto px-3 py-4">
+    <nav className="sticky top-0 left-0 h-screen w-fit flex flex-col bg-[#F7F8FB] dark:bg-background border-r justify-between overflow-auto px-3 py-5">
       <div className="flex flex-col">
         <StoreSwitcher stores={stores} />
         <Links />
