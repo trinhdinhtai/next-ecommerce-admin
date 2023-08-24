@@ -1,5 +1,6 @@
 "use client";
 
+import { useClerk } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ChevronDown, ExternalLink, User as UserIcon } from "lucide-react";
@@ -21,6 +22,8 @@ interface UserProps {
 }
 
 const UserButton = ({ user }: UserProps) => {
+  const { signOut } = useClerk();
+
   const fullName = `${user?.firstName} ${user?.lastName}`;
 
   return (
@@ -93,7 +96,10 @@ const UserButton = ({ user }: UserProps) => {
             <span>GM Solutions Homepage</span>
             <ExternalLink className="h-4 w-4" />
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex justify-between">
+          <DropdownMenuItem
+            className="flex justify-between"
+            onClick={() => signOut()}
+          >
             Logout
           </DropdownMenuItem>
         </DropdownMenuGroup>
