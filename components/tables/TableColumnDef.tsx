@@ -1,9 +1,29 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CategoryColumn } from "@/types/columns";
-import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
+import ActionCell from "@/components/tables/cell/ActionCell";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const categoryColumns: ColumnDef<CategoryColumn>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -21,5 +41,11 @@ export const categoryColumns: ColumnDef<CategoryColumn>[] = [
   {
     accessorKey: "createdAt",
     header: "Date",
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => (
+      <ActionCell columnId={row.original.id} targetType="categories" />
+    ),
   },
 ];

@@ -39,6 +39,7 @@ export default function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -49,9 +50,16 @@ export default function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection,
+    initialState: {
+      pagination: {
+        pageSize: 5,
+      },
+    },
     state: {
       sorting,
       columnFilters,
+      rowSelection,
     },
   });
 
@@ -59,18 +67,25 @@ export default function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="flex items-center py-4 gap-4">
-        <Input
-          placeholder={`Filter by ${searchField}...`}
-          value={
-            (table.getColumn(searchField)?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn(searchField)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        {actionComponent}
+      <div className="flex justify-between items-center">
+        <div className="flex-1 flex items-center py-4 gap-4">
+          <Input
+            placeholder={`Filter by ${searchField}...`}
+            value={
+              (table.getColumn(searchField)?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn(searchField)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+          {actionComponent}
+        </div>
+        {/* Row selection */}
+        <div className="text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
       </div>
 
       {/* Table */}
