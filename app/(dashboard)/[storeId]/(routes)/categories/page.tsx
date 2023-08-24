@@ -1,5 +1,11 @@
+import PageHeading from "@/components/PageHeading";
+
 const CategoriesPage = () => {
-  return <div>page</div>;
+  return (
+    <div>
+      <PageHeading tittle="Categories" />
+    </div>
+  );
 };
 
 export default CategoriesPage;

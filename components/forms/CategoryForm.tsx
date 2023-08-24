@@ -5,7 +5,7 @@ import axios from "axios";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { createStoreSchema } from "@/validators";
+import { categorySchema, createStoreSchema } from "@/validators";
 import {
   Form,
   FormControl,
@@ -18,19 +18,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 
-type CreateStoreFormInput = z.infer<typeof createStoreSchema>;
+type CategoryFormInput = z.infer<typeof categorySchema>;
 
-const CreateStoreForm = () => {
+const CategoryForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<CreateStoreFormInput>({
+  const form = useForm<CategoryFormInput>({
     resolver: zodResolver(createStoreSchema),
     defaultValues: {
       name: "",
+      storeId: "",
     },
   });
 
-  const onSubmit = async (values: CreateStoreFormInput) => {
+  const onSubmit = async (values: CategoryFormInput) => {
     try {
       setIsLoading(true);
       const response = await axios.post("/api/stores", values);
@@ -44,27 +45,29 @@ const CreateStoreForm = () => {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Store name</FormLabel>
-              <FormControl>
-                <Input placeholder="GM Store" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={isLoading}>
-          Create
-        </Button>
-      </form>
-    </Form>
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Store name</FormLabel>
+                <FormControl>
+                  <Input placeholder="GM Store" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" disabled={isLoading}>
+            Create
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 };
 
-export default CreateStoreForm;
+export default CategoryForm;
