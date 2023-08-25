@@ -1,14 +1,7 @@
 "use client";
 
 import ApiAlert from "@/components/ApiAlert";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { useOrigin } from "@/hooks/useOrigin";
-import { LayoutDashboard } from "lucide-react";
 import { useParams } from "next/navigation";
 
 interface ApiListProps {
