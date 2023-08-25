@@ -17,7 +17,7 @@ import ConfirmDeleteModal from "@/components/modals/ConfirmDeleteModal";
 
 interface CategoryCellProps {
   columnId: string;
-  targetType: "categories";
+  targetType: "billboards" | "categories";
 }
 
 const ActionCell = ({ columnId, targetType }: CategoryCellProps) => {

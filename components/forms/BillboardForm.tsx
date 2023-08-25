@@ -21,6 +21,7 @@ import { Billboard } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/helpers/utils";
+import Image from "next/image";
 
 type BillboardFormInput = z.infer<typeof billboardSchema>;
 
@@ -41,7 +42,7 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
 
   const form = useForm<BillboardFormInput>({
     resolver: zodResolver(billboardSchema),
-    defaultValues: {
+    defaultValues: billboard ?? {
       label: "",
       imageUrl: "",
     },
@@ -66,6 +67,11 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
 
       if (!billboard) {
         await axios.post(`/api/${params.storeId}/billboards`, values);
+      } else {
+        await axios.patch(
+          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          values
+        );
       }
       router.refresh();
       router.push(`/${params.storeId}/billboards`);
@@ -109,14 +115,25 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
               <FormItem>
                 <FormLabel>Image</FormLabel>
                 <FormControl>
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    placeholder="Add billboard image"
-                    disabled={isLoading}
-                    className="file:text-blue-500"
-                    onChange={(e) => handleImageChange(e, field.onChange)}
-                  />
+                  {billboard ? (
+                    <div className="w-1/2 aspect-[21/9] relative rounded-xl">
+                      <Image
+                        fill
+                        src={billboard.imageUrl}
+                        alt="Billboard image"
+                        className="object-cover rounded-xl"
+                      />
+                    </div>
+                  ) : (
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      placeholder="Add billboard image"
+                      disabled={isLoading}
+                      className="file:text-blue-500"
+                      onChange={(e) => handleImageChange(e, field.onChange)}
+                    />
+                  )}
                 </FormControl>
                 <FormMessage />
               </FormItem>

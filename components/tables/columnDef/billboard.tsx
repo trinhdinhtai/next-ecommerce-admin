@@ -62,7 +62,7 @@ export const billboardColumns: ColumnDef<BillboardColumn>[] = [
   {
     id: "actions",
     cell: ({ row }) => (
-      <ActionCell columnId={row.original.id} targetType="categories" />
+      <ActionCell columnId={row.original.id} targetType="billboards" />
     ),
   },
 ];
