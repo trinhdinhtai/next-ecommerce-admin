@@ -10,3 +10,13 @@ export type CategoryColumn = {
   name: string;
   createdAt: string;
 };
+
+export type ProductColumn = {
+  id: string;
+  name: string;
+  price: string;
+  category: string;
+  createdAt: string;
+  isFeatured: boolean;
+  isArchived: boolean;
+};
