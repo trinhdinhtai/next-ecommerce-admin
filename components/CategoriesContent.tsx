@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import PageHeading from "@/components/PageHeading";
-import { categoryColumns } from "@/components/tables/TableColumnDef";
+import { categoryColumns } from "@/components/tables/columnDef/category";
 import DataTable from "@/components/ui/data-table";
 import { CategoryColumn } from "@/types/columns";
 import { Button } from "@/components/ui/button";

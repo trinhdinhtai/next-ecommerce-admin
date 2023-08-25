@@ -7,6 +7,7 @@ import {
   Users,
   Truck,
   Zap,
+  Monitor,
 } from "lucide-react";
 
 export const SidebarLinks: SidebarLink[] = [
@@ -19,6 +20,11 @@ export const SidebarLinks: SidebarLink[] = [
     icon: LayoutDashboard,
     href: "categories",
     label: "Categories",
+  },
+  {
+    icon: Monitor,
+    href: "billboards",
+    label: "Billboards",
   },
   {
     icon: ShoppingBasket,
