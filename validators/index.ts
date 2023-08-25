@@ -10,6 +10,6 @@ export const categorySchema = z.object({
 });
 
 export const billboardSchema = z.object({
+  imageUrl: z.string().url().nonempty(),
   label: z.string().min(1),
-  imageUrl: z.string().min(1),
 });
