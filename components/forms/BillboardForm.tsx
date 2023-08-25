@@ -68,7 +68,7 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
         await axios.post(`/api/${params.storeId}/billboards`, values);
       }
       router.refresh();
-      router.push(`/${params.storeId}/categories`);
+      router.push(`/${params.storeId}/billboards`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong");

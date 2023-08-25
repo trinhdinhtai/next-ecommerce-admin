@@ -3,6 +3,7 @@ import { BillboardColumn } from "@/types/columns";
 import { ArrowUpDown } from "lucide-react";
 import ActionCell from "@/components/tables/cell/ActionCell";
 import { Checkbox } from "@/components/ui/checkbox";
+import Image from "next/image";
 
 export const billboardColumns: ColumnDef<BillboardColumn>[] = [
   {
@@ -25,15 +26,31 @@ export const billboardColumns: ColumnDef<BillboardColumn>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "label",
     header: ({ column }) => {
       return (
         <div
           className="flex items-center gap-1 cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Label
           <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "imageUrl",
+    header: "Image",
+    cell: ({ row }) => {
+      return (
+        <div className="w-36 aspect-[21/9] rounded-lg relative">
+          <Image
+            fill
+            src={row.original.imageUrl}
+            className="object-cover rounded-lg"
+            alt="Billboard Image"
+          />
         </div>
       );
     },

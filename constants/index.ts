@@ -8,6 +8,7 @@ import {
   Truck,
   Zap,
   Monitor,
+  ScrollText,
 } from "lucide-react";
 
 export const SidebarLinks: SidebarLink[] = [
@@ -32,7 +33,7 @@ export const SidebarLinks: SidebarLink[] = [
     label: "Products",
   },
   {
-    icon: ShoppingBag,
+    icon: ScrollText,
     href: "orders",
     label: "Orders",
   },
