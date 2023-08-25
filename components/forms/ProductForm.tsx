@@ -21,12 +21,6 @@ import { toast } from "react-hot-toast";
 import { Category, Product } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 import {
-  UploadButton,
-  UploadDropzone,
-  useUploadThing,
-} from "@/lib/uploadthing";
-import Image from "next/image";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -46,12 +40,10 @@ interface ProductFormProps {
 const ProductForm = ({ product, categories }: ProductFormProps) => {
   const params = useParams();
   const router = useRouter();
-  const { startUpload } = useUploadThing("imageUploader");
 
   const [isLoading, setIsLoading] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
 
-  const toastMessage = product ? "Billboard updated." : "Billboard created.";
+  const toastMessage = product ? "Product updated." : "Product created.";
   const action = product ? "Save changes" : "Create";
 
   const form = useForm<ProductFormInput>({
@@ -67,22 +59,20 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
   });
 
   const onSubmit = async (values: ProductFormInput) => {
-    console.log("file: ProductForm.tsx:70 ~ onSubmit ~ values:", values);
     try {
       setIsLoading(true);
-      // const imgRes = await startUpload(files);
 
-      // if (!product) {
-      //   await axios.post(`/api/${params.storeId}/billboards`, values);
-      // } else {
-      //   await axios.patch(
-      //     `/api/${params.storeId}/billboards/${params.billboardId}`,
-      //     values
-      //   );
-      // }
-      // router.refresh();
-      // router.push(`/${params.storeId}/billboards`);
-      // toast.success(toastMessage);
+      if (!product) {
+        await axios.post(`/api/${params.storeId}/products`, values);
+      } else {
+        await axios.patch(
+          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          values
+        );
+      }
+      router.refresh();
+      router.push(`/${params.storeId}/products`);
+      toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong");
     } finally {

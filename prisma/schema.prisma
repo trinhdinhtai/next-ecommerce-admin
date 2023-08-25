@@ -54,6 +54,7 @@ model Product {
   category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
   name        String
   price       Decimal
+  images      Image[]   // Relation to Image model
   isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
   createdAt   DateTime  @default(now())
@@ -61,6 +62,17 @@ model Product {
 
   @@index([storeId])
   @@index([categoryId])
+}
+
+model Image {
+  id          String   @id @default(uuid())
+  productId   String   // Foreign Key to Product
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url         String   // URL of the image
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([productId])
 }
 
 model UserSubscription {
