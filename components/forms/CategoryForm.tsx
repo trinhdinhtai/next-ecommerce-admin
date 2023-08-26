@@ -44,6 +44,14 @@ const CategoryForm = ({ category }: CategoryFormProps) => {
   });
 
   const onSubmit = async (values: CategoryFormInput) => {
+    toast.promise(onCreateCategory(values), {
+      loading: "Creating category...",
+      success: toastMessage,
+      error: "Something went wrong",
+    });
+  };
+
+  const onCreateCategory = async (values: CategoryFormInput) => {
     try {
       setIsLoading(true);
       if (!category) {
@@ -51,9 +59,8 @@ const CategoryForm = ({ category }: CategoryFormProps) => {
       }
       router.refresh();
       router.push(`/${params.storeId}/categories`);
-      toast.success(toastMessage);
     } catch (error) {
-      toast.error("Something went wrong");
+      console.error("Something went wrong", error);
     } finally {
       setIsLoading(false);
     }

@@ -55,7 +55,7 @@ const ImageUpload = ({
             button({ isUploading }) {
               return isUploading
                 ? "display:none"
-                : "bg-primary text-secondary text-sm";
+                : "bg-primary text-secondary text-sm h-8";
             },
           }}
         />

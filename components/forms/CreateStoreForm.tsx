@@ -31,13 +31,20 @@ const CreateStoreForm = () => {
   });
 
   const onSubmit = async (values: CreateStoreFormInput) => {
+    toast.promise(onCreateStore(values), {
+      loading: "Creating store...",
+      success: "Store created successfully",
+      error: "Something went wrong",
+    });
+  };
+
+  const onCreateStore = async (values: CreateStoreFormInput) => {
     try {
       setIsLoading(true);
       const response = await axios.post("/api/stores", values);
-      toast.success("Store created successfully");
       window.location.assign(`/${response.data.id}`);
     } catch (error) {
-      toast.error("Something went wrong");
+      console.error("Something went wrong", error);
     } finally {
       setIsLoading(false);
     }

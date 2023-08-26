@@ -59,6 +59,14 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
   });
 
   const onSubmit = async (values: ProductFormInput) => {
+    toast.promise(onCreateProduct(values), {
+      loading: "Creating product...",
+      success: toastMessage,
+      error: "Something went wrong",
+    });
+  };
+
+  const onCreateProduct = async (values: ProductFormInput) => {
     try {
       setIsLoading(true);
 
@@ -72,9 +80,8 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
       }
       router.refresh();
       router.push(`/${params.storeId}/products`);
-      toast.success(toastMessage);
     } catch (error) {
-      toast.error("Something went wrong");
+      console.error("Something went wrong", error);
     } finally {
       setIsLoading(false);
     }

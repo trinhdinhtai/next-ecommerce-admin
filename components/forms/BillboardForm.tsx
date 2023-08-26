@@ -49,6 +49,14 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
   });
 
   const onSubmit = async (values: BillboardFormInput) => {
+    toast.promise(onCreateBillboard(values), {
+      loading: "Creating billboard...",
+      success: toastMessage,
+      error: "Something went wrong",
+    });
+  };
+
+  const onCreateBillboard = async (values: BillboardFormInput) => {
     try {
       setIsLoading(true);
 
@@ -75,9 +83,8 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
       }
       router.refresh();
       router.push(`/${params.storeId}/billboards`);
-      toast.success(toastMessage);
     } catch (error) {
-      toast.error("Something went wrong");
+      console.error("Something went wrong", error);
     } finally {
       setIsLoading(false);
     }

@@ -16,7 +16,10 @@ export const billboardSchema = z.object({
 
 export const productSchema = z.object({
   name: z.string().min(1),
-  images: z.object({ url: z.string() }).array().nonempty("Images are required"),
+  images: z
+    .object({ url: z.string() })
+    .array()
+    .nonempty("Please add at least one image or update the existing one"),
   price: z.coerce.number().min(1),
   categoryId: z.string().min(1),
   isFeatured: z.boolean().default(false).optional(),
