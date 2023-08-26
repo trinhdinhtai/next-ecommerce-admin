@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import {
   ColumnDef,
   SortingState,
@@ -21,20 +21,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { DataTableToolbar } from "./data-table-toolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  actionComponent?: ReactNode;
   searchKey: keyof TData;
 }
 
 export default function DataTable<TData, TValue>({
   columns,
   data,
-  actionComponent,
   searchKey,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -63,30 +61,9 @@ export default function DataTable<TData, TValue>({
     },
   });
 
-  const searchField = String(searchKey);
-
   return (
-    <>
-      <div className="flex justify-between items-center">
-        <div className="flex-1 flex items-center py-4 gap-4">
-          <Input
-            placeholder={`Filter by ${searchField}...`}
-            value={
-              (table.getColumn(searchField)?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn(searchField)?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-          {actionComponent}
-        </div>
-        {/* Row selection */}
-        <div className="text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-      </div>
+    <div className="space-y-4">
+      <DataTableToolbar table={table} searchKey={searchKey} />
 
       {/* Table */}
       <div className="rounded-md border">
@@ -159,6 +136,6 @@ export default function DataTable<TData, TValue>({
           Next
         </Button>
       </div>
-    </>
+    </div>
   );
 }

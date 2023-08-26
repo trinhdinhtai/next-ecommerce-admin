@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CategoryColumn } from "@/types/columns";
-import { ArrowUpDown } from "lucide-react";
 import ActionCell from "@/components/tables/cell/ActionCell";
 import { Checkbox } from "@/components/ui/checkbox";
+import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 
 export const categoryColumns: ColumnDef<CategoryColumn>[] = [
   {
@@ -26,17 +26,9 @@ export const categoryColumns: ColumnDef<CategoryColumn>[] = [
   },
   {
     accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <div
-          className="flex items-center gap-1 cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Name" />
+    ),
   },
   {
     accessorKey: "createdAt",

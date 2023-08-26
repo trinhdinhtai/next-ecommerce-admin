@@ -87,7 +87,7 @@ const UserButton = ({ user }: UserProps) => {
             onClick={handleOpenCommandModal}
           >
             <span>Command Menu</span>
-            <DropdownMenuShortcut>
+            <DropdownMenuShortcut className="space-x-1">
               <span className="border rounded-sm p-1">⌘</span>
               <span className="border rounded-sm p-1">K</span>
             </DropdownMenuShortcut>

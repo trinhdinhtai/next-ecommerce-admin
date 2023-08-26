@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { prisma } from "@/lib/prismadb";
 
 import { CategoryColumn } from "@/types/columns";
-import CategoriesContent from "@/components/CategoriesContent";
+import CategoriesTable from "@/components/tables/Categories";
 
 interface CategoriesPageProps {
   params: {
@@ -27,7 +27,7 @@ const CategoriesPage = async ({ params }: CategoriesPageProps) => {
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));
 
-  return <CategoriesContent data={formattedCategories} />;
+  return <CategoriesTable data={formattedCategories} />;
 };
 
 export default CategoriesPage;

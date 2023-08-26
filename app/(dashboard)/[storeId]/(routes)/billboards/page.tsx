@@ -1,4 +1,4 @@
-import BillboardsContent from "@/components/BillboardsContent";
+import BillboardsTable from "@/components/tables/Billboards";
 import { prisma } from "@/lib/prismadb";
 import { BillboardColumn } from "@/types/columns";
 import { format } from "date-fns";
@@ -28,7 +28,7 @@ const BillboardsPage = async ({ params }: BillboardsPageProps) => {
     })
   );
 
-  return <BillboardsContent data={formattedBillboards} />;
+  return <BillboardsTable data={formattedBillboards} />;
 };
 
 export default BillboardsPage;

@@ -1,4 +1,4 @@
-import ProductsContent from "@/components/ProductsContent";
+import ProductsTable from "@/components/tables/Products";
 import { formatter } from "@/helpers/utils";
 import { prisma } from "@/lib/prismadb";
 import { ProductColumn } from "@/types/columns";
@@ -33,7 +33,7 @@ const ProductsPage = async ({ params }: ProductsPageProps) => {
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));
 
-  return <ProductsContent data={formattedProducts} />;
+  return <ProductsTable data={formattedProducts} />;
 };
 
 export default ProductsPage;
