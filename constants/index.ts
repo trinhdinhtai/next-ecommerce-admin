@@ -9,13 +9,13 @@ import {
   Gauge,
   LayoutDashboard,
   ShoppingBasket,
-  ShoppingBag,
   Users,
   Truck,
   Zap,
   Monitor,
   ScrollText,
   CircleIcon,
+  Settings,
 } from "lucide-react";
 
 export const SidebarLinks: SidebarLink[] = [
@@ -48,16 +48,23 @@ export const SidebarLinks: SidebarLink[] = [
     icon: Users,
     href: "customers",
     label: "Customers",
+    disable: true,
   },
   {
     icon: Truck,
     href: "shipments",
     label: "Shipments",
+    disable: true,
   },
   {
     icon: Zap,
     href: "api-list",
     label: "APIs",
+  },
+  {
+    icon: Settings,
+    href: "settings",
+    label: "Settings",
   },
 ];
 

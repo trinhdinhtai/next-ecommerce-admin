@@ -5,6 +5,7 @@ import { useParams, usePathname } from "next/navigation";
 import { SidebarLinks } from "@/constants";
 import { SidebarLink } from "@/types";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 const Links = () => {
   const params = useParams();
@@ -27,11 +28,17 @@ const Links = () => {
             "text-sm font-medium transition-colors hover:text-primary px-5 py-3 rounded-md flex items-center gap-2 mt-8",
             isActive(link)
               ? "text-black bg-white dark:bg-gray-900 dark:text-white"
-              : "text-muted-foreground"
+              : "text-muted-foreground",
+            link.disable && "opacity-50"
           )}
         >
           <link.icon></link.icon>
           {link.label}
+          {link.disable && (
+            <Badge variant="outline" size="sm">
+              Coming soon
+            </Badge>
+          )}
         </Link>
       ))}
     </div>

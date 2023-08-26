@@ -1,12 +1,9 @@
 import PageHeading from "@/components/PageHeading";
 
-const CustomersPage = () => {
+const SettingsPage = () => {
   return (
     <div>
-      <PageHeading
-        title="Customers"
-        description="Manage customers for your store"
-      />
+      <PageHeading title="Settings" description="Settings for your store." />
 
       <h2 className="mt-4 text-lg font-semibold">
         This page is in development
@@ -15,4 +12,4 @@ const CustomersPage = () => {
   );
 };
 
-export default CustomersPage;
+export default SettingsPage;
