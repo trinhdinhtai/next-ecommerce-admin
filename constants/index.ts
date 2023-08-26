@@ -3,6 +3,7 @@ import {
   CheckCircledIcon,
   CrossCircledIcon,
   QuestionMarkCircledIcon,
+  SizeIcon,
   StopwatchIcon,
 } from "@radix-ui/react-icons";
 import {
@@ -16,6 +17,9 @@ import {
   ScrollText,
   CircleIcon,
   Settings,
+  Palette,
+  Minimize,
+  Minimize2,
 } from "lucide-react";
 
 export const SidebarLinks: SidebarLink[] = [
@@ -38,6 +42,16 @@ export const SidebarLinks: SidebarLink[] = [
     icon: ShoppingBasket,
     href: "products",
     label: "Products",
+  },
+  {
+    icon: Minimize2,
+    href: "sizes",
+    label: "Sizes",
+  },
+  {
+    icon: Palette,
+    href: "colors",
+    label: "Colors",
   },
   {
     icon: ScrollText,

@@ -44,8 +44,8 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const loadingMessage = product
-    ? "Creating product ..."
-    : "Updating product ...";
+    ? "Updating product ..."
+    : "Creating product ...";
   const toastMessage = product ? "Product updated." : "Product created.";
   const action = product ? "Save changes" : "Create";
 
@@ -62,6 +62,7 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
   });
 
   const onSubmit = async (values: ProductFormInput) => {
+    console.log("🚀 ~ file: ProductForm.tsx:65 ~ onSubmit ~ values:", values);
     toast.promise(onCreateProduct(values), {
       loading: loadingMessage,
       success: toastMessage,
@@ -84,7 +85,7 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
       router.refresh();
       router.push(`/${params.storeId}/products`);
     } catch (error) {
-      console.error("Something went wrong", error);
+      throw error;
     } finally {
       setIsLoading(false);
     }

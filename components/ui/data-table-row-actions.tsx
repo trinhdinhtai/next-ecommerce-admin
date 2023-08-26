@@ -41,7 +41,7 @@ const DataTableRowActions = ({
 
   const handleDelete = async () => {
     toast.promise(onDeleting(), {
-      loading: "Creating billboard...",
+      loading: `Deleting ${entityName} ...`,
       success: "Deleted successfully",
       error: "Make sure you removed all products first",
     });
@@ -52,7 +52,7 @@ const DataTableRowActions = ({
       await axios.delete(`/api/${params.storeId}/${entityName}/${columnId}`);
       router.refresh();
     } catch (error) {
-      console.error("error", error);
+      throw error;
     } finally {
       setIsOpen(false);
       setIsLoading(false);

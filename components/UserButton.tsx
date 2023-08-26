@@ -3,7 +3,7 @@
 import { useClerk } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { ChevronDown, ExternalLink, User as UserIcon } from "lucide-react";
+import { ChevronDown, ExternalLink } from "lucide-react";
 import { User } from "@/types";
 import {
   DropdownMenu,
@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useCommandModal } from "@/hooks/useCommandModal";
+import { useRouter } from "next/navigation";
 
 interface UserProps {
   user: User;
@@ -25,6 +26,7 @@ interface UserProps {
 const UserButton = ({ user }: UserProps) => {
   const { signOut } = useClerk();
   const { onOpen } = useCommandModal();
+  const router = useRouter();
 
   const fullName = `${user?.firstName} ${user?.lastName}`;
   const displayName = fullName || user?.username;
@@ -75,7 +77,9 @@ const UserButton = ({ user }: UserProps) => {
         </DropdownMenuLabel>
 
         <DropdownMenuGroup className="space-y-3 mt-4">
-          <DropdownMenuItem>Dashboard</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => router.push("/")}>
+            Dashboard
+          </DropdownMenuItem>
           <DropdownMenuItem>My Profile</DropdownMenuItem>
         </DropdownMenuGroup>
 

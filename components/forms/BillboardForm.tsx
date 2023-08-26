@@ -38,8 +38,8 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
 
   const loadingMessage = billboard
-    ? "Creating billboard ..."
-    : "Updating billboard ...";
+    ? "Updating billboard ..."
+    : "Creating billboard ...";
   const toastMessage = billboard ? "Billboard updated." : "Billboard created.";
   const action = billboard ? "Save changes" : "Create";
 
@@ -87,7 +87,7 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
       router.refresh();
       router.push(`/${params.storeId}/billboards`);
     } catch (error) {
-      console.error("Something went wrong", error);
+      throw error;
     } finally {
       setIsLoading(false);
     }

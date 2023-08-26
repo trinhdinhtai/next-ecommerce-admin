@@ -5,7 +5,7 @@ import axios from "axios";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { categorySchema, createStoreSchema } from "@/validators";
+import { categorySchema } from "@/validators";
 import {
   Form,
   FormControl,
@@ -17,32 +17,40 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
-import { Category } from "@prisma/client";
+import { Billboard, Category } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 type CategoryFormInput = z.infer<typeof categorySchema>;
 
 interface CategoryFormProps {
   category: Category | null;
+  billboards: Billboard[];
 }
 
-const CategoryForm = ({ category }: CategoryFormProps) => {
+const CategoryForm = ({ category, billboards }: CategoryFormProps) => {
   const params = useParams();
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
 
   const loadingMessage = category
-    ? "Creating category ..."
-    : "Updating category ...";
+    ? "Updating category ..."
+    : "Creating category ...";
   const toastMessage = category ? "Category updated." : "Category created.";
   const action = category ? "Save changes" : "Create";
 
   const form = useForm<CategoryFormInput>({
-    resolver: zodResolver(createStoreSchema),
+    resolver: zodResolver(categorySchema),
     defaultValues: {
-      name: "",
-      storeId: "",
+      name: category?.name || "",
+      billboardId: category?.billboardId || "",
     },
   });
 
@@ -68,7 +76,7 @@ const CategoryForm = ({ category }: CategoryFormProps) => {
       router.refresh();
       router.push(`/${params.storeId}/categories`);
     } catch (error) {
-      console.error("Something went wrong", error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -92,6 +100,39 @@ const CategoryForm = ({ category }: CategoryFormProps) => {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="billboardId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Billboard</FormLabel>
+                  <Select
+                    disabled={isLoading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a category"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {billboards.map((billboard) => (
+                        <SelectItem key={billboard.id} value={billboard.id}>
+                          {billboard.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

@@ -6,7 +6,7 @@ export const createStoreSchema = z.object({
 
 export const categorySchema = z.object({
   name: z.string().min(2),
-  storeId: z.string().min(1),
+  billboardId: z.string(),
 });
 
 export const billboardSchema = z.object({

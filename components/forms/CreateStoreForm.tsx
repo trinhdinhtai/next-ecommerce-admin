@@ -44,7 +44,7 @@ const CreateStoreForm = () => {
       const response = await axios.post("/api/stores", values);
       window.location.assign(`/${response.data.id}`);
     } catch (error) {
-      console.error("Something went wrong", error);
+      throw error;
     } finally {
       setIsLoading(false);
     }

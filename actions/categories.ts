@@ -8,3 +8,12 @@ export async function getCategoriesByStoreId(storeId: string) {
   });
   return categories;
 }
+
+export async function getCategoryById(id: string) {
+  const category = await prisma.category.findUnique({
+    where: {
+      id,
+    },
+  });
+  return category;
+}
