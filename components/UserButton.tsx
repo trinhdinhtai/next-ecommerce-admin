@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useCommandModal } from "@/hooks/useCommandModal";
 
 interface UserProps {
   user: User;
@@ -23,8 +24,13 @@ interface UserProps {
 
 const UserButton = ({ user }: UserProps) => {
   const { signOut } = useClerk();
+  const { onOpen } = useCommandModal();
 
   const fullName = `${user?.firstName} ${user?.lastName}`;
+
+  const handleOpenCommandModal = () => {
+    onOpen();
+  };
 
   return (
     <DropdownMenu>
@@ -76,7 +82,10 @@ const UserButton = ({ user }: UserProps) => {
         <DropdownMenuSeparator className="mt-4" />
 
         <DropdownMenuGroup className="space-y-3 mt-4">
-          <DropdownMenuItem className="flex items-center justify-between mt-4">
+          <DropdownMenuItem
+            className="flex items-center justify-between mt-4"
+            onClick={handleOpenCommandModal}
+          >
             <span>Command Menu</span>
             <DropdownMenuShortcut>
               <span className="border rounded-sm p-1">⌘</span>
