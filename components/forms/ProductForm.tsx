@@ -43,6 +43,9 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const loadingMessage = product
+    ? "Creating product ..."
+    : "Updating product ...";
   const toastMessage = product ? "Product updated." : "Product created.";
   const action = product ? "Save changes" : "Create";
 
@@ -60,7 +63,7 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
 
   const onSubmit = async (values: ProductFormInput) => {
     toast.promise(onCreateProduct(values), {
-      loading: "Creating product...",
+      loading: loadingMessage,
       success: toastMessage,
       error: "Something went wrong",
     });

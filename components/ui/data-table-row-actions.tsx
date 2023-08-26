@@ -15,12 +15,15 @@ import { useState } from "react";
 import axios from "axios";
 import ConfirmDeleteModal from "@/components/modals/ConfirmDeleteModal";
 
-interface CategoryCellProps {
+interface DataTableRowActionsProps {
   columnId: string;
-  targetType: "billboards" | "categories" | "products";
+  entityName: "billboards" | "categories" | "products";
 }
 
-const ActionCell = ({ columnId, targetType }: CategoryCellProps) => {
+const DataTableRowActions = ({
+  columnId,
+  entityName,
+}: DataTableRowActionsProps) => {
   const router = useRouter();
   const params = useParams();
 
@@ -33,19 +36,23 @@ const ActionCell = ({ columnId, targetType }: CategoryCellProps) => {
   };
 
   const handleUpdate = () => {
-    router.push(`/${params.storeId}/${targetType}/${columnId}`);
+    router.push(`/${params.storeId}/${entityName}/${columnId}`);
   };
 
   const handleDelete = async () => {
+    toast.promise(onDeleting(), {
+      loading: "Creating billboard...",
+      success: "Deleted successfully",
+      error: "Make sure you removed all products first",
+    });
+  };
+  const onDeleting = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(`/api/${params.storeId}/${targetType}/${columnId}`);
-      toast.success("Deleted successfully");
+      await axios.delete(`/api/${params.storeId}/${entityName}/${columnId}`);
       router.refresh();
     } catch (error) {
-      toast.error(
-        "Make sure you removed all products using this category first."
-      );
+      console.error("error", error);
     } finally {
       setIsOpen(false);
       setIsLoading(false);
@@ -84,4 +91,4 @@ const ActionCell = ({ columnId, targetType }: CategoryCellProps) => {
   );
 };
 
-export default ActionCell;
+export default DataTableRowActions;

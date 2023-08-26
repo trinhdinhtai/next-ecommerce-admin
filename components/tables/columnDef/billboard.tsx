@@ -1,9 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { BillboardColumn } from "@/types/columns";
 import { ArrowUpDown } from "lucide-react";
-import ActionCell from "@/components/tables/cell/ActionCell";
 import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
+import DataTableRowActions from "@/components/ui/data-table-row-actions";
 
 export const billboardColumns: ColumnDef<BillboardColumn>[] = [
   {
@@ -62,7 +62,7 @@ export const billboardColumns: ColumnDef<BillboardColumn>[] = [
   {
     id: "actions",
     cell: ({ row }) => (
-      <ActionCell columnId={row.original.id} targetType="billboards" />
+      <DataTableRowActions columnId={row.original.id} entityName="billboards" />
     ),
   },
 ];

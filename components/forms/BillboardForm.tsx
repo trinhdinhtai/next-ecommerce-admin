@@ -37,6 +37,9 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
 
+  const loadingMessage = billboard
+    ? "Creating billboard ..."
+    : "Updating billboard ...";
   const toastMessage = billboard ? "Billboard updated." : "Billboard created.";
   const action = billboard ? "Save changes" : "Create";
 
@@ -50,7 +53,7 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
 
   const onSubmit = async (values: BillboardFormInput) => {
     toast.promise(onCreateBillboard(values), {
-      loading: "Creating billboard...",
+      loading: loadingMessage,
       success: toastMessage,
       error: "Something went wrong",
     });

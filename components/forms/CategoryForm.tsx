@@ -32,6 +32,9 @@ const CategoryForm = ({ category }: CategoryFormProps) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const loadingMessage = category
+    ? "Creating category ..."
+    : "Updating category ...";
   const toastMessage = category ? "Category updated." : "Category created.";
   const action = category ? "Save changes" : "Create";
 
@@ -45,7 +48,7 @@ const CategoryForm = ({ category }: CategoryFormProps) => {
 
   const onSubmit = async (values: CategoryFormInput) => {
     toast.promise(onCreateCategory(values), {
-      loading: "Creating category...",
+      loading: loadingMessage,
       success: toastMessage,
       error: "Something went wrong",
     });

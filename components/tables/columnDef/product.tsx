@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ProductColumn } from "@/types/columns";
-import ActionCell from "@/components/tables/cell/ActionCell";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
+import DataTableRowActions from "@/components/ui/data-table-row-actions";
 
 export const productColumns: ColumnDef<ProductColumn>[] = [
   {
@@ -37,13 +37,25 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
     ),
   },
   {
+    accessorKey: "category",
+    header: "Category",
+  },
+  {
+    accessorKey: "isArchived",
+    header: "Archived",
+  },
+  {
+    accessorKey: "isFeatured",
+    header: "Featured",
+  },
+  {
     accessorKey: "createdAt",
     header: "Date",
   },
   {
     id: "actions",
     cell: ({ row }) => (
-      <ActionCell columnId={row.original.id} targetType="products" />
+      <DataTableRowActions columnId={row.original.id} entityName="products" />
     ),
   },
 ];

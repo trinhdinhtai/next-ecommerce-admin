@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CategoryColumn } from "@/types/columns";
-import ActionCell from "@/components/tables/cell/ActionCell";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
+import DataTableRowActions from "@/components/ui/data-table-row-actions";
 
 export const categoryColumns: ColumnDef<CategoryColumn>[] = [
   {
@@ -37,7 +37,7 @@ export const categoryColumns: ColumnDef<CategoryColumn>[] = [
   {
     id: "actions",
     cell: ({ row }) => (
-      <ActionCell columnId={row.original.id} targetType="categories" />
+      <DataTableRowActions columnId={row.original.id} entityName="categories" />
     ),
   },
 ];

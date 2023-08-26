@@ -9,3 +9,19 @@ export async function getProductById(id: string) {
 
   return product;
 }
+
+export async function getProductByStoreId(storeId: string) {
+  const products = await prisma.product.findMany({
+    where: {
+      storeId,
+    },
+    include: {
+      category: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return products;
+}
