@@ -5,6 +5,7 @@ export type User = {
   lastName: string | null;
   emailAddress: string;
   imageUrl: string;
+  username: string | null;
 };
 
 export type SidebarLink = {

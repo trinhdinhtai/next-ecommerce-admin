@@ -25,6 +25,7 @@ const Sidebar = async () => {
     lastName: user.lastName,
     imageUrl: user.imageUrl,
     emailAddress: user.emailAddresses[0].emailAddress,
+    username: user.username,
   };
 
   return (

@@ -27,7 +27,7 @@ const UserButton = ({ user }: UserProps) => {
   const { onOpen } = useCommandModal();
 
   const fullName = `${user?.firstName} ${user?.lastName}`;
-
+  const displayName = fullName || user?.username;
   const handleOpenCommandModal = () => {
     onOpen();
   };
@@ -47,7 +47,7 @@ const UserButton = ({ user }: UserProps) => {
             </Avatar>
 
             <div className="flex flex-col gap-1 text-sm text-left">
-              <span>{fullName}</span>
+              <span>{displayName}</span>
               <span className="text-muted-foreground text-xs">
                 {user.emailAddress}
               </span>
@@ -66,7 +66,7 @@ const UserButton = ({ user }: UserProps) => {
             </Avatar>
 
             <div className="flex flex-col gap-1 text-sm text-left">
-              <span>{fullName}</span>
+              <span>{displayName}</span>
               <span className="text-muted-foreground text-xs">
                 {user.emailAddress}
               </span>
