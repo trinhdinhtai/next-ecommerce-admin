@@ -10,14 +10,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
 import ConfirmDeleteModal from "@/components/modals/ConfirmDeleteModal";
 
 interface CategoryCellProps {
   columnId: string;
-  targetType: "billboards" | "categories";
+  targetType: "billboards" | "categories" | "products";
 }
 
 const ActionCell = ({ columnId, targetType }: CategoryCellProps) => {

@@ -56,6 +56,11 @@ const CategoryForm = ({ category }: CategoryFormProps) => {
       setIsLoading(true);
       if (!category) {
         await axios.post(`/api/${params.storeId}/categories`, values);
+      } else {
+        await axios.patch(
+          `/api/${params.storeId}/categories/${params.categoryId}`,
+          values
+        );
       }
       router.refresh();
       router.push(`/${params.storeId}/categories`);
