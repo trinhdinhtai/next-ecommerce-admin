@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 import { prisma } from "@/lib/prismadb";
+import { productSchema } from "@/validators";
 
 export async function GET(
   req: Request,
@@ -10,6 +11,8 @@ export async function GET(
     const { searchParams } = new URL(req.url);
 
     const categoryId = searchParams.get("categoryId") || undefined;
+    const colorId = searchParams.get("colorId") || undefined;
+    const sizeId = searchParams.get("sizeId") || undefined;
     const isFeatured = searchParams.get("isFeatured");
 
     let isFeaturedValue;
@@ -29,18 +32,21 @@ export async function GET(
       where: {
         storeId: params.storeId,
         categoryId,
+        colorId,
+        sizeId,
         isFeatured: isFeaturedValue,
         isArchived: false,
       },
       include: {
         images: true,
         category: true,
+        color: true,
+        size: true,
       },
       orderBy: {
         createdAt: "desc",
       },
     });
-    console.log("🚀 ~ file: route.ts:43 ~ products:", products);
 
     return NextResponse.json(products);
   } catch (error) {
@@ -60,9 +66,6 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const body = await req.json();
-    const { name, price, categoryId, images, isFeatured, isArchived } = body;
-
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
@@ -77,6 +80,18 @@ export async function POST(
     if (!storeByUserId) {
       return new NextResponse("Unauthorized", { status: 405 });
     }
+
+    const body = await req.json();
+    const {
+      name,
+      price,
+      categoryId,
+      colorId,
+      sizeId,
+      images,
+      isFeatured,
+      isArchived,
+    } = productSchema.parse(body);
 
     if (!name?.length) {
       return new NextResponse("Name is required", { status: 400 });
@@ -94,6 +109,14 @@ export async function POST(
       return new NextResponse("Category id is required", { status: 400 });
     }
 
+    if (!colorId) {
+      return new NextResponse("Color id is required", { status: 400 });
+    }
+
+    if (!sizeId) {
+      return new NextResponse("Size id is required", { status: 400 });
+    }
+
     const product = await prisma.product.create({
       data: {
         name,
@@ -101,9 +124,9 @@ export async function POST(
         isFeatured,
         isArchived,
         categoryId,
+        colorId,
+        sizeId,
         storeId: params.storeId,
-        colorId: "null",
-        sizeId: "",
         images: {
           createMany: {
             data: [...images.map((image: { url: string }) => image)],

@@ -41,12 +41,31 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
     header: "Category",
   },
   {
+    accessorKey: "size",
+    header: "Size",
+  },
+  {
+    accessorKey: "color",
+    header: "Color",
+    cell: ({ row }) => (
+      <div className="flex items-center gap-x-2">
+        <div
+          className="h-6 w-6 rounded-full border"
+          style={{ backgroundColor: row.original.color }}
+        />
+        {row.original.color}
+      </div>
+    ),
+  },
+  {
     accessorKey: "isArchived",
     header: "Archived",
+    cell: ({ row }) => <Checkbox checked={row.original.isArchived} disabled />,
   },
   {
     accessorKey: "isFeatured",
     header: "Featured",
+    cell: ({ row }) => <Checkbox checked={row.original.isFeatured} disabled />,
   },
   {
     accessorKey: "createdAt",

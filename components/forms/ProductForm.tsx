@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
-import { Category, Product } from "@prisma/client";
+import { Category, Color, Product, Size } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 import {
   Select,
@@ -35,9 +35,16 @@ export type ProductFormInput = z.infer<typeof productSchema>;
 interface ProductFormProps {
   product: Product | null;
   categories: Category[];
+  colors: Color[];
+  sizes: Size[];
 }
 
-const ProductForm = ({ product, categories }: ProductFormProps) => {
+const ProductForm = ({
+  product,
+  categories,
+  colors,
+  sizes,
+}: ProductFormProps) => {
   const params = useParams();
   const router = useRouter();
 
@@ -49,20 +56,28 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
   const toastMessage = product ? "Product updated." : "Product created.";
   const action = product ? "Save changes" : "Create";
 
+  const defaultValues = product
+    ? {
+        ...product,
+        price: parseFloat(String(product?.price)),
+      }
+    : {
+        name: "",
+        images: [],
+        price: 0,
+        categoryId: "",
+        colorId: "",
+        sizeId: "",
+        isFeatured: false,
+        isArchived: false,
+      };
+
   const form = useForm<ProductFormInput>({
     resolver: zodResolver(productSchema),
-    defaultValues: {
-      name: "",
-      images: [],
-      price: 0,
-      categoryId: "",
-      isFeatured: false,
-      isArchived: false,
-    },
+    defaultValues,
   });
 
   const onSubmit = async (values: ProductFormInput) => {
-    console.log("🚀 ~ file: ProductForm.tsx:65 ~ onSubmit ~ values:", values);
     toast.promise(onCreateProduct(values), {
       loading: loadingMessage,
       success: toastMessage,
@@ -78,7 +93,7 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
         await axios.post(`/api/${params.storeId}/products`, values);
       } else {
         await axios.patch(
-          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          `/api/${params.storeId}/products/${params.productId}`,
           values
         );
       }
@@ -193,6 +208,72 @@ const ProductForm = ({ product, categories }: ProductFormProps) => {
           </div>
 
           <div className="md:grid md:grid-cols-2 gap-8">
+            <FormField
+              control={form.control}
+              name="colorId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Color</FormLabel>
+                  <Select
+                    disabled={isLoading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a color"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {colors.map((color) => (
+                        <SelectItem key={color.id} value={color.id}>
+                          {color.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="sizeId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Size</FormLabel>
+                  <Select
+                    disabled={isLoading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a size"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {sizes.map((size) => (
+                        <SelectItem key={size.id} value={size.id}>
+                          {size.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="isFeatured"

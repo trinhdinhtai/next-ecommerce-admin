@@ -5,6 +5,9 @@ export async function getProductById(id: string) {
     where: {
       id,
     },
+    include: {
+      images: true,
+    },
   });
 
   return product;
