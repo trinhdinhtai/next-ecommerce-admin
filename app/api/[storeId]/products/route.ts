@@ -3,23 +3,48 @@ import { auth } from "@clerk/nextjs";
 import { prisma } from "@/lib/prismadb";
 
 export async function GET(
-  _: Request,
+  req: Request,
   { params }: { params: { storeId: string } }
 ) {
   try {
+    const { searchParams } = new URL(req.url);
+
+    const categoryId = searchParams.get("categoryId") || undefined;
+    const isFeatured = searchParams.get("isFeatured");
+
+    let isFeaturedValue;
+    if (isFeatured === "true") {
+      isFeaturedValue = true;
+    } else if (isFeatured === "false") {
+      isFeaturedValue = false;
+    } else {
+      isFeaturedValue = undefined;
+    }
+
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
 
-    const categories = await prisma.billboard.findMany({
+    const products = await prisma.product.findMany({
       where: {
         storeId: params.storeId,
+        categoryId,
+        isFeatured: isFeaturedValue,
+        isArchived: false,
+      },
+      include: {
+        images: true,
+        category: true,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
+    console.log("🚀 ~ file: route.ts:43 ~ products:", products);
 
-    return NextResponse.json(categories);
+    return NextResponse.json(products);
   } catch (error) {
-    console.log("[BILLBOARDS_GET]", error);
+    console.log("[PRODUCTS_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
