@@ -8,7 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { LayoutDashboard, Monitor } from "lucide-react";
+import { SidebarLinks } from "@/constants";
 
 const APIListPage = () => {
   return (
@@ -18,33 +18,28 @@ const APIListPage = () => {
         description="Manage API Endpoint for your store"
       />
 
-      <Accordion type="multiple" className="w-full">
-        <AccordionItem value="billboards">
-          <AccordionTrigger className="text-xl font-semibold">
-            <div className="flex items-center gap-2">
-              <Monitor className="h-5 w-5" />
-              Billboards
-            </div>
-          </AccordionTrigger>
-          <AccordionContent>
-            <ApiList entityName="billboards" entityIdName="billboardId" />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-
-      <Accordion type="multiple" className="w-full">
-        <AccordionItem value="categories">
-          <AccordionTrigger className="text-xl font-semibold">
-            <div className="flex items-center gap-2">
-              <LayoutDashboard className="h-5 w-5" />
-              Categories
-            </div>
-          </AccordionTrigger>
-          <AccordionContent>
-            <ApiList entityName="categories" entityIdName="categoryId" />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      {SidebarLinks.map(
+        (link) =>
+          link.entityName &&
+          link.entityId && (
+            <Accordion key={link.href} type="multiple" className="w-full">
+              <AccordionItem value={link.entityName}>
+                <AccordionTrigger className="text-xl font-semibold">
+                  <div className="flex items-center gap-2">
+                    <link.icon className="h-5 w-5" />
+                    {link.label}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <ApiList
+                    entityName={link.entityName}
+                    entityIdName={link.entityId}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )
+      )}
     </>
   );
 };

@@ -13,4 +13,6 @@ export type SidebarLink = {
   href: string;
   label: string;
   disable?: boolean;
+  entityName?: string;
+  entityId?: string;
 };
