@@ -1,33 +1,33 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 import { prisma } from "@/lib/prismadb";
-import { categorySchema } from "@/validators";
+import { colorSchema } from "@/validators";
 
 export async function GET(
   _: Request,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: { colorId: string } }
 ) {
   try {
-    if (!params.categoryId) {
-      return new NextResponse("Category id is required", { status: 400 });
+    if (!params.colorId) {
+      return new NextResponse("Color id is required", { status: 400 });
     }
 
-    const category = await prisma.size.findUnique({
+    const color = await prisma.color.findUnique({
       where: {
-        id: params.categoryId,
+        id: params.colorId,
       },
     });
 
-    return NextResponse.json(category);
+    return NextResponse.json(color);
   } catch (error) {
-    console.log("[CATEGORY_GET]", error);
+    console.log("[COLOR_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { categoryId: string; storeId: string } }
+  { params }: { params: { colorId: string; storeId: string } }
 ) {
   try {
     const { userId } = auth();
@@ -50,42 +50,42 @@ export async function PATCH(
     }
 
     const body = await req.json();
-    const { name, billboardId } = categorySchema.parse(body);
+    const { name, value } = colorSchema.parse(body);
 
     if (!name) {
-      return new NextResponse("Category name is required", { status: 400 });
+      return new NextResponse("Color name is required", { status: 400 });
     }
 
-    const category = await prisma.category.update({
+    if (!value) {
+      return new NextResponse("Color value is required", { status: 400 });
+    }
+
+    const color = await prisma.color.update({
       where: {
-        id: params.categoryId,
+        id: params.colorId,
       },
       data: {
         name,
-        billboardId,
+        value,
       },
     });
 
-    return NextResponse.json(category);
+    return NextResponse.json(color);
   } catch (error) {
-    console.log("[CATEGORY_PATCH]", error);
+    console.log("[COLOR_PATCH]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
 export async function DELETE(
   _: Request,
-  { params }: { params: { categoryId: string; storeId: string } }
+  { params }: { params: { colorId: string; storeId: string } }
 ) {
   try {
     const { userId } = auth();
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
-    }
-
-    if (!params.categoryId) {
-      return new NextResponse("Category id is required", { status: 400 });
     }
 
     if (!params.storeId) {
@@ -103,15 +103,19 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const category = await prisma.category.delete({
+    if (!params.colorId) {
+      return new NextResponse("Color id is required", { status: 400 });
+    }
+
+    const color = await prisma.color.delete({
       where: {
-        id: params.categoryId,
+        id: params.colorId,
       },
     });
 
-    return NextResponse.json(category);
+    return NextResponse.json(color);
   } catch (error) {
-    console.log("[CATEGORY_DELETE]", error);
+    console.log("[COLOR_DELETE]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

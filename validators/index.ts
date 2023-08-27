@@ -25,3 +25,15 @@ export const productSchema = z.object({
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
 });
+
+export const colorSchema = z.object({
+  name: z.string().min(2),
+  value: z.string().min(4).max(9).regex(/^#/, {
+    message: "Please fill in the correct color code format",
+  }),
+});
+
+export const sizeSchema = z.object({
+  name: z.string().min(1),
+  value: z.string().min(1),
+});

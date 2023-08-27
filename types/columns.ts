@@ -21,3 +21,17 @@ export type ProductColumn = {
   isFeatured: boolean;
   isArchived: boolean;
 };
+
+export type ColorColumn = {
+  id: string;
+  name: string;
+  value: string;
+  createdAt: string;
+};
+
+export type SizeColumn = {
+  id: string;
+  name: string;
+  value: string;
+  createdAt: string;
+};

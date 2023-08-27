@@ -8,11 +8,23 @@ export type User = {
   username: string | null;
 };
 
+export type EntityName =
+  | "categories"
+  | "billboards"
+  | "products"
+  | "sizes"
+  | "colors"
+  | "orders"
+  | "customers"
+  | "shipments"
+  | "api-list"
+  | "settings";
+
 export type SidebarLink = {
   icon: LucideIcon;
   href: string;
   label: string;
   disable?: boolean;
-  entityName?: string;
+  entityName?: EntityName;
   entityId?: string;
 };

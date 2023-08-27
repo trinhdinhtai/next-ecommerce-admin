@@ -14,10 +14,11 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
 import ConfirmDeleteModal from "@/components/modals/ConfirmDeleteModal";
+import { EntityName } from "@/types";
 
 interface DataTableRowActionsProps {
   columnId: string;
-  entityName: "billboards" | "categories" | "products";
+  entityName: EntityName;
 }
 
 const DataTableRowActions = ({
