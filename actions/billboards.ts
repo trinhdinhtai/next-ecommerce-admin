@@ -5,6 +5,9 @@ export async function getBillboardsByStoreId(storeId: string) {
     where: {
       storeId,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   return billboards;
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 import { prisma } from "@/lib/prismadb";
+import { getBillboardsByStoreId } from "@/actions/billboards";
 
 export async function GET(
   _: Request,
@@ -11,13 +12,8 @@ export async function GET(
       return new NextResponse("Store id is required", { status: 400 });
     }
 
-    const categories = await prisma.billboard.findMany({
-      where: {
-        storeId: params.storeId,
-      },
-    });
-
-    return NextResponse.json(categories);
+    const billboards = await getBillboardsByStoreId(params.storeId);
+    return NextResponse.json(billboards);
   } catch (error) {
     console.log("[BILLBOARDS_GET]", error);
     return new NextResponse("Internal error", { status: 500 });

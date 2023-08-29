@@ -1,5 +1,5 @@
+import { getBillboardsByStoreId } from "@/actions/billboards";
 import BillboardsTable from "@/components/tables/Billboards";
-import { prisma } from "@/lib/prismadb";
 import { BillboardColumn } from "@/types/columns";
 import { format } from "date-fns";
 
@@ -10,14 +10,7 @@ interface BillboardsPageProps {
 }
 
 const BillboardsPage = async ({ params }: BillboardsPageProps) => {
-  const billboards = await prisma.billboard.findMany({
-    where: {
-      storeId: params.storeId,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const billboards = await getBillboardsByStoreId(params.storeId);
 
   const formattedBillboards: BillboardColumn[] = billboards.map(
     (billboard) => ({
