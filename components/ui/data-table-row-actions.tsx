@@ -8,36 +8,50 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
+import { Copy, Edit, FileDown, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
 import ConfirmDeleteModal from "@/components/modals/ConfirmDeleteModal";
 import { EntityName } from "@/types";
+import { exportRowData } from "@/lib/excel";
+import { Row } from "@tanstack/react-table";
 
-interface DataTableRowActionsProps {
-  columnId: string;
+interface DataTableRowActionsProps<TData> {
+  row: Row<TData>;
   entityName: EntityName;
 }
 
-const DataTableRowActions = ({
-  columnId,
+export function DataTableRowActions<TData>({
+  row,
   entityName,
-}: DataTableRowActionsProps) => {
+}: DataTableRowActionsProps<TData>) {
   const router = useRouter();
   const params = useParams();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const originalRow = row.original;
+  const getColumnId = () => {
+    if (
+      typeof originalRow === "object" &&
+      originalRow !== null &&
+      "id" in originalRow
+    ) {
+      return String(originalRow.id);
+    }
+    return undefined;
+  };
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(columnId);
+    navigator.clipboard.writeText(getColumnId()!);
     toast.success("Copied to clipboard.");
   };
 
   const handleUpdate = () => {
-    router.push(`/${params.storeId}/${entityName}/${columnId}`);
+    router.push(`/${params.storeId}/${entityName}/${getColumnId()}`);
   };
 
   const handleDelete = async () => {
@@ -50,7 +64,9 @@ const DataTableRowActions = ({
   const onDeleting = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(`/api/${params.storeId}/${entityName}/${columnId}`);
+      await axios.delete(
+        `/api/${params.storeId}/${entityName}/${getColumnId()}`
+      );
       router.refresh();
     } catch (error) {
       throw error;
@@ -86,10 +102,19 @@ const DataTableRowActions = ({
           <DropdownMenuItem onClick={() => setIsOpen(true)}>
             <Trash className="mr-2 h-4 w-4" /> Delete
           </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              exportRowData({
+                rowData: originalRow,
+              })
+            }
+          >
+            <FileDown className="mr-2 h-4 w-4" /> Export
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
   );
-};
+}
 
 export default DataTableRowActions;

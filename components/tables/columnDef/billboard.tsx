@@ -62,7 +62,7 @@ export const billboardColumns: ColumnDef<BillboardColumn>[] = [
   {
     id: "actions",
     cell: ({ row }) => (
-      <DataTableRowActions columnId={row.original.id} entityName="billboards" />
+      <DataTableRowActions row={row} entityName="billboards" />
     ),
   },
 ];

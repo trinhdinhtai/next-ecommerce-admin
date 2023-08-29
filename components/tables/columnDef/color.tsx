@@ -45,8 +45,6 @@ export const colorColumns: ColumnDef<ColorColumn>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => (
-      <DataTableRowActions columnId={row.original.id} entityName="colors" />
-    ),
+    cell: ({ row }) => <DataTableRowActions row={row} entityName="colors" />,
   },
 ];

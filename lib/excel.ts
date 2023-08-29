@@ -7,6 +7,11 @@ interface ExportExcelButtonProps<TData> {
   columns: Column<TData, unknown>[];
 }
 
+interface ExportRowProps<TData> {
+  fileName?: string;
+  rowData: TData;
+}
+
 export function downloadToExcel<TData>({
   fileName = "ExportData",
   rowsData,
@@ -22,6 +27,33 @@ export function downloadToExcel<TData>({
       columns: [{ label: "ID", value: "id" }, ...excelColumns],
       // @ts-ignore
       content: rowsData,
+    },
+  ];
+
+  const settings = {
+    fileName,
+  };
+
+  xlsx(columns, settings);
+}
+
+export function exportRowData<TData>({
+  fileName = "ExportData",
+  rowData,
+}: ExportRowProps<TData>) {
+  if (typeof rowData !== "object" || !rowData) return;
+
+  const excelColumns = Object.keys(rowData).map((key) => ({
+    label: convertToNaturalFieldName(key),
+    value: key,
+  }));
+
+  const columns: IJsonSheet[] = [
+    {
+      sheet: "Sheet 1",
+      columns: [...excelColumns],
+      // @ts-ignore
+      content: [rowsData],
     },
   ];
 

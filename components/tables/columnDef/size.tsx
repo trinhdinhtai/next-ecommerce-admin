@@ -40,8 +40,6 @@ export const sizeColumns: ColumnDef<SizeColumn>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => (
-      <DataTableRowActions columnId={row.original.id} entityName="sizes" />
-    ),
+    cell: ({ row }) => <DataTableRowActions row={row} entityName="sizes" />,
   },
 ];

@@ -73,8 +73,6 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => (
-      <DataTableRowActions columnId={row.original.id} entityName="products" />
-    ),
+    cell: ({ row }) => <DataTableRowActions row={row} entityName="products" />,
   },
 ];

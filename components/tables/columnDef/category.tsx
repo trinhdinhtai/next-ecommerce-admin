@@ -42,7 +42,7 @@ export const categoryColumns: ColumnDef<CategoryColumn>[] = [
   {
     id: "actions",
     cell: ({ row }) => (
-      <DataTableRowActions columnId={row.original.id} entityName="categories" />
+      <DataTableRowActions row={row} entityName="categories" />
     ),
   },
 ];
