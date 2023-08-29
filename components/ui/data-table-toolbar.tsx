@@ -6,10 +6,10 @@ import { Table } from "@tanstack/react-table";
 import { Input } from "./input";
 import { Button } from "./button";
 import { DataTableViewOptions } from "./data-table-view-option";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { useEffect } from "react";
 import { statuses } from "@/constants";
+import { DataTableExportButton } from "@/components/ui/data-table-export-button";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -61,6 +61,7 @@ export function DataTableToolbar<TData>({
       </div>
 
       <div className="flex items-center gap-2">
+        <DataTableExportButton table={table} />
         <DataTableViewOptions table={table} />
         <Button
           size="sm"

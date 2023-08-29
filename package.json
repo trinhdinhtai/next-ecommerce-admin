@@ -38,6 +38,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
+    "json-as-xlsx": "^2.5.4",
     "lucide-react": "^0.268.0",
     "next": "13.4.19",
     "next-themes": "^0.2.1",
