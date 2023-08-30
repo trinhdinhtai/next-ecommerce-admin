@@ -1,5 +1,8 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { UploadDropzone } from "@/lib/uploadthing";
+import "@uploadthing/react/styles.css";
 import { Trash } from "lucide-react";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
@@ -50,14 +53,7 @@ const ImageUpload = ({
           onUploadError={(error: Error) => {
             toast.error(`ERROR! ${error.message}`);
           }}
-          className="border-dashed py-4 w-[200px] h-[200px] border-2"
-          appearance={{
-            button({ isUploading }) {
-              return isUploading
-                ? "display:none"
-                : "bg-primary text-secondary text-sm h-8";
-            },
-          }}
+          className="dark: border-gray-700"
         />
       </div>
     </>
