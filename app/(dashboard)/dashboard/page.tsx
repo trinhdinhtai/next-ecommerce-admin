@@ -3,7 +3,7 @@
 import { useCreateStoreModal } from "@/hooks/useCreateStoreModal";
 import { useEffect } from "react";
 
-const RootPage = () => {
+const DashboardPage = () => {
   const isOpen = useCreateStoreModal((state) => state.isOpen);
   const onOpen = useCreateStoreModal((state) => state.onOpen);
 
@@ -16,4 +16,4 @@ const RootPage = () => {
   return null;
 };
 
-export default RootPage;
+export default DashboardPage;
