@@ -15,7 +15,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeDialog } from "@/components/theme-dialog";
 import { useCommandModal } from "@/hooks/useCommandModal";
 import { useRouter } from "next/navigation";
 
@@ -98,7 +98,7 @@ const UserButton = ({ user }: UserProps) => {
           </DropdownMenuItem>
           <DropdownMenuItem className="flex justify-between">
             Theme
-            <ThemeToggle />
+            <ThemeDialog />
           </DropdownMenuItem>
         </DropdownMenuGroup>
 

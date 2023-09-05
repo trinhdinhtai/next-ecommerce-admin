@@ -1,27 +1,18 @@
 "use client";
 
 import * as React from "react";
-import { ChevronsUpDown, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 
-export function ThemeToggle() {
+export function ThemeDialog() {
   const { theme, setTheme } = useTheme();
 
   const handleChange = (value: string) => {
