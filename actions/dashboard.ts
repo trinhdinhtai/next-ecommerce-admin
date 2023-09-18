@@ -47,7 +47,7 @@ export const getStockCount = async (storeId: string) => {
   return stockCount;
 };
 
-export const getRecentSales = async (storeId: string) => {
+export const getRecentOrders = async (storeId: string) => {
   const paidOrders = await prisma.order.findMany({
     where: {
       storeId,
@@ -59,7 +59,12 @@ export const getRecentSales = async (storeId: string) => {
           product: true,
         },
       },
+      customer: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 5,
   });
 
   return paidOrders;

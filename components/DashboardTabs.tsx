@@ -12,12 +12,14 @@ import {
 } from "./ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { GraphData } from "@/actions/graph";
+import { OrderColumn } from "@/types/columns";
 
 interface DashboardTabsProps {
   totalRevenue: number;
   salesCount: number;
   stockCount: number;
   graphRevenue: GraphData[];
+  recentOrders: OrderColumn[];
 }
 
 const DashboardTabs = ({
@@ -25,6 +27,7 @@ const DashboardTabs = ({
   salesCount,
   stockCount,
   graphRevenue,
+  recentOrders,
 }: DashboardTabsProps) => {
   return (
     <Tabs defaultValue="overview" className="space-y-4">
@@ -94,11 +97,11 @@ const DashboardTabs = ({
           </Card>
           <Card className="col-span-3">
             <CardHeader>
-              <CardTitle>Recent Sales</CardTitle>
+              <CardTitle>Recent Orders</CardTitle>
               <CardDescription>You made 265 sales this month.</CardDescription>
             </CardHeader>
             <CardContent>
-              <RecentOrders />
+              <RecentOrders recentOrders={recentOrders} />
             </CardContent>
           </Card>
         </div>

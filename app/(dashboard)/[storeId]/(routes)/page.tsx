@@ -1,5 +1,5 @@
 import {
-  getRecentSales,
+  getRecentOrders,
   getSalesCount,
   getStockCount,
   getTotalRevenue,
@@ -7,6 +7,9 @@ import {
 import { getGraphRevenue } from "@/actions/graph";
 import DashboardTabs from "@/components/DashboardTabs";
 import DateRangePicker from "@/components/ui/date-range-picker";
+import { formatter } from "@/helpers/utils";
+import { OrderColumn } from "@/types/columns";
+import { format } from "date-fns";
 
 interface DashboardPageProps {
   params: {
@@ -20,14 +23,31 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
     getSalesCount(params.storeId),
     getStockCount(params.storeId),
     getGraphRevenue(params.storeId),
-    getRecentSales(params.storeId),
+    getRecentOrders(params.storeId),
   ]);
 
   const totalRevenue = response[0];
   const salesCount = response[1];
   const stockCount = response[2];
   const graphRevenue = response[3];
-  const recentSales = response[4];
+  const orderResponse = response[4];
+
+  const recentOrders: OrderColumn[] = orderResponse.map((order) => ({
+    id: order.id,
+    products: order.orderItems
+      .map((orderItem) => orderItem.product.name)
+      .join(", "),
+    customerName: order.customer?.name || "",
+    phone: order.customer?.phone || "",
+    address: order.customer?.address || "",
+    totalPrice: formatter.format(
+      order.orderItems.reduce((total, item) => {
+        return total + Number(item.product.price);
+      }, 0)
+    ),
+    isPaid: order.isPaid,
+    createdAt: format(order.createdAt, "MMMM do, yyyy"),
+  }));
 
   return (
     <div className="space-y-4">
@@ -40,6 +60,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
         salesCount={salesCount}
         stockCount={stockCount}
         graphRevenue={graphRevenue}
+        recentOrders={recentOrders}
       />
     </div>
   );
