@@ -149,6 +149,9 @@ dependencies:
   uploadthing:
     specifier: ^5.3.3
     version: 5.3.3(zod@3.21.4)
+  uuid:
+    specifier: ^9.0.1
+    version: 9.0.1
   zod:
     specifier: ^3.21.4
     version: 3.21.4
@@ -157,6 +160,9 @@ dependencies:
     version: 4.4.1(@types/react@18.2.21)(react@18.2.0)
 
 devDependencies:
+  '@types/uuid':
+    specifier: ^9.0.4
+    version: 9.0.4
   prisma:
     specifier: ^5.2.0
     version: 5.2.0
@@ -1718,6 +1724,10 @@ packages:
       '@types/mime': 3.0.1
       '@types/node': 20.5.4
     dev: false
+
+  /@types/uuid@9.0.4:
+    resolution: {integrity: sha512-zAuJWQflfx6dYJM62vna+Sn5aeSWhh3OB+wfUEACNcqUSc0AGc5JKl+ycL1vrH7frGTXhJchYjE1Hak8L819dA==}
+    dev: true
 
   /@typescript-eslint/parser@6.4.1(eslint@8.47.0)(typescript@5.1.6):
     resolution: {integrity: sha512-610G6KHymg9V7EqOaNBMtD1GgpAmGROsmfHJPXNLCU9bfIuLrkdOygltK784F6Crboyd5tBFayPB7Sf0McrQwg==}
@@ -4730,6 +4740,11 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+    dev: false
+
+  /uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    hasBin: true
     dev: false
 
   /victory-vendor@36.6.11:

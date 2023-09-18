@@ -105,17 +105,18 @@ model Color {
 }
 
 model Order {
-  id        String    @id @default(uuid())
+  id          String    @id @default(uuid())
   storeId     String    // Foreign Key to Store
   store       Store     @relation("StoreToOrder", fields: [storeId], references: [id])
   orderItems OrderItem[] // Relation to OrderItem model
   isPaid     Boolean   @default(false)
-  phone      String    @default("")
-  address    String    @default("")
+  customerId String    // Foreign Key to Customer
+  customer  Customer  @relation("CustomerToOrder", fields: [customerId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
   @@index([storeId])
+  @@index([customerId])
 }
 
 // Intermediary for a many-to-many relationship
@@ -128,6 +129,17 @@ model OrderItem {
 
   @@index([orderId])
   @@index([productId])
+}
+
+model Customer {
+  id          String    @id @default(uuid())
+  name        String
+  phone       String    @default("")
+  email       String    @default("")
+  address     String    @default("")
+  orders      Order[]   @relation("CustomerToOrder")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Image {

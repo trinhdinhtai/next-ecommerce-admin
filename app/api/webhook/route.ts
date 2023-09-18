@@ -42,8 +42,14 @@ export async function POST(req: Request) {
       },
       data: {
         isPaid: true,
-        address: addressString,
-        phone: session?.customer_details?.phone || "",
+        customer: {
+          update: {
+            name: session?.customer_details?.name ?? "",
+            phone: session?.customer_details?.phone ?? "",
+            email: session?.customer_details?.email ?? "",
+            address: addressString,
+          },
+        },
       },
       include: {
         orderItems: true,
