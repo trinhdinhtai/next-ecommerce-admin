@@ -110,8 +110,8 @@ model Order {
   store       Store     @relation("StoreToOrder", fields: [storeId], references: [id])
   orderItems OrderItem[] // Relation to OrderItem model
   isPaid     Boolean   @default(false)
-  customerId String    // Foreign Key to Customer
-  customer  Customer  @relation("CustomerToOrder", fields: [customerId], references: [id])
+  customerId String?    // Foreign Key to Customer
+  customer  Customer?  @relation("CustomerToOrder", fields: [customerId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 

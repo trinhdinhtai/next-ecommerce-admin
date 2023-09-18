@@ -40,6 +40,7 @@ export type SizeColumn = {
 
 export type OrderColumn = {
   id: string;
+  customerName: string;
   phone: string;
   address: string;
   isPaid: boolean;

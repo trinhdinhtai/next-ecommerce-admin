@@ -12,7 +12,7 @@ interface OrderTableProps {
 const OrdersTable = ({ data }: OrderTableProps) => {
   return (
     <div>
-      <PageHeading title="Sizes" description="Manage sizes for your store" />
+      <PageHeading title="Orders" description="Manage orders for your store" />
       <DataTable columns={orderColumns} data={data} searchKey="products" />
     </div>
   );
