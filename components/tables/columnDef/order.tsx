@@ -49,8 +49,4 @@ export const orderColumns: ColumnDef<OrderColumn>[] = [
     accessorKey: "createdAt",
     header: "Date",
   },
-  {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} entityName="orders" />,
-  },
 ];
