@@ -1,7 +1,6 @@
 "use client"
 
 import { ChangeEvent, useState } from "react"
-import Image from "next/image"
 import { useParams, useRouter } from "next/navigation"
 import { isBase64Image } from "@/helpers/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -24,6 +23,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
+import SingleImageUpload from "../upload/single-image-upload"
+
 type BillboardFormInput = z.infer<typeof billboardSchema>
 
 interface BillboardFormProps {
@@ -33,10 +34,8 @@ interface BillboardFormProps {
 const BillboardForm = ({ billboard }: BillboardFormProps) => {
   const params = useParams()
   const router = useRouter()
-  const { startUpload } = useUploadThing("imageUploader")
 
   const [isLoading, setIsLoading] = useState(false)
-  const [files, setFiles] = useState<File[]>([])
 
   const loadingMessage = billboard
     ? "Updating billboard ..."
@@ -64,19 +63,6 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
     try {
       setIsLoading(true)
 
-      // Upload image
-      const blob = values.imageUrl
-
-      const hasImageChanged = isBase64Image(blob)
-
-      if (hasImageChanged) {
-        const imgRes = await startUpload(files)
-
-        if (imgRes?.[0]?.url) {
-          values.imageUrl = imgRes[0].url
-        }
-      }
-
       if (!billboard) {
         await axios.post(`/api/${params.storeId}/billboards`, values)
       } else {
@@ -94,27 +80,6 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
     }
   }
 
-  const handleImageChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    fieldChange: (value: string) => void
-  ) => {
-    e.preventDefault()
-    const fileReader = new FileReader()
-
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0]
-      setFiles(Array.from(e.target.files))
-      if (!file.type.includes("image")) return
-
-      fileReader.onload = async (event) => {
-        const imageDataUrl = event.target?.result?.toString() ?? ""
-        fieldChange(imageDataUrl)
-      }
-
-      fileReader.readAsDataURL(file)
-    }
-  }
-
   return (
     <>
       <Form {...form}>
@@ -126,25 +91,11 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
               <FormItem>
                 <FormLabel>Image</FormLabel>
                 <FormControl>
-                  {billboard ? (
-                    <div className="relative aspect-[21/9] w-1/2 rounded-xl">
-                      <Image
-                        fill
-                        src={billboard.imageUrl}
-                        alt="Billboard image"
-                        className="rounded-xl object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      placeholder="Add billboard image"
-                      disabled={isLoading}
-                      className="file:text-blue-500"
-                      onChange={(e) => handleImageChange(e, field.onChange)}
-                    />
-                  )}
+                  <SingleImageUpload
+                    value={field.value}
+                    onChange={(newValue) => field.onChange(newValue)}
+                    onRemove={(newValue) => field.onChange(newValue)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
