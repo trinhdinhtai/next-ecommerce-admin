@@ -13,9 +13,12 @@ export async function GET(
       return new NextResponse("Category id is required", { status: 400 })
     }
 
-    const category = await prisma.size.findUnique({
+    const category = await prisma.category.findUnique({
       where: {
         id: params.categoryId,
+      },
+      include: {
+        products: true,
       },
     })
 
