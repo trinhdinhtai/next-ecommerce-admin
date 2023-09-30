@@ -1,11 +1,16 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import axios from "axios";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { sizeSchema } from "@/validators";
+import { useState } from "react"
+import { useParams, useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Size } from "@prisma/client"
+import axios from "axios"
+import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
+import * as z from "zod"
+
+import { sizeSchema } from "@/lib/validations"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -13,28 +18,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "react-hot-toast";
-import { Size } from "@prisma/client";
-import { useParams, useRouter } from "next/navigation";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-type SizeFormInput = z.infer<typeof sizeSchema>;
+type SizeFormInput = z.infer<typeof sizeSchema>
 
 interface SizeFormProps {
-  size: Size | null;
+  size: Size | null
 }
 
 const SizeForm = ({ size }: SizeFormProps) => {
-  const params = useParams();
-  const router = useRouter();
+  const params = useParams()
+  const router = useRouter()
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
-  const loadingMessage = size ? "Updating size ..." : "Creating size ...";
-  const toastMessage = size ? "Size updated." : "Size created.";
-  const action = size ? "Save changes" : "Create";
+  const loadingMessage = size ? "Updating size ..." : "Creating size ..."
+  const toastMessage = size ? "Size updated." : "Size created."
+  const action = size ? "Save changes" : "Create"
 
   const form = useForm<SizeFormInput>({
     resolver: zodResolver(sizeSchema),
@@ -42,35 +43,35 @@ const SizeForm = ({ size }: SizeFormProps) => {
       name: size?.name || "",
       value: size?.value || "",
     },
-  });
+  })
 
   const onSubmit = async (values: SizeFormInput) => {
     toast.promise(onCreateSize(values), {
       loading: loadingMessage,
       success: toastMessage,
       error: "Something went wrong",
-    });
-  };
+    })
+  }
 
   const onCreateSize = async (values: SizeFormInput) => {
     try {
-      setIsLoading(true);
+      setIsLoading(true)
       if (!size) {
-        await axios.post(`/api/${params.storeId}/sizes`, values);
+        await axios.post(`/api/${params.storeId}/sizes`, values)
       } else {
         await axios.patch(
           `/api/${params.storeId}/sizes/${params.sizeId}`,
           values
-        );
+        )
       }
-      router.refresh();
-      router.push(`/${params.storeId}/sizes`);
+      router.refresh()
+      router.push(`/${params.storeId}/sizes`)
     } catch (error) {
-      throw error;
+      throw error
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <>
@@ -120,7 +121,7 @@ const SizeForm = ({ size }: SizeFormProps) => {
         </form>
       </Form>
     </>
-  );
-};
+  )
+}
 
-export default SizeForm;
+export default SizeForm

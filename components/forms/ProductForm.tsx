@@ -1,11 +1,17 @@
-"use client";
+"use client"
 
-import { ChangeEvent, useState } from "react";
-import axios from "axios";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { productSchema } from "@/validators";
+import { useState } from "react"
+import { useParams, useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Category, Color, Product, Size } from "@prisma/client"
+import axios from "axios"
+import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
+import * as z from "zod"
+
+import { productSchema } from "@/lib/validations"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -14,29 +20,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "react-hot-toast";
-import { Category, Color, Product, Size } from "@prisma/client";
-import { useParams, useRouter } from "next/navigation";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import ImageUpload from "@/components/ImageUpload";
+} from "@/components/ui/select"
+import MultiImageUpload from "@/components/upload/multi-image-upload"
 
-export type ProductFormInput = z.infer<typeof productSchema>;
+export type ProductFormInput = z.infer<typeof productSchema>
 
 interface ProductFormProps {
-  product: Product | null;
-  categories: Category[];
-  colors: Color[];
-  sizes: Size[];
+  product: Product | null
+  categories: Category[]
+  colors: Color[]
+  sizes: Size[]
 }
 
 const ProductForm = ({
@@ -45,16 +46,16 @@ const ProductForm = ({
   colors,
   sizes,
 }: ProductFormProps) => {
-  const params = useParams();
-  const router = useRouter();
+  const params = useParams()
+  const router = useRouter()
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const loadingMessage = product
     ? "Updating product ..."
-    : "Creating product ...";
-  const toastMessage = product ? "Product updated." : "Product created.";
-  const action = product ? "Save changes" : "Create";
+    : "Creating product ..."
+  const toastMessage = product ? "Product updated." : "Product created."
+  const action = product ? "Save changes" : "Create"
 
   const defaultValues = product
     ? {
@@ -70,41 +71,41 @@ const ProductForm = ({
         sizeId: "",
         isFeatured: false,
         isArchived: false,
-      };
+      }
 
   const form = useForm<ProductFormInput>({
     resolver: zodResolver(productSchema),
     defaultValues,
-  });
+  })
 
   const onSubmit = async (values: ProductFormInput) => {
     toast.promise(onCreateProduct(values), {
       loading: loadingMessage,
       success: toastMessage,
       error: "Something went wrong",
-    });
-  };
+    })
+  }
 
   const onCreateProduct = async (values: ProductFormInput) => {
     try {
-      setIsLoading(true);
+      setIsLoading(true)
 
       if (!product) {
-        await axios.post(`/api/${params.storeId}/products`, values);
+        await axios.post(`/api/${params.storeId}/products`, values)
       } else {
         await axios.patch(
           `/api/${params.storeId}/products/${params.productId}`,
           values
-        );
+        )
       }
-      router.refresh();
-      router.push(`/${params.storeId}/products`);
+      router.refresh()
+      router.push(`/${params.storeId}/products`)
     } catch (error) {
-      throw error;
+      throw error
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <>
@@ -117,9 +118,8 @@ const ProductForm = ({
               <FormItem>
                 <FormLabel>Image</FormLabel>
                 <FormControl>
-                  <ImageUpload
+                  <MultiImageUpload
                     value={field.value.map((image) => image.url)}
-                    disabled={isLoading}
                     onChange={(newValue) =>
                       field.onChange([...field.value, ...newValue])
                     }
@@ -135,7 +135,7 @@ const ProductForm = ({
             )}
           />
 
-          <div className="md:grid md:grid-cols-2 gap-8">
+          <div className="gap-8 md:grid md:grid-cols-2">
             <FormField
               control={form.control}
               name="name"
@@ -207,7 +207,7 @@ const ProductForm = ({
             />
           </div>
 
-          <div className="md:grid md:grid-cols-2 gap-8">
+          <div className="gap-8 md:grid md:grid-cols-2">
             <FormField
               control={form.control}
               name="colorId"
@@ -325,7 +325,7 @@ const ProductForm = ({
         </form>
       </Form>
     </>
-  );
-};
+  )
+}
 
-export default ProductForm;
+export default ProductForm

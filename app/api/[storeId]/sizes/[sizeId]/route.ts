@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
-import { prisma } from "@/lib/prismadb";
-import { sizeSchema } from "@/validators";
+import { NextResponse } from "next/server"
+import { auth } from "@clerk/nextjs"
+
+import { prisma } from "@/lib/prismadb"
+import { sizeSchema } from "@/lib/validations"
 
 export async function GET(
   _: Request,
@@ -9,19 +10,19 @@ export async function GET(
 ) {
   try {
     if (!params.sizeId) {
-      return new NextResponse("Color id is required", { status: 400 });
+      return new NextResponse("Color id is required", { status: 400 })
     }
 
     const size = await prisma.size.findUnique({
       where: {
         id: params.sizeId,
       },
-    });
+    })
 
-    return NextResponse.json(size);
+    return NextResponse.json(size)
   } catch (error) {
-    console.log("[SIZE_GET]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log("[SIZE_GET]", error)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }
 
@@ -30,34 +31,34 @@ export async function PATCH(
   { params }: { params: { sizeId: string; storeId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const { userId } = auth()
 
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 })
     }
 
     if (!params.storeId) {
-      return new NextResponse("Store id is required", { status: 400 });
+      return new NextResponse("Store id is required", { status: 400 })
     }
     const storeByUserId = await prisma.store.findFirst({
       where: {
         id: params.storeId,
         userId,
       },
-    });
+    })
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 405 });
+      return new NextResponse("Unauthorized", { status: 405 })
     }
 
-    const body = await req.json();
-    const { name, value } = sizeSchema.parse(body);
+    const body = await req.json()
+    const { name, value } = sizeSchema.parse(body)
 
     if (!name) {
-      return new NextResponse("Color name is required", { status: 400 });
+      return new NextResponse("Color name is required", { status: 400 })
     }
 
     if (!value) {
-      return new NextResponse("Color value is required", { status: 400 });
+      return new NextResponse("Color value is required", { status: 400 })
     }
 
     const size = await prisma.size.update({
@@ -68,12 +69,12 @@ export async function PATCH(
         name,
         value,
       },
-    });
+    })
 
-    return NextResponse.json(size);
+    return NextResponse.json(size)
   } catch (error) {
-    console.log("[SIZE_PATCH]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log("[SIZE_PATCH]", error)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }
 
@@ -82,14 +83,14 @@ export async function DELETE(
   { params }: { params: { sizeId: string; storeId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const { userId } = auth()
 
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 })
     }
 
     if (!params.storeId) {
-      return new NextResponse("Store id is required", { status: 400 });
+      return new NextResponse("Store id is required", { status: 400 })
     }
 
     const storeByUserId = await prisma.store.findFirst({
@@ -97,25 +98,25 @@ export async function DELETE(
         id: params.storeId,
         userId,
       },
-    });
+    })
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 405 });
+      return new NextResponse("Unauthorized", { status: 405 })
     }
 
     if (!params.sizeId) {
-      return new NextResponse("Size id is required", { status: 400 });
+      return new NextResponse("Size id is required", { status: 400 })
     }
 
     const size = await prisma.size.delete({
       where: {
         id: params.sizeId,
       },
-    });
+    })
 
-    return NextResponse.json(size);
+    return NextResponse.json(size)
   } catch (error) {
-    console.log("[SIZE_DELETE]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log("[SIZE_DELETE]", error)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }

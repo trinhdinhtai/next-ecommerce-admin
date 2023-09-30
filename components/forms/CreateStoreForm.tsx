@@ -1,11 +1,14 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import axios from "axios";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { createStoreSchema } from "@/validators";
+import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import axios from "axios"
+import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
+import * as z from "zod"
+
+import { createStoreSchema } from "@/lib/validations"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -13,42 +16,40 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "react-hot-toast";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-type CreateStoreFormInput = z.infer<typeof createStoreSchema>;
+type CreateStoreFormInput = z.infer<typeof createStoreSchema>
 
 const CreateStoreForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<CreateStoreFormInput>({
     resolver: zodResolver(createStoreSchema),
     defaultValues: {
       name: "",
     },
-  });
+  })
 
   const onSubmit = async (values: CreateStoreFormInput) => {
     toast.promise(onCreateStore(values), {
       loading: "Creating store...",
       success: "Store created successfully",
       error: "Something went wrong",
-    });
-  };
+    })
+  }
 
   const onCreateStore = async (values: CreateStoreFormInput) => {
     try {
-      setIsLoading(true);
-      const response = await axios.post("/api/stores", values);
-      window.location.assign(`/${response.data.id}`);
+      setIsLoading(true)
+      const response = await axios.post("/api/stores", values)
+      window.location.assign(`/${response.data.id}`)
     } catch (error) {
-      throw error;
+      throw error
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <Form {...form}>
@@ -71,7 +72,7 @@ const CreateStoreForm = () => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default CreateStoreForm;
+export default CreateStoreForm

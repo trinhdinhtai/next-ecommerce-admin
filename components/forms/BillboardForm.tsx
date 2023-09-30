@@ -1,11 +1,19 @@
-"use client";
+"use client"
 
-import { ChangeEvent, useState } from "react";
-import axios from "axios";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { billboardSchema } from "@/validators";
+import { ChangeEvent, useState } from "react"
+import Image from "next/image"
+import { useParams, useRouter } from "next/navigation"
+import { isBase64Image } from "@/helpers/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Billboard } from "@prisma/client"
+import axios from "axios"
+import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
+import * as z from "zod"
+
+import { useUploadThing } from "@/lib/uploadthing"
+import { billboardSchema } from "@/lib/validations"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -13,35 +21,28 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "react-hot-toast";
-import { Billboard } from "@prisma/client";
-import { useParams, useRouter } from "next/navigation";
-import { useUploadThing } from "@/lib/uploadthing";
-import { isBase64Image } from "@/helpers/utils";
-import Image from "next/image";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-type BillboardFormInput = z.infer<typeof billboardSchema>;
+type BillboardFormInput = z.infer<typeof billboardSchema>
 
 interface BillboardFormProps {
-  billboard: Billboard | null;
+  billboard: Billboard | null
 }
 
 const BillboardForm = ({ billboard }: BillboardFormProps) => {
-  const params = useParams();
-  const router = useRouter();
-  const { startUpload } = useUploadThing("imageUploader");
+  const params = useParams()
+  const router = useRouter()
+  const { startUpload } = useUploadThing("imageUploader")
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
+  const [isLoading, setIsLoading] = useState(false)
+  const [files, setFiles] = useState<File[]>([])
 
   const loadingMessage = billboard
     ? "Updating billboard ..."
-    : "Creating billboard ...";
-  const toastMessage = billboard ? "Billboard updated." : "Billboard created.";
-  const action = billboard ? "Save changes" : "Create";
+    : "Creating billboard ..."
+  const toastMessage = billboard ? "Billboard updated." : "Billboard created."
+  const action = billboard ? "Save changes" : "Create"
 
   const form = useForm<BillboardFormInput>({
     resolver: zodResolver(billboardSchema),
@@ -49,70 +50,70 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
       label: "",
       imageUrl: "",
     },
-  });
+  })
 
   const onSubmit = async (values: BillboardFormInput) => {
     toast.promise(onCreateBillboard(values), {
       loading: loadingMessage,
       success: toastMessage,
       error: "Something went wrong",
-    });
-  };
+    })
+  }
 
   const onCreateBillboard = async (values: BillboardFormInput) => {
     try {
-      setIsLoading(true);
+      setIsLoading(true)
 
       // Upload image
-      const blob = values.imageUrl;
+      const blob = values.imageUrl
 
-      const hasImageChanged = isBase64Image(blob);
+      const hasImageChanged = isBase64Image(blob)
 
       if (hasImageChanged) {
-        const imgRes = await startUpload(files);
+        const imgRes = await startUpload(files)
 
         if (imgRes?.[0]?.url) {
-          values.imageUrl = imgRes[0].url;
+          values.imageUrl = imgRes[0].url
         }
       }
 
       if (!billboard) {
-        await axios.post(`/api/${params.storeId}/billboards`, values);
+        await axios.post(`/api/${params.storeId}/billboards`, values)
       } else {
         await axios.patch(
           `/api/${params.storeId}/billboards/${params.billboardId}`,
           values
-        );
+        )
       }
-      router.refresh();
-      router.push(`/${params.storeId}/billboards`);
+      router.refresh()
+      router.push(`/${params.storeId}/billboards`)
     } catch (error) {
-      throw error;
+      throw error
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const handleImageChange = (
     e: ChangeEvent<HTMLInputElement>,
     fieldChange: (value: string) => void
   ) => {
-    e.preventDefault();
-    const fileReader = new FileReader();
+    e.preventDefault()
+    const fileReader = new FileReader()
 
     if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      setFiles(Array.from(e.target.files));
-      if (!file.type.includes("image")) return;
+      const file = e.target.files[0]
+      setFiles(Array.from(e.target.files))
+      if (!file.type.includes("image")) return
 
       fileReader.onload = async (event) => {
-        const imageDataUrl = event.target?.result?.toString() ?? "";
-        fieldChange(imageDataUrl);
-      };
+        const imageDataUrl = event.target?.result?.toString() ?? ""
+        fieldChange(imageDataUrl)
+      }
 
-      fileReader.readAsDataURL(file);
+      fileReader.readAsDataURL(file)
     }
-  };
+  }
 
   return (
     <>
@@ -126,12 +127,12 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
                 <FormLabel>Image</FormLabel>
                 <FormControl>
                   {billboard ? (
-                    <div className="w-1/2 aspect-[21/9] relative rounded-xl">
+                    <div className="relative aspect-[21/9] w-1/2 rounded-xl">
                       <Image
                         fill
                         src={billboard.imageUrl}
                         alt="Billboard image"
-                        className="object-cover rounded-xl"
+                        className="rounded-xl object-cover"
                       />
                     </div>
                   ) : (
@@ -174,7 +175,7 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
         </form>
       </Form>
     </>
-  );
-};
+  )
+}
 
-export default BillboardForm;
+export default BillboardForm

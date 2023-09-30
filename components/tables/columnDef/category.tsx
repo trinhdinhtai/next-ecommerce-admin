@@ -1,8 +1,10 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { CategoryColumn } from "@/types/columns";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
-import DataTableRowActions from "@/components/ui/data-table-row-actions";
+import Image from "next/image"
+import { ColumnDef } from "@tanstack/react-table"
+
+import { CategoryColumn } from "@/types/columns"
+import { Checkbox } from "@/components/ui/checkbox"
+import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
+import DataTableRowActions from "@/components/ui/data-table-row-actions"
 
 export const categoryColumns: ColumnDef<CategoryColumn>[] = [
   {
@@ -31,6 +33,21 @@ export const categoryColumns: ColumnDef<CategoryColumn>[] = [
     ),
   },
   {
+    accessorKey: "imageUrl",
+    header: "Image",
+    cell: ({ row }) => {
+      return (
+        <Image
+          width={80}
+          height={80}
+          src={row.original.imageUrl}
+          className="aspect-square rounded-lg object-cover"
+          alt="Category Image"
+        />
+      )
+    },
+  },
+  {
     accessorKey: "billboardLabel",
     header: "Billboard",
     cell: ({ row }) => row.original.billboardLabel,
@@ -45,4 +62,4 @@ export const categoryColumns: ColumnDef<CategoryColumn>[] = [
       <DataTableRowActions row={row} entityName="categories" />
     ),
   },
-];
+]

@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
-import { prisma } from "@/lib/prismadb";
-import { categorySchema } from "@/validators";
+import { NextResponse } from "next/server"
+import { auth } from "@clerk/nextjs"
+
+import { prisma } from "@/lib/prismadb"
+import { categorySchema } from "@/lib/validations"
 
 export async function GET(
   _: Request,
@@ -9,19 +10,19 @@ export async function GET(
 ) {
   try {
     if (!params.categoryId) {
-      return new NextResponse("Category id is required", { status: 400 });
+      return new NextResponse("Category id is required", { status: 400 })
     }
 
     const category = await prisma.size.findUnique({
       where: {
         id: params.categoryId,
       },
-    });
+    })
 
-    return NextResponse.json(category);
+    return NextResponse.json(category)
   } catch (error) {
-    console.log("[CATEGORY_GET]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log("[CATEGORY_GET]", error)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }
 
@@ -30,30 +31,30 @@ export async function PATCH(
   { params }: { params: { categoryId: string; storeId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const { userId } = auth()
 
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 })
     }
 
     if (!params.storeId) {
-      return new NextResponse("Store id is required", { status: 400 });
+      return new NextResponse("Store id is required", { status: 400 })
     }
     const storeByUserId = await prisma.store.findFirst({
       where: {
         id: params.storeId,
         userId,
       },
-    });
+    })
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 405 });
+      return new NextResponse("Unauthorized", { status: 405 })
     }
 
-    const body = await req.json();
-    const { name, billboardId } = categorySchema.parse(body);
+    const body = await req.json()
+    const { name, billboardId } = categorySchema.parse(body)
 
     if (!name) {
-      return new NextResponse("Category name is required", { status: 400 });
+      return new NextResponse("Category name is required", { status: 400 })
     }
 
     const category = await prisma.category.update({
@@ -64,12 +65,12 @@ export async function PATCH(
         name,
         billboardId,
       },
-    });
+    })
 
-    return NextResponse.json(category);
+    return NextResponse.json(category)
   } catch (error) {
-    console.log("[CATEGORY_PATCH]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log("[CATEGORY_PATCH]", error)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }
 
@@ -78,18 +79,18 @@ export async function DELETE(
   { params }: { params: { categoryId: string; storeId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const { userId } = auth()
 
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 })
     }
 
     if (!params.categoryId) {
-      return new NextResponse("Category id is required", { status: 400 });
+      return new NextResponse("Category id is required", { status: 400 })
     }
 
     if (!params.storeId) {
-      return new NextResponse("Store id is required", { status: 400 });
+      return new NextResponse("Store id is required", { status: 400 })
     }
 
     const storeByUserId = await prisma.store.findFirst({
@@ -97,21 +98,21 @@ export async function DELETE(
         id: params.storeId,
         userId,
       },
-    });
+    })
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 405 });
+      return new NextResponse("Unauthorized", { status: 405 })
     }
 
     const category = await prisma.category.delete({
       where: {
         id: params.categoryId,
       },
-    });
+    })
 
-    return NextResponse.json(category);
+    return NextResponse.json(category)
   } catch (error) {
-    console.log("[CATEGORY_DELETE]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log("[CATEGORY_DELETE]", error)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }
