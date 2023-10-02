@@ -1,13 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import * as z from "zod"
 
 import { createStoreSchema } from "@/lib/validations"
+import { useCreateStoreModal } from "@/hooks/use-create-store"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -22,7 +24,16 @@ import { Input } from "@/components/ui/input"
 type CreateStoreFormInput = z.infer<typeof createStoreSchema>
 
 const CreateStoreForm = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
+  const { onClose } = useCreateStoreModal()
+  const { mutate: createStore, isLoading } = useMutation({
+    mutationFn: async (values: CreateStoreFormInput) => {
+      const response = await axios.post("/api/stores", values)
+      return response.data
+    },
+  })
+
+  const { setIsFirstCreate } = useCreateStoreModal()
 
   const form = useForm<CreateStoreFormInput>({
     resolver: zodResolver(createStoreSchema),
@@ -31,29 +42,24 @@ const CreateStoreForm = () => {
     },
   })
 
-  const onSubmit = async (values: CreateStoreFormInput) => {
-    toast.promise(onCreateStore(values), {
-      loading: "Creating store...",
-      success: "Store created successfully",
-      error: "Something went wrong",
-    })
-  }
-
   const onCreateStore = async (values: CreateStoreFormInput) => {
-    try {
-      setIsLoading(true)
-      const response = await axios.post("/api/stores", values)
-      window.location.assign(`/${response.data.id}`)
-    } catch (error) {
-      throw error
-    } finally {
-      setIsLoading(false)
-    }
+    createStore(values, {
+      onSuccess: (data) => {
+        router.push(`/${data.store.id}`)
+        toast.success("Store created successfully!")
+        onClose()
+        setIsFirstCreate(data.isFirstStore)
+      },
+      onError: (error) => {
+        console.error(error)
+        toast.error("Something went wrong!")
+      },
+    })
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onCreateStore)} className="space-y-8">
         <FormField
           control={form.control}
           name="name"

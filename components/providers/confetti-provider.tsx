@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import ReactConfetti from "react-confetti";
+import ReactConfetti from "react-confetti"
 
-import { useCreateStoreModal } from "@/hooks/use-create-store";
+import { useCreateStoreModal } from "@/hooks/use-create-store"
 
 export const ConfettiProvider = () => {
-  const { isFirstCreate } = useCreateStoreModal();
+  const { isFirstCreate } = useCreateStoreModal()
 
-  if (!isFirstCreate) return null;
+  if (!isFirstCreate) return null
 
   return (
     <ReactConfetti
-      className="pointer-events-none z-[100]"
+      className="pointer-events-none z-[1000]"
       numberOfPieces={500}
       recycle={false}
     />
-  );
-};
+  )
+}

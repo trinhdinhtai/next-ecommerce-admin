@@ -1,19 +1,22 @@
-"use client";
+"use client"
 
-import { useCreateStoreModal } from "@/hooks/use-create-store";
-import { useEffect } from "react";
+import { useEffect } from "react"
+
+import { useCreateStoreModal } from "@/hooks/use-create-store"
 
 const DashboardPage = () => {
-  const isOpen = useCreateStoreModal((state) => state.isOpen);
-  const onOpen = useCreateStoreModal((state) => state.onOpen);
+  const { isOpen, onOpen, isFirstCreate } = useCreateStoreModal()
 
   useEffect(() => {
-    if (!isOpen) {
-      onOpen();
+    if (isFirstCreate) {
+      return
     }
-  }, [isOpen, onOpen]);
+    if (!isOpen) {
+      onOpen()
+    }
+  }, [isOpen, onOpen, isFirstCreate])
 
-  return null;
-};
+  return null
+}
 
-export default DashboardPage;
+export default DashboardPage
