@@ -21,8 +21,8 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { useCreateStoreModal } from "@/hooks/useCreateStoreModal";
 import { getAvatarFallback } from "@/helpers/utils";
+import { useCreateStoreModal } from "@/hooks/use-create-store";
 
 interface StoreSwitcherProps {
   stores: Store[];

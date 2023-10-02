@@ -1,6 +1,6 @@
 "use client";
 
-import { useCreateStoreModal } from "@/hooks/useCreateStoreModal";
+import { useCreateStoreModal } from "@/hooks/use-create-store";
 import { useEffect } from "react";
 
 const DashboardPage = () => {

@@ -14,7 +14,7 @@ const LandingHero = () => {
   return (
     <div className="font-bold py-36 px-4 text-center space-y-10">
       <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold">
-        <h1>The Best E-commerce Platform</h1>
+        <h1>The Best E-commerce Management Platform</h1>
         <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#1C79BD] to-[#5AA2D6] py-4">
           <TypewriterComponent
             options={{
@@ -33,8 +33,9 @@ const LandingHero = () => {
       </div>
 
       <p className="font-normal text-center text-muted-foreground flex flex-col">
-        <span>E-commerce platform with essential commerce features</span>
-        <span>Built with Next.js 13 server components</span>
+        <span>
+          E-commerce management platform with essential commerce features
+        </span>
       </p>
 
       <div>
