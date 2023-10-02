@@ -1,10 +1,13 @@
-"use client";
+"use client"
 
-import { useClerk } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { ChevronDown, ExternalLink } from "lucide-react";
-import { User } from "@/types";
+import { useRouter } from "next/navigation"
+import { User } from "@/types"
+import { useClerk } from "@clerk/nextjs"
+import { ChevronDown, ExternalLink } from "lucide-react"
+
+import { useCommandModal } from "@/hooks/useCommandModal"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,25 +17,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ThemeDialog } from "@/components/theme-dialog";
-import { useCommandModal } from "@/hooks/useCommandModal";
-import { useRouter } from "next/navigation";
+} from "@/components/ui/dropdown-menu"
+import { ThemeDialog } from "@/components/theme-dialog"
 
 interface UserProps {
-  user: User;
+  user: User
 }
 
 const UserButton = ({ user }: UserProps) => {
-  const { signOut } = useClerk();
-  const { onOpen } = useCommandModal();
-  const router = useRouter();
+  const { signOut } = useClerk()
+  const { onOpen } = useCommandModal()
+  const router = useRouter()
 
-  const fullName = `${user?.firstName} ${user?.lastName}`;
-  const displayName = fullName || user?.username;
+  const fullName = `${user?.firstName} ${user?.lastName}`
+  const displayName = fullName || user?.username
   const handleOpenCommandModal = () => {
-    onOpen();
-  };
+    onOpen()
+  }
 
   return (
     <DropdownMenu>
@@ -41,16 +42,16 @@ const UserButton = ({ user }: UserProps) => {
           variant="outline"
           role="combobox"
           aria-label="User button"
-          className="w-full justify-between text-base bg-transparent border-none h-16"
+          className="h-16 w-64 justify-between border-none bg-transparent text-base"
         >
           <div className="flex items-center gap-2">
             <Avatar className="mr-2 h-10 w-10">
               <AvatarImage src={user?.imageUrl} alt="User Avatar" />
             </Avatar>
 
-            <div className="flex flex-col gap-1 text-sm text-left">
+            <div className="flex flex-col gap-1 text-left text-sm">
               <span>{displayName}</span>
-              <span className="text-muted-foreground text-xs">
+              <span className="text-xs text-muted-foreground">
                 {user.emailAddress}
               </span>
             </div>
@@ -60,23 +61,23 @@ const UserButton = ({ user }: UserProps) => {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent className="w-64">
         <DropdownMenuLabel>
           <div className="flex items-center gap-2">
             <Avatar className="mr-2 h-10 w-10">
               <AvatarImage src={user?.imageUrl} alt="User Avatar" />
             </Avatar>
 
-            <div className="flex flex-col gap-1 text-sm text-left">
+            <div className="flex flex-col gap-1 text-left text-sm">
               <span>{displayName}</span>
-              <span className="text-muted-foreground text-xs">
+              <span className="text-xs text-muted-foreground">
                 {user.emailAddress}
               </span>
             </div>
           </div>
         </DropdownMenuLabel>
 
-        <DropdownMenuGroup className="space-y-3 mt-4">
+        <DropdownMenuGroup className="mt-4 space-y-3">
           <DropdownMenuItem onClick={() => router.push("/")}>
             Dashboard
           </DropdownMenuItem>
@@ -85,15 +86,15 @@ const UserButton = ({ user }: UserProps) => {
 
         <DropdownMenuSeparator className="mt-4" />
 
-        <DropdownMenuGroup className="space-y-3 mt-4">
+        <DropdownMenuGroup className="mt-4 space-y-3">
           <DropdownMenuItem
-            className="flex items-center justify-between mt-4"
+            className="mt-4 flex items-center justify-between"
             onClick={handleOpenCommandModal}
           >
             <span>Command Menu</span>
             <DropdownMenuShortcut className="space-x-1">
-              <span className="border rounded-sm p-1">⌘</span>
-              <span className="border rounded-sm p-1">K</span>
+              <span className="rounded-sm border p-1">⌘</span>
+              <span className="rounded-sm border p-1">K</span>
             </DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex justify-between">
@@ -104,8 +105,8 @@ const UserButton = ({ user }: UserProps) => {
 
         <DropdownMenuSeparator className="mt-4" />
 
-        <DropdownMenuGroup className="space-y-3 mt-4">
-          <DropdownMenuItem className="flex items-center justify-between mt-4">
+        <DropdownMenuGroup className="mt-4 space-y-3">
+          <DropdownMenuItem className="mt-4 flex items-center justify-between">
             <span>GM Solutions Homepage</span>
             <ExternalLink className="h-4 w-4" />
           </DropdownMenuItem>
@@ -124,7 +125,7 @@ const UserButton = ({ user }: UserProps) => {
         </DropdownMenuLabel>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}
 
-export default UserButton;
+export default UserButton

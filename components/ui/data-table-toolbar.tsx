@@ -1,30 +1,32 @@
-"use client";
+"use client"
 
-import { Plus, X } from "lucide-react";
-import { Table } from "@tanstack/react-table";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { statuses } from "@/constants"
+import { Table } from "@tanstack/react-table"
+import { Plus, X } from "lucide-react"
 
-import { Input } from "./input";
-import { Button } from "./button";
-import { DataTableViewOptions } from "./data-table-view-option";
-import { usePathname, useRouter } from "next/navigation";
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { statuses } from "@/constants";
-import { DataTableExportButton } from "@/components/ui/data-table-export-button";
+import { cn } from "@/lib/utils"
+import { DataTableExportButton } from "@/components/ui/data-table-export-button"
+
+import { Button, buttonVariants } from "./button"
+import { DataTableFacetedFilter } from "./data-table-faceted-filter"
+import { DataTableViewOptions } from "./data-table-view-option"
+import { Input } from "./input"
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>;
-  searchKey: keyof TData;
+  table: Table<TData>
+  searchKey: keyof TData
 }
 
 export function DataTableToolbar<TData>({
   table,
   searchKey,
 }: DataTableToolbarProps<TData>) {
-  const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname()
 
-  const isFiltered = table.getState().columnFilters.length > 0;
-  const searchField = String(searchKey);
+  const isFiltered = table.getState().columnFilters.length > 0
+  const searchField = String(searchKey)
 
   return (
     <div className="flex items-center justify-between">
@@ -63,15 +65,14 @@ export function DataTableToolbar<TData>({
       <div className="flex items-center gap-2">
         <DataTableExportButton table={table} />
         <DataTableViewOptions table={table} />
-        <Button
-          size="sm"
-          className="h-8 flex gap-1"
-          onClick={() => router.push(`${pathname}/new`)}
+        <Link
+          className={cn(buttonVariants({ size: "sm" }), "flex h-8 gap-1")}
+          href={`${pathname}/new`}
         >
           <Plus className="h-4 w-4" />
           Add
-        </Button>
+        </Link>
       </div>
     </div>
-  );
+  )
 }
