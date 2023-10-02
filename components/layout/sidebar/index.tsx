@@ -20,11 +20,11 @@ const Sidebar = async () => {
   })
 
   return (
-    <nav className="flex h-full flex-col justify-between overflow-auto border-r bg-background px-3 py-5">
-      <div className="flex flex-col">
+    <nav className="flex h-full flex-col overflow-auto border-r bg-background py-5">
+      <div className="flex justify-center">
         <StoreSwitcher stores={stores} />
-        <Links />
       </div>
+      <Links />
     </nav>
   )
 }
