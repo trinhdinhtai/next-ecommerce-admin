@@ -1,11 +1,16 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import axios from "axios";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { colorSchema } from "@/validators";
+import { useState } from "react"
+import { useParams, useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Color } from "@prisma/client"
+import axios from "axios"
+import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
+import * as z from "zod"
+
+import { colorSchema } from "@/lib/validations"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -13,28 +18,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "react-hot-toast";
-import { Color } from "@prisma/client";
-import { useParams, useRouter } from "next/navigation";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-type ColorFormInput = z.infer<typeof colorSchema>;
+type ColorFormInput = z.infer<typeof colorSchema>
 
 interface ColorFormProps {
-  color: Color | null;
+  color: Color | null
 }
 
 const ColorForm = ({ color }: ColorFormProps) => {
-  const params = useParams();
-  const router = useRouter();
+  const params = useParams()
+  const router = useRouter()
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
-  const loadingMessage = color ? "Updating color ..." : "Creating color ...";
-  const toastMessage = color ? "Color updated." : "Color created.";
-  const action = color ? "Save changes" : "Create";
+  const loadingMessage = color ? "Updating color ..." : "Creating color ..."
+  const toastMessage = color ? "Color updated." : "Color created."
+  const action = color ? "Save changes" : "Create"
 
   const form = useForm<ColorFormInput>({
     resolver: zodResolver(colorSchema),
@@ -42,35 +43,35 @@ const ColorForm = ({ color }: ColorFormProps) => {
       name: color?.name || "",
       value: color?.value || "",
     },
-  });
+  })
 
   const onSubmit = async (values: ColorFormInput) => {
     toast.promise(onCreateColor(values), {
       loading: loadingMessage,
       success: toastMessage,
       error: "Something went wrong",
-    });
-  };
+    })
+  }
 
   const onCreateColor = async (values: ColorFormInput) => {
     try {
-      setIsLoading(true);
+      setIsLoading(true)
       if (!color) {
-        await axios.post(`/api/${params.storeId}/colors`, values);
+        await axios.post(`/api/${params.storeId}/colors`, values)
       } else {
         await axios.patch(
           `/api/${params.storeId}/colors/${params.colorId}`,
           values
-        );
+        )
       }
-      router.refresh();
-      router.push(`/${params.storeId}/colors`);
+      router.refresh()
+      router.push(`/${params.storeId}/colors`)
     } catch (error) {
-      throw error;
+      throw error
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <>
@@ -120,7 +121,7 @@ const ColorForm = ({ color }: ColorFormProps) => {
         </form>
       </Form>
     </>
-  );
-};
+  )
+}
 
-export default ColorForm;
+export default ColorForm
