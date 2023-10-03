@@ -18,7 +18,11 @@ export async function GET(
         id: params.categoryId,
       },
       include: {
-        products: true,
+        products: {
+          include: {
+            images: true,
+          },
+        },
       },
     })
 
