@@ -62,6 +62,7 @@ model Product {
   categoryId  String    // Foreign Key to Category
   category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
   name        String
+  description String?
   price       Decimal
   inventory   Int       @default(0)
   isFeatured  Boolean   @default(false)
