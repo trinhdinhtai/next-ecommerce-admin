@@ -1,13 +1,14 @@
-import ProductsTable from "@/components/tables/Products";
-import { formatter } from "@/helpers/utils";
-import { prisma } from "@/lib/prismadb";
-import { ProductColumn } from "@/types/columns";
-import { format } from "date-fns";
+import { formatter } from "@/helpers/utils"
+import { format } from "date-fns"
+
+import { ProductColumn } from "@/types/columns"
+import { prisma } from "@/lib/prismadb"
+import ProductsTable from "@/components/tables/Products"
 
 interface ProductsPageProps {
   params: {
-    storeId: string;
-  };
+    storeId: string
+  }
 }
 
 const ProductsPage = async ({ params }: ProductsPageProps) => {
@@ -23,7 +24,7 @@ const ProductsPage = async ({ params }: ProductsPageProps) => {
     orderBy: {
       createdAt: "desc",
     },
-  });
+  })
 
   const formattedProducts: ProductColumn[] = products.map((item) => ({
     id: item.id,
@@ -31,13 +32,14 @@ const ProductsPage = async ({ params }: ProductsPageProps) => {
     isFeatured: item.isFeatured,
     isArchived: item.isArchived,
     price: formatter.format(item.price.toNumber()),
+    inventory: item.inventory,
     category: item.category.name,
     size: item.size.name,
     color: item.color.value,
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
-  }));
+  }))
 
-  return <ProductsTable data={formattedProducts} />;
-};
+  return <ProductsTable data={formattedProducts} />
+}
 
-export default ProductsPage;
+export default ProductsPage

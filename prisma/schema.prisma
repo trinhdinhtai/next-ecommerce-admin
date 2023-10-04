@@ -62,6 +62,7 @@ model Product {
   category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
   name        String
   price       Decimal
+  inventory   Int       @default(0)
   isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
   sizeId      String    // Foreign Key to Size
@@ -70,6 +71,7 @@ model Product {
   color       Color     @relation(fields: [colorId], references: [id])
   images      Image[]   // Relation to Image model
   orderItems  OrderItem[]   // Relation to Order model
+  cardItems   CartItem[]    // Relation to Cart model
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
@@ -173,8 +175,12 @@ model CartItem {
   id          String    @id @default(uuid())
   cartId      String    // Foreign Key to Order
   cart        Cart     @relation(fields: [cartId], references: [id])
+  productId   String    // Foreign Key to Product
+  product     Product   @relation(fields: [productId], references: [id])
+  quantity    Int       @default(1)
 
   @@index([cartId])
+  @@index([productId])
 }
 
 enum PlanType {

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs"
 
 import { prisma } from "@/lib/prismadb"
-import { productSchema } from "@/lib/validations"
+import { productSchema } from "@/lib/validations/product"
 
 export async function GET(
   req: Request,
@@ -86,6 +86,7 @@ export async function POST(
     const {
       name,
       price,
+      inventory,
       categoryId,
       colorId,
       sizeId,
@@ -118,10 +119,15 @@ export async function POST(
       return new NextResponse("Size id is required", { status: 400 })
     }
 
+    if (!inventory) {
+      return new NextResponse("Inventory is required", { status: 400 })
+    }
+
     const product = await prisma.product.create({
       data: {
         name,
         price,
+        inventory,
         isFeatured,
         isArchived,
         categoryId,

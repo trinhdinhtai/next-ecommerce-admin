@@ -1,8 +1,9 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { ProductColumn } from "@/types/columns";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
-import DataTableRowActions from "@/components/ui/data-table-row-actions";
+import { ColumnDef } from "@tanstack/react-table"
+
+import { ProductColumn } from "@/types/columns"
+import { Checkbox } from "@/components/ui/checkbox"
+import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
+import DataTableRowActions from "@/components/ui/data-table-row-actions"
 
 export const productColumns: ColumnDef<ProductColumn>[] = [
   {
@@ -58,6 +59,10 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
     ),
   },
   {
+    accessorKey: "inventory",
+    header: "Inventory",
+  },
+  {
     accessorKey: "isArchived",
     header: "Archived",
     cell: ({ row }) => <Checkbox checked={row.original.isArchived} disabled />,
@@ -75,4 +80,4 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
     id: "actions",
     cell: ({ row }) => <DataTableRowActions row={row} entityName="products" />,
   },
-];
+]

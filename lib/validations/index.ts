@@ -15,20 +15,6 @@ export const billboardSchema = z.object({
   label: z.string().min(1),
 })
 
-export const productSchema = z.object({
-  name: z.string().min(1),
-  images: z
-    .object({ url: z.string() })
-    .array()
-    .nonempty("Please add at least one image or update the existing one"),
-  price: z.coerce.number().min(1),
-  categoryId: z.string().min(1),
-  colorId: z.string().min(1),
-  sizeId: z.string().min(1),
-  isFeatured: z.boolean().default(false).optional(),
-  isArchived: z.boolean().default(false).optional(),
-})
-
 export const colorSchema = z.object({
   name: z.string().min(2),
   value: z.string().min(4).max(9).regex(/^#/, {
@@ -39,4 +25,9 @@ export const colorSchema = z.object({
 export const sizeSchema = z.object({
   name: z.string().min(1),
   value: z.string().min(1),
+})
+
+export const cartItemSchema = z.object({
+  productId: z.number(),
+  quantity: z.number().min(0),
 })

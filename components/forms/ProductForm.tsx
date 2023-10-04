@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import * as z from "zod"
 
-import { productSchema } from "@/lib/validations"
+import { productSchema } from "@/lib/validations/product"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -66,6 +66,7 @@ const ProductForm = ({
         name: "",
         images: [],
         price: 0,
+        inventory: 0,
         categoryId: "",
         colorId: "",
         sizeId: "",
@@ -165,6 +166,25 @@ const ProductForm = ({
                       type="number"
                       disabled={isLoading}
                       placeholder="9.99"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="inventory"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Inventory</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      disabled={isLoading}
+                      placeholder="999"
                       {...field}
                     />
                   </FormControl>
