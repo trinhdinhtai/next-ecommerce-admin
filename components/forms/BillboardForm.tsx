@@ -1,16 +1,14 @@
 "use client"
 
-import { ChangeEvent, useState } from "react"
+import { useState } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { isBase64Image } from "@/helpers/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Billboard } from "@prisma/client"
 import axios from "axios"
 import { useForm } from "react-hook-form"
-import { toast } from "react-hot-toast"
+import { toast } from "sonner"
 import * as z from "zod"
 
-import { useUploadThing } from "@/lib/uploadthing"
 import { billboardSchema } from "@/lib/validations"
 import { Button } from "@/components/ui/button"
 import {

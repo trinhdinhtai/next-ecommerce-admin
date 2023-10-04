@@ -7,7 +7,7 @@ import "@uploadthing/react/styles.css"
 
 import Image from "next/image"
 import { Trash } from "lucide-react"
-import { toast } from "react-hot-toast"
+import { toast } from "sonner"
 import { UploadFileResponse } from "uploadthing/client"
 
 interface SingleImageUploadProps {

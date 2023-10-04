@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Billboard, Category } from "@prisma/client"
 import axios from "axios"
 import { useForm } from "react-hook-form"
-import { toast } from "react-hot-toast"
+import { toast } from "sonner"
 import * as z from "zod"
 
 import { categorySchema } from "@/lib/validations"

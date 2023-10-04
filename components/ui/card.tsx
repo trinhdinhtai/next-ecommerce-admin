@@ -4,8 +4,10 @@ import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> & {
+    as?: "div" | "section" | "article"
+  }
+>(({ className, as: Comp = "div", ...props }, ref) => (
   <div
     ref={ref}
     className={cn(

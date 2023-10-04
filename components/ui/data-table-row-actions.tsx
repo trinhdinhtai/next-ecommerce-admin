@@ -1,80 +1,81 @@
-"use client";
+"use client"
 
+import { useState } from "react"
+import { useParams, useRouter } from "next/navigation"
+import { EntityName } from "@/types"
+import { Row } from "@tanstack/react-table"
+import axios from "axios"
+import { Copy, Edit, FileDown, MoreHorizontal, Trash } from "lucide-react"
+import { toast } from "sonner"
+
+import { exportRowData } from "@/lib/excel"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Copy, Edit, FileDown, MoreHorizontal, Trash } from "lucide-react";
-import { toast } from "react-hot-toast";
-import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
-import axios from "axios";
-import ConfirmDeleteModal from "@/components/modals/ConfirmDeleteModal";
-import { EntityName } from "@/types";
-import { exportRowData } from "@/lib/excel";
-import { Row } from "@tanstack/react-table";
+} from "@/components/ui/dropdown-menu"
+import ConfirmDeleteModal from "@/components/modals/ConfirmDeleteModal"
 
 interface DataTableRowActionsProps<TData> {
-  row: Row<TData>;
-  entityName: EntityName;
+  row: Row<TData>
+  entityName: EntityName
 }
 
 export function DataTableRowActions<TData>({
   row,
   entityName,
 }: DataTableRowActionsProps<TData>) {
-  const router = useRouter();
-  const params = useParams();
+  const router = useRouter()
+  const params = useParams()
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const originalRow = row.original;
+  const originalRow = row.original
   const getColumnId = () => {
     if (
       typeof originalRow === "object" &&
       originalRow !== null &&
       "id" in originalRow
     ) {
-      return String(originalRow.id);
+      return String(originalRow.id)
     }
-    return undefined;
-  };
+    return undefined
+  }
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(getColumnId()!);
-    toast.success("Copied to clipboard.");
-  };
+    navigator.clipboard.writeText(getColumnId()!)
+    toast.success("Copied to clipboard.")
+  }
 
   const handleUpdate = () => {
-    router.push(`/${params.storeId}/${entityName}/${getColumnId()}`);
-  };
+    router.push(`/${params.storeId}/${entityName}/${getColumnId()}`)
+  }
 
   const handleDelete = async () => {
     toast.promise(onDeleting(), {
       loading: `Deleting ${entityName} ...`,
       success: "Deleted successfully",
       error: "Make sure you removed all products first",
-    });
-  };
+    })
+  }
   const onDeleting = async () => {
     try {
-      setIsLoading(true);
+      setIsLoading(true)
       await axios.delete(
         `/api/${params.storeId}/${entityName}/${getColumnId()}`
-      );
-      router.refresh();
+      )
+      router.refresh()
     } catch (error) {
-      throw error;
+      throw error
     } finally {
-      setIsOpen(false);
-      setIsLoading(false);
+      setIsOpen(false)
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <>
@@ -114,7 +115,7 @@ export function DataTableRowActions<TData>({
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  );
+  )
 }
 
-export default DataTableRowActions;
+export default DataTableRowActions
