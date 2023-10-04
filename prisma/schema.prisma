@@ -164,6 +164,19 @@ model UserSubscription {
   stripeCurrentPeriodEnd    DateTime? @map(name: "stripe_current_period_end")
 }
 
+model Cart {
+  id          String    @id @default(uuid())
+  cartItems   CartItem[] // Relation to CartItem model
+}
+
+model CartItem {
+  id          String    @id @default(uuid())
+  cartId      String    // Foreign Key to Order
+  cart        Cart     @relation(fields: [cartId], references: [id])
+
+  @@index([cartId])
+}
+
 enum PlanType {
   user
   system
