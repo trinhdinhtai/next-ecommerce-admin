@@ -1,12 +1,12 @@
-import { LucideIcon } from "lucide-react";
+import { LucideIcon } from "lucide-react"
 
 export type User = {
-  firstName: string | null;
-  lastName: string | null;
-  emailAddress: string;
-  imageUrl: string;
-  username: string | null;
-};
+  firstName: string | null
+  lastName: string | null
+  emailAddress: string
+  imageUrl: string
+  username: string | null
+}
 
 export type EntityName =
   | "categories"
@@ -16,15 +16,14 @@ export type EntityName =
   | "colors"
   | "orders"
   | "customers"
-  | "shipments"
   | "api-list"
-  | "settings";
+  | "settings"
 
 export type SidebarLink = {
-  icon: LucideIcon;
-  href: string;
-  label: string;
-  disable?: boolean;
-  entityName?: EntityName;
-  entityId?: string;
-};
+  icon: LucideIcon
+  href: string
+  label: string
+  disable?: boolean
+  entityName?: EntityName
+  entityId?: string
+}

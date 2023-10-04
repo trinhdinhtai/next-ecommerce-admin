@@ -1,24 +1,23 @@
-import { SidebarLink } from "@/types";
+import { SidebarLink } from "@/types"
 import {
   CheckCircledIcon,
   CrossCircledIcon,
   QuestionMarkCircledIcon,
   StopwatchIcon,
-} from "@radix-ui/react-icons";
+} from "@radix-ui/react-icons"
 import {
+  CircleIcon,
   Gauge,
   LayoutDashboard,
+  Minimize2,
+  Monitor,
+  Palette,
+  ScrollText,
+  Settings,
   ShoppingBasket,
   Users,
-  Truck,
   Zap,
-  Monitor,
-  ScrollText,
-  CircleIcon,
-  Settings,
-  Palette,
-  Minimize2,
-} from "lucide-react";
+} from "lucide-react"
 
 export const SidebarLinks: SidebarLink[] = [
   {
@@ -73,12 +72,6 @@ export const SidebarLinks: SidebarLink[] = [
     disable: true,
   },
   {
-    icon: Truck,
-    href: "shipments",
-    label: "Shipments",
-    disable: true,
-  },
-  {
     icon: Zap,
     href: "api-list",
     label: "APIs",
@@ -88,7 +81,7 @@ export const SidebarLinks: SidebarLink[] = [
     href: "settings",
     label: "Settings",
   },
-];
+]
 
 export const statuses = [
   {
@@ -116,4 +109,4 @@ export const statuses = [
     label: "Canceled",
     icon: CrossCircledIcon,
   },
-];
+]
