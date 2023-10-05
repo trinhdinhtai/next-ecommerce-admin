@@ -21,10 +21,9 @@ export default async function DashboardLayout({ children }: SetupLayoutProps) {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar user={user} />
-
-      <div className="grid flex-1 grid-cols-[280px_minmax(0,1fr)]">
+      <div className="grid flex-1 grid-cols-[68px_minmax(0,1fr)]">
         <aside className="sticky top-16 z-30 h-[calc(100vh-4rem)] w-full shrink-0 overflow-y-auto border-r">
-          <ScrollArea className="mt-8">
+          <ScrollArea className="mt-6">
             <SidebarNav items={dashboardConfig.sidebarNav} />
           </ScrollArea>
         </aside>

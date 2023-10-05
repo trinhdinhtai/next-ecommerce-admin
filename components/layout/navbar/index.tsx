@@ -9,7 +9,7 @@ interface NavbarProps {
 
 const Navbar = async ({ user }: NavbarProps) => {
   return (
-    <div className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b bg-background px-8">
+    <div className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b bg-background px-6">
       <Image alt="Logo" src="/logo.png" width={52} height={52} />
 
       <UserButton user={user} />
