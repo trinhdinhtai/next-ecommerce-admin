@@ -1,24 +1,25 @@
-"use client";
+"use client"
 
-import PageHeading from "@/components/PageHeading";
-import DataTable from "@/components/ui/data-table";
-import { ProductColumn } from "@/types/columns";
-import { productColumns } from "@/components/tables/columnDef/product";
+import { ProductColumn } from "@/types/columns"
+import DataTable from "@/components/ui/data-table"
+import { Shell } from "@/components/ui/shell"
+import PageHeading from "@/components/PageHeading"
+import { productColumns } from "@/components/tables/columnDef/product"
 
 interface ProductsTableProps {
-  data: ProductColumn[];
+  data: ProductColumn[]
 }
 
 const ProductsTable = ({ data }: ProductsTableProps) => {
   return (
-    <div>
+    <Shell>
       <PageHeading
         title="Products"
         description="Manage Products for your store"
       />
       <DataTable columns={productColumns} data={data} searchKey="name" />
-    </div>
-  );
-};
+    </Shell>
+  )
+}
 
-export default ProductsTable;
+export default ProductsTable

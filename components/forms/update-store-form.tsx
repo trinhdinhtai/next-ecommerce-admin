@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Store } from "@prisma/client"
@@ -31,6 +32,8 @@ interface UpdateStoreFormProps {
 const UpdateStoreForm = ({ store }: UpdateStoreFormProps) => {
   const router = useRouter()
 
+  const [isDeleting, setIsDeleting] = useState(false)
+
   const form = useForm<UpdateStoreFormInput>({
     resolver: zodResolver(storeSchema),
     defaultValues: {
@@ -51,6 +54,21 @@ const UpdateStoreForm = ({ store }: UpdateStoreFormProps) => {
       router.refresh()
     } catch (error) {
       throw error
+    }
+  }
+
+  const handleDeleteStore = async () => {
+    setIsDeleting(true)
+
+    try {
+      await axios.delete(`/api/${store.id}`)
+      toast.success("Store deleted successfully!")
+      router.refresh()
+      router.push("/dashboard/stores")
+    } catch (error) {
+      throw error
+    } finally {
+      setIsDeleting(false)
     }
   }
 
@@ -94,9 +112,20 @@ const UpdateStoreForm = ({ store }: UpdateStoreFormProps) => {
             )}
           />
 
-          <LoadingButton type="submit" isLoading={isSubmitting}>
-            Update
-          </LoadingButton>
+          <div className="flex gap-2">
+            <LoadingButton type="submit" isLoading={isSubmitting}>
+              Update store
+            </LoadingButton>
+
+            <LoadingButton
+              type="submit"
+              variant="destructive"
+              isLoading={isDeleting}
+              onClick={handleDeleteStore}
+            >
+              Delete store
+            </LoadingButton>
+          </div>
         </form>
       </Form>
     </>

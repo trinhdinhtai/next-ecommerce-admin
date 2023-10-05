@@ -1,4 +1,20 @@
-import { CreditCard, DollarSign, Rocket, Store, User } from "lucide-react"
+import {
+  CreditCard,
+  DollarSign,
+  Gauge,
+  LayoutDashboard,
+  Minimize2,
+  Monitor,
+  Palette,
+  Rocket,
+  ScrollText,
+  Settings,
+  ShoppingBasket,
+  Store,
+  User,
+  Users,
+  Zap,
+} from "lucide-react"
 
 export const Icons = {
   store: Store,
@@ -6,4 +22,14 @@ export const Icons = {
   user: User,
   dollarSign: DollarSign,
   rocket: Rocket,
+  gauge: Gauge,
+  layoutDashboard: LayoutDashboard,
+  monitor: Monitor,
+  shoppingBasket: ShoppingBasket,
+  minimize2: Minimize2,
+  palette: Palette,
+  scrollText: ScrollText,
+  users: Users,
+  zap: Zap,
+  settings: Settings,
 }

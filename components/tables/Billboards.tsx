@@ -1,24 +1,25 @@
-"use client";
+"use client"
 
-import PageHeading from "@/components/PageHeading";
-import DataTable from "@/components/ui/data-table";
-import { BillboardColumn } from "@/types/columns";
-import { billboardColumns } from "@/components/tables/columnDef/billboard";
+import { BillboardColumn } from "@/types/columns"
+import DataTable from "@/components/ui/data-table"
+import { Shell } from "@/components/ui/shell"
+import PageHeading from "@/components/PageHeading"
+import { billboardColumns } from "@/components/tables/columnDef/billboard"
 
 interface CategoriesContentProps {
-  data: BillboardColumn[];
+  data: BillboardColumn[]
 }
 
 const BillboardsTable = ({ data }: CategoriesContentProps) => {
   return (
-    <div>
+    <Shell>
       <PageHeading
         title="Billboards"
         description="Manage billboards for your store"
       />
       <DataTable columns={billboardColumns} data={data} searchKey="label" />
-    </div>
-  );
-};
+    </Shell>
+  )
+}
 
-export default BillboardsTable;
+export default BillboardsTable

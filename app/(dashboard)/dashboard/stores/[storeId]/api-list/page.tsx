@@ -1,24 +1,25 @@
-"use client";
+"use client"
 
-import ApiList from "@/components/ApiList";
-import PageHeading from "@/components/PageHeading";
+import { StoreSidebarLinks } from "@/config/store-sidebar-links"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { SidebarLinks } from "@/constants";
+} from "@/components/ui/accordion"
+import { Shell } from "@/components/ui/shell"
+import ApiList from "@/components/ApiList"
+import PageHeading from "@/components/PageHeading"
 
 const APIListPage = () => {
   return (
-    <>
+    <Shell>
       <PageHeading
         title="APIs"
         description="Manage API Endpoint for your store"
       />
 
-      {SidebarLinks.map(
+      {StoreSidebarLinks.map(
         (link) =>
           link.entityName &&
           link.entityId && (
@@ -40,8 +41,8 @@ const APIListPage = () => {
             </Accordion>
           )
       )}
-    </>
-  );
-};
+    </Shell>
+  )
+}
 
-export default APIListPage;
+export default APIListPage

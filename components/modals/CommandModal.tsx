@@ -1,8 +1,14 @@
-"use client";
+"use client"
 
-import Modal from "@/components/ui/modal";
-import { useCommandModal } from "@/hooks/useCommandModal";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react"
+import { useParams, useRouter } from "next/navigation"
+import { Laptop, Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
+
+import { StoreSidebarLinks } from "@/config/store-sidebar-links"
+import { useCommandModal } from "@/hooks/useCommandModal"
+import Modal from "@/components/ui/modal"
+
 import {
   CommandDialog,
   CommandEmpty,
@@ -11,47 +17,43 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "../ui/command";
-import { SidebarLinks } from "@/constants";
-import { useParams, useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
-import { Laptop, Moon, Sun } from "lucide-react";
+} from "../ui/command"
 
 const CommandModal = () => {
-  const router = useRouter();
-  const params = useParams();
-  const { setTheme } = useTheme();
-  const { isOpen, onOpen, onClose } = useCommandModal();
+  const router = useRouter()
+  const params = useParams()
+  const { setTheme } = useTheme()
+  const { isOpen, onOpen, onClose } = useCommandModal()
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault();
-        onOpen();
+        event.preventDefault()
+        onOpen()
       }
-    };
+    }
 
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [onOpen]);
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [onOpen])
 
   const onChange = (open: boolean) => {
     if (!open) {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   const runCommand = useCallback(
     (command: () => void) => {
-      onClose();
-      command();
+      onClose()
+      command()
     },
     [onClose]
-  );
+  )
 
   const onNavigate = (href: string) => {
-    router.push(`/${params.storeId}/${href}`);
-  };
+    router.push(`/${params.storeId}/${href}`)
+  }
 
   return (
     <CommandDialog open={isOpen} onOpenChange={onChange}>
@@ -59,7 +61,7 @@ const CommandModal = () => {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Links">
-          {SidebarLinks.map((link) => (
+          {StoreSidebarLinks.map((link) => (
             <CommandItem
               key={link.label.trim()}
               onSelect={() => runCommand(() => onNavigate(link.href))}
@@ -87,7 +89,7 @@ const CommandModal = () => {
         </CommandGroup>
       </CommandList>
     </CommandDialog>
-  );
-};
+  )
+}
 
-export default CommandModal;
+export default CommandModal

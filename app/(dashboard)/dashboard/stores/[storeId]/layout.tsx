@@ -17,6 +17,7 @@ export default async function StoreIdLayout({
   params,
 }: StoreIdLayoutProps) {
   const { userId } = auth()
+  const { storeId } = params
 
   if (!userId) {
     redirect("/sign-in")
@@ -32,7 +33,7 @@ export default async function StoreIdLayout({
     },
   })
 
-  const store = stores.find((store) => store.id === params.storeId)
+  const store = stores.find((store) => store.id === storeId)
 
   if (!store) {
     notFound()
@@ -44,7 +45,7 @@ export default async function StoreIdLayout({
         <StoreSidebar stores={stores} currentStore={store} />
       </div>
 
-      <div className="flex-1 p-6">{children}</div>
+      <div className="flex-1">{children}</div>
     </div>
   )
 }

@@ -10,6 +10,7 @@ import { format } from "date-fns"
 
 import { OrderColumn } from "@/types/columns"
 import DateRangePicker from "@/components/ui/date-range-picker"
+import { Shell } from "@/components/ui/shell"
 import DashboardTabs from "@/components/DashboardTabs"
 
 interface DashboardPageProps {
@@ -51,7 +52,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
   }))
 
   return (
-    <div className="space-y-4">
+    <Shell>
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
         <DateRangePicker />
@@ -63,6 +64,6 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
         graphRevenue={graphRevenue}
         recentOrders={recentOrders}
       />
-    </div>
+    </Shell>
   )
 }

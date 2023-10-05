@@ -1,21 +1,23 @@
-"use client";
+"use client"
 
-import PageHeading from "@/components/PageHeading";
-import DataTable from "@/components/ui/data-table";
-import { OrderColumn } from "@/types/columns";
-import { orderColumns } from "./columnDef/order";
+import { OrderColumn } from "@/types/columns"
+import DataTable from "@/components/ui/data-table"
+import { Shell } from "@/components/ui/shell"
+import PageHeading from "@/components/PageHeading"
+
+import { orderColumns } from "./columnDef/order"
 
 interface OrderTableProps {
-  data: OrderColumn[];
+  data: OrderColumn[]
 }
 
 const OrdersTable = ({ data }: OrderTableProps) => {
   return (
-    <div>
+    <Shell>
       <PageHeading title="Orders" description="Manage orders for your store" />
       <DataTable columns={orderColumns} data={data} searchKey="products" />
-    </div>
-  );
-};
+    </Shell>
+  )
+}
 
-export default OrdersTable;
+export default OrdersTable

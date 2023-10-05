@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Shell } from "@/components/ui/shell"
 import UpdateStoreForm from "@/components/forms/update-store-form"
 import PageHeading from "@/components/PageHeading"
 
@@ -25,7 +26,7 @@ const SettingsPage = async ({ params }: SettingsPageProps) => {
   if (!store) return null
 
   return (
-    <div>
+    <Shell>
       <PageHeading title="Settings" description="Manage store preferences" />
 
       <Card
@@ -44,7 +45,7 @@ const SettingsPage = async ({ params }: SettingsPageProps) => {
           <UpdateStoreForm store={store} />
         </CardContent>
       </Card>
-    </div>
+    </Shell>
   )
 }
 

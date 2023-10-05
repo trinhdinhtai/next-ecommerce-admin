@@ -8,9 +8,8 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { createStoreSchema } from "@/lib/validations"
+import { storeSchema } from "@/lib/validations/store"
 import { useCreateStoreModal } from "@/hooks/use-create-store"
-import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -20,8 +19,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import LoadingButton from "@/components/ui/loading-button"
+import { Textarea } from "@/components/ui/textarea"
 
-type CreateStoreFormInput = z.infer<typeof createStoreSchema>
+type CreateStoreFormInput = z.infer<typeof storeSchema>
 
 const CreateStoreForm = () => {
   const router = useRouter()
@@ -36,18 +37,20 @@ const CreateStoreForm = () => {
   const { setIsFirstCreate } = useCreateStoreModal()
 
   const form = useForm<CreateStoreFormInput>({
-    resolver: zodResolver(createStoreSchema),
+    resolver: zodResolver(storeSchema),
     defaultValues: {
       name: "",
+      description: "",
     },
   })
 
   const onCreateStore = async (values: CreateStoreFormInput) => {
     createStore(values, {
       onSuccess: (data) => {
-        router.push(`/${data.store.id}`)
         toast.success("Store created successfully!")
         onClose()
+        router.refresh()
+        router.push(`/dashboard/stores/${data.store.id}`)
         setIsFirstCreate(data.isFirstStore)
       },
       onError: (error) => {
@@ -73,9 +76,28 @@ const CreateStoreForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading}>
-          Create
-        </Button>
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  disabled={isLoading}
+                  placeholder="Type store description here."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <LoadingButton type="submit" isLoading={isLoading}>
+          Create store
+        </LoadingButton>
       </form>
     </Form>
   )

@@ -1,4 +1,4 @@
-import Links from "@/components/layout/sidebar/Links"
+import StoreSidebarLinks from "@/components/layout/sidebar/store-sidebar-links"
 import StoreSwitcher, { Store } from "@/components/StoreSwitcher"
 
 interface StoreProps {
@@ -12,7 +12,7 @@ export default function StoreSidebar({ stores, currentStore }: StoreProps) {
       <div className="flex justify-center">
         <StoreSwitcher stores={stores} currentStore={currentStore} />
       </div>
-      <Links />
+      <StoreSidebarLinks storeId={currentStore.id} />
     </nav>
   )
 }

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs"
 
 import { prisma } from "@/lib/prismadb"
+import { storeSchema } from "@/lib/validations/store"
 
 export async function GET(_: Request) {
   try {
@@ -33,7 +34,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json()
-    const { name } = body
+    const { name, description } = storeSchema.parse(body)
 
     if (!name) {
       return new NextResponse("Name is required", { status: 400 })
@@ -42,6 +43,7 @@ export async function POST(req: Request) {
     const store = await prisma.store.create({
       data: {
         name,
+        description,
         userId,
       },
     })
