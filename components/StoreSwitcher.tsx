@@ -1,17 +1,14 @@
-"use client";
+"use client"
 
-import { Store } from "@prisma/client";
-import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CheckIcon, ChevronsUpDown, PlusCircle } from "lucide-react";
+import { useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { getAvatarFallback } from "@/helpers/utils"
+import { CheckIcon, ChevronsUpDown, PlusCircle } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { useCreateStoreModal } from "@/hooks/use-create-store"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandEmpty,
@@ -20,44 +17,49 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/components/ui/command";
-import { getAvatarFallback } from "@/helpers/utils";
-import { useCreateStoreModal } from "@/hooks/use-create-store";
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
+export type Store = {
+  id: string
+  name: string
+}
 
 interface StoreSwitcherProps {
-  stores: Store[];
+  currentStore: Store
+  stores: Store[]
 }
 
 type FormattedStore = {
-  label: string;
-  value: string;
-};
+  label: string
+  value: string
+}
 
-const StoreSwitcher = ({ stores }: StoreSwitcherProps) => {
-  const params = useParams();
-  const router = useRouter();
+const StoreSwitcher = ({ stores, currentStore }: StoreSwitcherProps) => {
+  const router = useRouter()
+  const pathname = usePathname()
 
-  const [open, setOpen] = useState(false);
-  const { onOpen } = useCreateStoreModal();
+  const [open, setOpen] = useState(false)
+  const { onOpen } = useCreateStoreModal()
 
   const formattedStores: FormattedStore[] = stores.map((store) => ({
     label: store.name,
     value: store.id,
-  }));
-
-  const currentStore = formattedStores.find(
-    (store) => store.value === params.storeId
-  );
+  }))
 
   const handleStoreChange = (store: FormattedStore) => {
-    setOpen(false);
-    router.push(`/${store.value}`);
-  };
+    setOpen(false)
+    router.push(pathname.replace(currentStore.id, store.value))
+  }
 
   const handleOpenCreateStoreModal = () => {
-    setOpen(false);
-    onOpen();
-  };
+    setOpen(false)
+    onOpen()
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -72,13 +74,13 @@ const StoreSwitcher = ({ stores }: StoreSwitcherProps) => {
           <Avatar className="mr-2 h-7 w-7">
             <AvatarImage
               src={`https://avatar.vercel.sh/1.png`}
-              alt={currentStore?.label}
+              alt={currentStore.name}
             />
             <AvatarFallback>
-              {getAvatarFallback(currentStore?.label)}
+              {getAvatarFallback(currentStore.name)}
             </AvatarFallback>
           </Avatar>
-          {currentStore?.label}
+          {currentStore.name}
           <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -108,7 +110,7 @@ const StoreSwitcher = ({ stores }: StoreSwitcherProps) => {
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
-                      currentStore?.value === store.value
+                      currentStore.id === store.value
                         ? "opacity-100"
                         : "opacity-0"
                     )}
@@ -129,7 +131,7 @@ const StoreSwitcher = ({ stores }: StoreSwitcherProps) => {
         </Command>
       </PopoverContent>
     </Popover>
-  );
-};
+  )
+}
 
-export default StoreSwitcher;
+export default StoreSwitcher
