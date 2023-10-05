@@ -1,3 +1,5 @@
+import "./env.mjs"
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -5,8 +7,11 @@ const nextConfig = {
       {
         hostname: "uploadthing.com",
       },
+      {
+        hostname: "utfs.io",
+      },
     ],
   },
-};
+}
 
-module.exports = nextConfig;
+export default nextConfig

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { getStoresAction } from "@/_actions/store"
 import { auth } from "@clerk/nextjs"
 
+import { env } from "@/env.mjs"
 import { cn } from "@/lib/utils"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { buttonVariants } from "@/components/ui/button"
@@ -13,6 +14,7 @@ import { Icons } from "@/components/icons"
 import PageHeading from "@/components/PageHeading"
 
 export const metadata: Metadata = {
+  metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
   title: "Stores",
   description: "Manage your stores",
 }
@@ -28,7 +30,7 @@ export default async function StoresPage() {
     <Shell>
       <div className="flex space-x-4">
         <div className="flex-1">
-          <PageHeading title="Stores" description="Manage store preferences" />
+          <PageHeading title="Stores" description="Manage your stores" />
         </div>
 
         <Link
