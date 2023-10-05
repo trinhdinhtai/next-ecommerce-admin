@@ -1,7 +1,7 @@
-import { getCategoriesByStoreId } from "@/actions/categories"
-import { getColorsByStoreId } from "@/actions/colors"
-import { getProductById } from "@/actions/products"
-import { getSizesByStoreId } from "@/actions/sizes"
+import { getCategoriesByStoreId } from "@/_actions/categories"
+import { getColorsByStoreId } from "@/_actions/colors"
+import { getProductById } from "@/_actions/products"
+import { getSizesByStoreId } from "@/_actions/sizes"
 
 import ProductForm from "@/components/forms/product-form"
 import PageHeading from "@/components/PageHeading"

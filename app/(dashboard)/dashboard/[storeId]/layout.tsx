@@ -1,8 +1,7 @@
 import { ReactNode } from "react"
 import { redirect } from "next/navigation"
-import { auth } from "@clerk/nextjs"
+import { currentUser } from "@clerk/nextjs"
 
-import { prisma } from "@/lib/prismadb"
 import Navbar from "@/components/layout/navbar"
 import Sidebar from "@/components/layout/sidebar"
 
@@ -15,25 +14,12 @@ interface DashboardLayoutProps {
 
 export default async function DashboardLayout({
   children,
-  params,
 }: DashboardLayoutProps) {
-  const { userId } = auth()
+  const user = await currentUser()
 
-  if (!userId) {
+  if (!user) {
     redirect("/sign-in")
   }
-
-  const store = await prisma.store.findFirst({
-    where: {
-      id: params.storeId,
-      userId,
-    },
-  })
-
-  if (!store) {
-    redirect("/")
-  }
-
   return (
     <div className="flex">
       <div className="fixed inset-y-0 z-50 h-20 w-full">

@@ -1,23 +1,24 @@
-import { getBillboardsByStoreId } from "@/actions/billboards";
-import { getCategoryById } from "@/actions/categories";
-import PageHeading from "@/components/PageHeading";
-import CategoryForm from "@/components/forms/CategoryForm";
+import { getBillboardsByStoreId } from "@/_actions/billboards"
+import { getCategoryById } from "@/_actions/categories"
+
+import CategoryForm from "@/components/forms/CategoryForm"
+import PageHeading from "@/components/PageHeading"
 
 interface CategoryIdPageProps {
   params: {
-    storeId: string;
-    categoryId: string;
-  };
+    storeId: string
+    categoryId: string
+  }
 }
 
 const CategoryIdPage = async ({ params }: CategoryIdPageProps) => {
   const response = await Promise.all([
     getCategoryById(params.categoryId),
     getBillboardsByStoreId(params.storeId),
-  ]);
+  ])
 
-  const category = response[0];
-  const billboards = response[1];
+  const category = response[0]
+  const billboards = response[1]
 
   return (
     <>
@@ -27,7 +28,7 @@ const CategoryIdPage = async ({ params }: CategoryIdPageProps) => {
       />
       <CategoryForm category={category} billboards={billboards} />
     </>
-  );
-};
+  )
+}
 
-export default CategoryIdPage;
+export default CategoryIdPage

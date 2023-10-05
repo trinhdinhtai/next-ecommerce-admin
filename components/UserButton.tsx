@@ -1,8 +1,8 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { User } from "@/types"
 import { useClerk } from "@clerk/nextjs"
+import { User } from "@clerk/nextjs/server"
 import { ChevronDown, ExternalLink } from "lucide-react"
 
 import { useCommandModal } from "@/hooks/useCommandModal"
@@ -42,17 +42,17 @@ const UserButton = ({ user }: UserProps) => {
           variant="outline"
           role="combobox"
           aria-label="User button"
-          className="h-16 w-64 justify-between border-none bg-transparent text-base"
+          className="h-12 w-64 justify-between border-none bg-transparent text-base"
         >
           <div className="flex items-center gap-2">
-            <Avatar className="mr-2 h-10 w-10">
+            <Avatar className="mr-2 h-9 w-9">
               <AvatarImage src={user?.imageUrl} alt="User Avatar" />
             </Avatar>
 
-            <div className="flex flex-col gap-1 text-left text-sm">
+            <div className="flex flex-col text-left text-sm">
               <span>{displayName}</span>
               <span className="text-xs text-muted-foreground">
-                {user.emailAddress}
+                {user.emailAddresses[0].emailAddress}
               </span>
             </div>
           </div>
@@ -62,22 +62,7 @@ const UserButton = ({ user }: UserProps) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-64">
-        <DropdownMenuLabel>
-          <div className="flex items-center gap-2">
-            <Avatar className="mr-2 h-10 w-10">
-              <AvatarImage src={user?.imageUrl} alt="User Avatar" />
-            </Avatar>
-
-            <div className="flex flex-col gap-1 text-left text-sm">
-              <span>{displayName}</span>
-              <span className="text-xs text-muted-foreground">
-                {user.emailAddress}
-              </span>
-            </div>
-          </div>
-        </DropdownMenuLabel>
-
-        <DropdownMenuGroup className="mt-4 space-y-3">
+        <DropdownMenuGroup className="mt-2 space-y-3">
           <DropdownMenuItem onClick={() => router.push("/")}>
             Dashboard
           </DropdownMenuItem>

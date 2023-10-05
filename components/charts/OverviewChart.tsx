@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { GraphData } from "@/actions/graph";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { GraphData } from "@/_actions/graph"
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 
 interface OverviewChartProps {
-  data: GraphData[];
+  data: GraphData[]
 }
 
 export function OverviewChart({ data }: OverviewChartProps) {
@@ -28,5 +28,5 @@ export function OverviewChart({ data }: OverviewChartProps) {
         <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
-  );
+  )
 }

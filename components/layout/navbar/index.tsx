@@ -1,31 +1,18 @@
 import Image from "next/image"
-import { redirect } from "next/navigation"
-import { User } from "@/types"
-import { auth, currentUser } from "@clerk/nextjs"
+import { User } from "@clerk/nextjs/server"
 
 import UserButton from "@/components/UserButton"
 
-const Navbar = async () => {
-  const user = await currentUser()
-  const { userId } = auth()
+interface NavbarProps {
+  user: User
+}
 
-  if (!user || !userId) {
-    redirect("/sign-in")
-  }
-
-  const formattedUser: User = {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    imageUrl: user.imageUrl,
-    emailAddress: user.emailAddresses[0].emailAddress,
-    username: user.username,
-  }
-
+const Navbar = async ({ user }: NavbarProps) => {
   return (
-    <div className="flex h-full items-center justify-between border-b bg-background px-8 py-4">
+    <div className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b bg-background px-8">
       <Image alt="Logo" src="/logo.png" width={52} height={52} />
 
-      <UserButton user={formattedUser} />
+      <UserButton user={user} />
     </div>
   )
 }

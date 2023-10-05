@@ -1,25 +1,27 @@
-"use client";
+"use client"
 
-import { CreditCard, DollarSign, Package } from "lucide-react";
-import RecentOrders from "./RecentOrders";
-import { OverviewChart } from "./charts/OverviewChart";
+import { GraphData } from "@/_actions/graph"
+import { CreditCard, DollarSign, Package } from "lucide-react"
+
+import { OrderColumn } from "@/types/columns"
+
+import { OverviewChart } from "./charts/OverviewChart"
+import RecentOrders from "./RecentOrders"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { GraphData } from "@/actions/graph";
-import { OrderColumn } from "@/types/columns";
+} from "./ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
 interface DashboardTabsProps {
-  totalRevenue: number;
-  salesCount: number;
-  stockCount: number;
-  graphRevenue: GraphData[];
-  recentOrders: OrderColumn[];
+  totalRevenue: number
+  salesCount: number
+  stockCount: number
+  graphRevenue: GraphData[]
+  recentOrders: OrderColumn[]
 }
 
 const DashboardTabs = ({
@@ -107,7 +109,7 @@ const DashboardTabs = ({
         </div>
       </TabsContent>
     </Tabs>
-  );
-};
+  )
+}
 
-export default DashboardTabs;
+export default DashboardTabs
