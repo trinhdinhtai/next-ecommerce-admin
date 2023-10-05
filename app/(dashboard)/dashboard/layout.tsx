@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import { redirect } from "next/navigation"
+import { User } from "@/types"
 import { currentUser } from "@clerk/nextjs"
 
 import { dashboardConfig } from "@/config/dashboard"
@@ -18,9 +19,17 @@ export default async function DashboardLayout({ children }: SetupLayoutProps) {
     redirect("/sign-in")
   }
 
+  const formattedUser: User = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    emailAddress: user.emailAddresses[0].emailAddress,
+    username: user.username,
+    imageUrl: user.imageUrl,
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar user={user} />
+      <Navbar user={formattedUser} />
       <div className="grid flex-1 grid-cols-[68px_minmax(0,1fr)]">
         <aside className="sticky top-16 z-30 h-[calc(100vh-4rem)] w-full shrink-0 overflow-y-auto border-r">
           <ScrollArea className="mt-6">

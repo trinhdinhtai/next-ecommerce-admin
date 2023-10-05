@@ -32,7 +32,7 @@ export default async function StoresPage() {
         </div>
 
         <Link
-          href="/dashboard/stores/create"
+          href="/dashboard/stores/new"
           className={cn(buttonVariants({ size: "sm" }))}
         >
           Create store
@@ -49,7 +49,7 @@ export default async function StoresPage() {
         </AlertDescription>
       </Alert>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {allStores.map((store) => (
           <StoreCard
             key={store.id}

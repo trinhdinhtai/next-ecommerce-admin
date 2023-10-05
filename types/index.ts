@@ -39,7 +39,7 @@ export type SidebarLink = {
 }
 
 export type CuratedStore = {
-  id: string
-  name: string
-  description: string
+  id: Store["id"]
+  name: Store["name"]
+  description: Store["description"]
 }

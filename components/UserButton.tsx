@@ -1,8 +1,8 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { User } from "@/types"
 import { useClerk } from "@clerk/nextjs"
-import { User } from "@clerk/nextjs/server"
 import { ChevronDown, ExternalLink } from "lucide-react"
 
 import { useCommandModal } from "@/hooks/useCommandModal"
@@ -52,7 +52,7 @@ const UserButton = ({ user }: UserProps) => {
             <div className="flex flex-col text-left text-sm">
               <span>{displayName}</span>
               <span className="text-xs text-muted-foreground">
-                {user.emailAddresses[0].emailAddress}
+                {user.emailAddress}
               </span>
             </div>
           </div>
