@@ -1,12 +1,15 @@
+import { Cross2Icon } from "@radix-ui/react-icons"
 import {
   Check,
   CreditCard,
+  Crop,
   Gauge,
   LayoutDashboard,
   Minimize2,
   Monitor,
   Palette,
   Rocket,
+  RotateCcw,
   ScrollText,
   Settings,
   ShoppingBasket,
@@ -36,4 +39,7 @@ export const Icons = {
   check: Check,
   upload: Upload,
   trash: Trash,
+  crop: Crop,
+  reset: RotateCcw,
+  cross2: Cross2Icon,
 }

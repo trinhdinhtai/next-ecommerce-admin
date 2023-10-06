@@ -1,7 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
+import Image from "next/image"
 import { useParams, useRouter } from "next/navigation"
+import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Category, Color, Product, Size } from "@prisma/client"
 import axios from "axios"
@@ -9,8 +11,8 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { useUploadThing } from "@/lib/uploadthing"
 import { productSchema } from "@/lib/validations/product"
-import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
@@ -29,7 +31,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import MultiImageUpload from "@/components/upload/multi-image-upload"
+import ImageUploadDialog from "@/components/image-upload-dialog"
+import { ZoomImage } from "@/components/zoom-image"
 
 import LoadingButton from "../ui/loading-button"
 
@@ -53,6 +56,11 @@ const ProductForm = ({
 
   const toastMessage = product ? "Product updated." : "Product created."
   const action = product ? "Save changes" : "Create"
+
+  const [files, setFiles] = useState<FileWithPreview[] | null>(null)
+  console.log("file: product-form.tsx:61 ~ files:", files)
+  const [isPending, startTransition] = useTransition()
+  const { isUploading, startUpload } = useUploadThing("imageUploader")
 
   const defaultValues = product
     ? {
@@ -102,29 +110,36 @@ const ProductForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={control}
-          name="images"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FormControl>
-                <MultiImageUpload
-                  value={field.value.map((image) => image.url)}
-                  onChange={(newValue) =>
-                    field.onChange([...field.value, ...newValue])
-                  }
-                  onRemove={(url) =>
-                    field.onChange([
-                      ...field.value.filter((current) => current.url !== url),
-                    ])
-                  }
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <FormItem className="flex w-full flex-col gap-1.5">
+          <FormLabel>Images</FormLabel>
+          {files?.length ? (
+            <div className="flex items-center gap-2">
+              {files.map((file) => (
+                <ZoomImage key={file.name}>
+                  <Image
+                    src={file.preview}
+                    alt={file.name}
+                    className="h-20 w-20 shrink-0 rounded-md object-cover object-center"
+                    width={80}
+                    height={80}
+                  />
+                </ZoomImage>
+              ))}
+            </div>
+          ) : null}
+          <FormControl>
+            <ImageUploadDialog
+              setValue={form.setValue}
+              name="images"
+              maxFiles={4}
+              maxSize={1024 * 1024 * 4}
+              files={files}
+              setFiles={setFiles}
+              isUploading={isUploading}
+              disabled={isPending}
+            />
+          </FormControl>
+        </FormItem>
 
         <div className="gap-8 md:grid md:grid-cols-2">
           <FormField

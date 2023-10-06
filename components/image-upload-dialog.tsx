@@ -176,7 +176,7 @@ export default function ImageUploadDialog<TFieldValues extends FieldValues>({
             <div className="grid gap-5">
               {files?.map((file, index) => (
                 <ImageUploadCard
-                  key={index}
+                  key={file.path}
                   index={index}
                   files={files}
                   setFiles={setFiles}
