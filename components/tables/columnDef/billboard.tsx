@@ -1,9 +1,11 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { BillboardColumn } from "@/types/columns";
-import { ArrowUpDown } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
-import Image from "next/image";
-import DataTableRowActions from "@/components/ui/data-table-row-actions";
+import Image from "next/image"
+import { ColumnDef } from "@tanstack/react-table"
+import { ArrowUpDown } from "lucide-react"
+
+import { BillboardColumn } from "@/types/columns"
+import { Checkbox } from "@/components/ui/checkbox"
+import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
+import DataTableRowActions from "@/components/ui/data-table-row-actions"
 
 export const billboardColumns: ColumnDef<BillboardColumn>[] = [
   {
@@ -27,37 +29,31 @@ export const billboardColumns: ColumnDef<BillboardColumn>[] = [
   },
   {
     accessorKey: "label",
-    header: ({ column }) => {
-      return (
-        <div
-          className="flex items-center gap-1 cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Label
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Label" />
+    ),
   },
   {
     accessorKey: "imageUrl",
     header: "Image",
     cell: ({ row }) => {
       return (
-        <div className="w-36 aspect-[21/9] rounded-lg relative">
+        <div className="relative aspect-[21/9] w-36 rounded-lg">
           <Image
             fill
             src={row.original.imageUrl}
-            className="object-cover rounded-lg"
+            className="rounded-lg object-cover"
             alt="Billboard Image"
           />
         </div>
-      );
+      )
     },
   },
   {
     accessorKey: "createdAt",
-    header: "Date",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Created At" />
+    ),
   },
   {
     id: "actions",
@@ -65,4 +61,4 @@ export const billboardColumns: ColumnDef<BillboardColumn>[] = [
       <DataTableRowActions row={row} entityName="billboards" />
     ),
   },
-];
+]
