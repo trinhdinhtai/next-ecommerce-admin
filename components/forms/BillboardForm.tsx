@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { useParams, useRouter } from "next/navigation"
+import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Billboard } from "@prisma/client"
 import axios from "axios"
@@ -9,6 +10,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { useUploadThing } from "@/lib/uploadthing"
 import { billboardSchema } from "@/lib/validations"
 import { Button } from "@/components/ui/button"
 import {
@@ -20,8 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-import SingleImageUpload from "../upload/single-image-upload"
+import ImageUploadDialog from "@/components/image-upload-dialog"
 
 type BillboardFormInput = z.infer<typeof billboardSchema>
 
@@ -33,6 +34,11 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
   const params = useParams()
   const router = useRouter()
 
+  const { isUploading, startUpload } = useUploadThing("imageUploader")
+
+  const [isPending, startTransition] = useTransition()
+
+  const [files, setFiles] = useState<FileWithPreview[] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   const loadingMessage = billboard
@@ -48,6 +54,8 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
       imageUrl: "",
     },
   })
+
+  const { control, setValue } = form
 
   const onSubmit = async (values: BillboardFormInput) => {
     toast.promise(onCreateBillboard(values), {
@@ -82,26 +90,25 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="imageUrl"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Image</FormLabel>
-                <FormControl>
-                  <SingleImageUpload
-                    value={field.value}
-                    onChange={(newValue) => field.onChange(newValue)}
-                    onRemove={(newValue) => field.onChange(newValue)}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <FormItem className="flex w-full flex-col gap-2">
+            <FormLabel>Image</FormLabel>
+            <FormControl>
+              <ImageUploadDialog
+                setValue={setValue}
+                name="imageUrl"
+                maxFiles={3}
+                maxSize={1024 * 1024 * 4}
+                files={files}
+                setFiles={setFiles}
+                isUploading={isUploading}
+                disabled={isPending}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
 
           <FormField
-            control={form.control}
+            control={control}
             name="label"
             render={({ field }) => (
               <FormItem>

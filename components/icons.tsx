@@ -11,6 +11,8 @@ import {
   Settings,
   ShoppingBasket,
   Store,
+  Trash,
+  Upload,
   User,
   Users,
   Zap,
@@ -32,4 +34,6 @@ export const Icons = {
   zap: Zap,
   settings: Settings,
   check: Check,
+  upload: Upload,
+  trash: Trash,
 }

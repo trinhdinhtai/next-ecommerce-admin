@@ -1,5 +1,6 @@
 import { Store } from "@prisma/client"
 import { LucideIcon } from "lucide-react"
+import { FileWithPath } from "react-dropzone"
 
 import { Icons } from "@/components/icons"
 
@@ -50,4 +51,8 @@ export interface SubscriptionPlan {
   description: string
   features: string[]
   price: number
+}
+
+export type FileWithPreview = FileWithPath & {
+  preview: string
 }
