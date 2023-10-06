@@ -167,9 +167,11 @@ export default function ImageUploadDialog<TFieldValues extends FieldValues>({
           {getContent()}
         </div>
 
-        <p className="text-center text-sm font-medium text-muted-foreground">
-          You can upload up to {maxFiles} {maxFiles === 1 ? "file" : "files"}
-        </p>
+        {maxFiles > 1 && (
+          <p className="text-center text-sm font-medium text-muted-foreground">
+            You can upload up to {maxFiles} files
+          </p>
+        )}
 
         {files?.length ? (
           <>
@@ -185,17 +187,19 @@ export default function ImageUploadDialog<TFieldValues extends FieldValues>({
               ))}
             </div>
 
-            <Button
-              type="button"
-              variant="destructive"
-              size="sm"
-              className="mt-2.5 w-full"
-              onClick={() => setFiles(null)}
-            >
-              <Icons.trash className="mr-2 h-4 w-4" aria-hidden="true" />
-              Remove All
-              <span className="sr-only">Remove all</span>
-            </Button>
+            {maxFiles > 1 && (
+              <Button
+                type="button"
+                variant="destructive"
+                size="sm"
+                className="mt-2.5 w-full"
+                onClick={() => setFiles(null)}
+              >
+                <Icons.trash className="mr-2 h-4 w-4" aria-hidden="true" />
+                Remove All
+                <span className="sr-only">Remove all</span>
+              </Button>
+            )}
           </>
         ) : null}
       </DialogContent>

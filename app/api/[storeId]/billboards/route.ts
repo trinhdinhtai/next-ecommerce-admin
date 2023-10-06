@@ -33,14 +33,14 @@ export async function POST(
     }
 
     const body = await req.json()
-    const { label, imageUrl } = body
+    const { label, images } = body
 
     if (!label) {
       return new NextResponse("Label is required", { status: 400 })
     }
 
-    if (!imageUrl) {
-      return new NextResponse("Image URL is required", { status: 400 })
+    if (!Array.isArray(images) || !images?.length) {
+      return new NextResponse("Invalid images", { status: 400 })
     }
 
     if (!params.storeId) {
@@ -62,7 +62,7 @@ export async function POST(
       data: {
         label,
         storeId: params.storeId,
-        imageUrl,
+        imageUrl: images[0].url,
       },
     })
 

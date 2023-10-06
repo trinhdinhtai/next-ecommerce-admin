@@ -1,10 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { useParams, useRouter } from "next/navigation"
+import Image from "next/image"
 import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Billboard } from "@prisma/client"
 import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -12,6 +11,7 @@ import * as z from "zod"
 
 import { catchError } from "@/lib/error"
 import { useUploadThing } from "@/lib/uploadthing"
+import { isArrayOfFile } from "@/lib/utils"
 import { billboardSchema } from "@/lib/validations/billboard"
 import {
   Form,
@@ -20,34 +20,26 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  UncontrolledFormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import LoadingButton from "@/components/ui/loading-button"
 import ImageUploadDialog from "@/components/image-upload-dialog"
+import { ZoomImage } from "@/components/zoom-image"
 
 type BillboardFormInput = z.infer<typeof billboardSchema>
 
-interface BillboardFormProps {
-  billboard: Billboard | null
+interface AddBillboardFormProps {
+  storeId: string
 }
 
-const BillboardForm = ({ billboard }: BillboardFormProps) => {
-  const params = useParams()
-  const router = useRouter()
-
+export default function AddBillboardForm({ storeId }: AddBillboardFormProps) {
   const { isUploading, startUpload } = useUploadThing("imageUploader")
-
   const [files, setFiles] = useState<FileWithPreview[] | null>(null)
-
-  const loadingMessage = billboard
-    ? "Updating billboard ..."
-    : "Creating billboard ..."
-  const toastMessage = billboard ? "Billboard updated." : "Billboard created."
-  const action = billboard ? "Save changes" : "Create"
 
   const form = useForm<BillboardFormInput>({
     resolver: zodResolver(billboardSchema),
-    defaultValues: billboard ?? {
+    defaultValues: {
       label: "",
       images: "",
     },
@@ -55,30 +47,31 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
 
   const {
     control,
-    setValue,
-    formState: { isSubmitting },
+    reset,
+    formState: { errors, isSubmitting },
   } = form
 
   const onSubmit = async (values: BillboardFormInput) => {
-    toast.promise(onCreateBillboard(values), {
-      loading: loadingMessage,
-      success: toastMessage,
-      error: "Something went wrong",
-    })
-  }
-
-  const onCreateBillboard = async (values: BillboardFormInput) => {
     try {
-      if (!billboard) {
-        await axios.post(`/api/${params.storeId}/billboards`, values)
-      } else {
-        await axios.patch(
-          `/api/${params.storeId}/billboards/${params.billboardId}`,
-          values
-        )
-      }
-      router.refresh()
-      router.push(`/${params.storeId}/billboards`)
+      if (!isArrayOfFile(values.images)) return
+
+      const images = await startUpload(values.images).then((imagesResponse) => {
+        const formattedImages = imagesResponse?.map((image) => ({
+          id: image.key,
+          name: image.key.split("_")[1] ?? image.key,
+          url: image.url,
+        }))
+        return formattedImages ?? null
+      })
+
+      await axios.post(`/api/${storeId}/billboards`, {
+        ...values,
+        images,
+      })
+
+      reset()
+      setFiles(null)
+      toast.success("Billboard created successfully.")
     } catch (error) {
       catchError(error)
     }
@@ -88,13 +81,28 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormItem className="flex w-full flex-col gap-2">
+          <FormItem className="flex w-full flex-col gap-1.5">
             <FormLabel>Image</FormLabel>
+            {files?.length ? (
+              <div className="flex items-center gap-2">
+                {files.map((file) => (
+                  <ZoomImage key={file.name}>
+                    <Image
+                      src={file.preview}
+                      alt={file.name}
+                      className="h-20 w-20 shrink-0 rounded-md object-cover object-center"
+                      width={80}
+                      height={80}
+                    />
+                  </ZoomImage>
+                ))}
+              </div>
+            ) : null}
             <FormControl>
               <ImageUploadDialog
-                setValue={setValue}
+                setValue={form.setValue}
                 name="images"
-                maxFiles={3}
+                maxFiles={1}
                 maxSize={1024 * 1024 * 4}
                 files={files}
                 setFiles={setFiles}
@@ -102,7 +110,7 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
                 disabled={isSubmitting}
               />
             </FormControl>
-            <FormMessage />
+            <UncontrolledFormMessage message={errors.images?.message} />
           </FormItem>
 
           <FormField
@@ -124,12 +132,10 @@ const BillboardForm = ({ billboard }: BillboardFormProps) => {
           />
 
           <LoadingButton type="submit" isLoading={isSubmitting}>
-            {action}
+            Create Billboard
           </LoadingButton>
         </form>
       </Form>
     </>
   )
 }
-
-export default BillboardForm

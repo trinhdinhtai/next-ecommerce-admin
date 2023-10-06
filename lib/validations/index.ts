@@ -10,11 +10,6 @@ export const categorySchema = z.object({
   billboardId: z.string(),
 })
 
-export const billboardSchema = z.object({
-  imageUrl: z.string().url().nonempty(),
-  label: z.string().min(1),
-})
-
 export const colorSchema = z.object({
   name: z.string().min(2),
   value: z.string().min(4).max(9).regex(/^#/, {
