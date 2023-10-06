@@ -81,7 +81,7 @@ export default function AddBillboardForm({ storeId }: AddBillboardFormProps) {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormItem className="flex w-full flex-col gap-1.5">
+          <FormItem className="flex flex-col gap-1.5">
             <FormLabel>Image</FormLabel>
             {files?.length ? (
               <div className="flex items-center gap-2">
@@ -90,9 +90,9 @@ export default function AddBillboardForm({ storeId }: AddBillboardFormProps) {
                     <Image
                       src={file.preview}
                       alt={file.name}
-                      className="h-20 w-20 shrink-0 rounded-md object-cover object-center"
-                      width={80}
-                      height={80}
+                      className="aspect-[24/9] w-60 shrink-0 rounded-md object-cover object-center"
+                      width={240}
+                      height={90}
                     />
                   </ZoomImage>
                 ))}

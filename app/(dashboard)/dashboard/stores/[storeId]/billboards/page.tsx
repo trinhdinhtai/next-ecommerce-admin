@@ -4,7 +4,7 @@ import { format } from "date-fns"
 import { BillboardColumn } from "@/types/columns"
 import { Shell } from "@/components/ui/shell"
 import PageHeading from "@/components/PageHeading"
-import BillboardsTable from "@/components/tables/Billboards"
+import BillboardsTable from "@/components/tables/BillboardsDataTable"
 
 interface BillboardsPageProps {
   params: {

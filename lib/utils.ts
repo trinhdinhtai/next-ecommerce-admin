@@ -40,3 +40,9 @@ export function isArrayOfFile(files: unknown): files is File[] {
   if (!isArray) return false
   return files.every((file) => file instanceof File)
 }
+
+export function getFileNameFromUrl(url: string): string {
+  const pathArray = url.split("/")
+  const fileName = pathArray[pathArray.length - 1]
+  return fileName
+}

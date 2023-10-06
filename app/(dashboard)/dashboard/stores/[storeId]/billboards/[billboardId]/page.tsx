@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation"
+
 import { prisma } from "@/lib/prismadb"
 import { Shell } from "@/components/ui/shell"
-import BillboardForm from "@/components/forms/BillboardForm"
+import UpdateBillboardForm from "@/components/forms/update-billboard-form"
 import PageHeading from "@/components/PageHeading"
 
 interface BillboardIdPageProps {
@@ -17,13 +19,13 @@ const BillboardIdPage = async ({ params }: BillboardIdPageProps) => {
       storeId: params.storeId,
     },
   })
+
+  if (!billboard) return notFound()
+
   return (
     <Shell>
-      <PageHeading
-        title={billboard ? billboard.label : "Add Billboard"}
-        description={billboard ? "Edit billboard" : "Add a new billboard"}
-      />
-      <BillboardForm billboard={billboard} />
+      <PageHeading title={billboard.label} description="Edit billboard" />
+      <UpdateBillboardForm storeId={params.storeId} billboard={billboard} />
     </Shell>
   )
 }

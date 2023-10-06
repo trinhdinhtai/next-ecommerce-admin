@@ -1,7 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { useParams, useRouter } from "next/navigation"
+import Link from "next/link"
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSelectedLayoutSegment,
+  useSelectedLayoutSegments,
+} from "next/navigation"
 import { EntityName } from "@/types"
 import { Row } from "@tanstack/react-table"
 import axios from "axios"
@@ -30,6 +37,7 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const router = useRouter()
   const params = useParams()
+  const pathname = usePathname()
 
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -49,10 +57,6 @@ export function DataTableRowActions<TData>({
   const handleCopy = () => {
     navigator.clipboard.writeText(getColumnId()!)
     toast.success("Copied to clipboard.")
-  }
-
-  const handleUpdate = () => {
-    router.push(`/${params.storeId}/${entityName}/${getColumnId()}`)
   }
 
   const handleDelete = async () => {
@@ -97,8 +101,10 @@ export function DataTableRowActions<TData>({
           <DropdownMenuItem onClick={handleCopy}>
             <Copy className="mr-2 h-4 w-4" /> Copy ID
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleUpdate}>
-            <Edit className="mr-2 h-4 w-4" /> Update
+          <DropdownMenuItem asChild>
+            <Link href={`${pathname}/${getColumnId()}`}>
+              <Edit className="mr-2 h-4 w-4" /> Edit
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setIsOpen(true)}>
             <Trash className="mr-2 h-4 w-4" /> Delete

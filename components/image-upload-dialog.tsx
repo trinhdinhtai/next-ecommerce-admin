@@ -57,6 +57,12 @@ export default function ImageUploadDialog<TFieldValues extends FieldValues>({
         const fileWithPreview = Object.assign(file, {
           preview: URL.createObjectURL(file),
         })
+
+        if (files?.length === maxFiles) {
+          toast.error(`You can only upload up to ${maxFiles} files`)
+          return
+        }
+
         setFiles((prev) => [...(prev ?? []), fileWithPreview])
       })
 
@@ -72,8 +78,7 @@ export default function ImageUploadDialog<TFieldValues extends FieldValues>({
         })
       }
     },
-
-    [maxSize, setFiles]
+    [maxSize, maxFiles, files?.length, setFiles]
   )
 
   // Register files to react-hook-form

@@ -1,6 +1,5 @@
 import Image from "next/image"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
 
 import { BillboardColumn } from "@/types/columns"
 import { Checkbox } from "@/components/ui/checkbox"
