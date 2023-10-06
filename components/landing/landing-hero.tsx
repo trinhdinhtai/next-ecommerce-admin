@@ -1,21 +1,26 @@
-"use client";
+"use client"
 
-import TypewriterComponent from "typewriter-effect";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@clerk/nextjs";
-import Link from "next/link";
-import Image from "next/image";
-import { useTheme } from "next-themes";
+import Image from "next/image"
+import Link from "next/link"
+import { useAuth } from "@clerk/nextjs"
+import { useTheme } from "next-themes"
+import TypewriterComponent from "typewriter-effect"
+
+import { Button } from "@/components/ui/button"
 
 const LandingHero = () => {
-  const { isSignedIn } = useAuth();
-  const { theme } = useTheme();
+  const { isSignedIn } = useAuth()
+  const { theme } = useTheme()
 
   return (
-    <div className="font-bold py-36 px-4 text-center space-y-10">
-      <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold">
-        <h1>The Best E-commerce Management Platform</h1>
-        <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#1C79BD] to-[#5AA2D6] py-4">
+    <div className="space-y-10 px-4 py-36 text-center font-bold">
+      <div className="space-y-5 text-5xl font-extrabold sm:text-5xl md:text-6xl lg:text-7xl">
+        <h1 className="font-heading flex flex-col gap-2">
+          <span>The Best</span>
+          <span>E-commerce Management</span>
+          <span>Platform</span>
+        </h1>
+        <div className="font-heading bg-gradient-to-r from-[#1C79BD] to-[#5AA2D6] bg-clip-text py-4 text-transparent">
           <TypewriterComponent
             options={{
               strings: [
@@ -32,7 +37,7 @@ const LandingHero = () => {
         </div>
       </div>
 
-      <p className="font-normal text-center text-muted-foreground flex flex-col">
+      <p className="flex flex-col text-center font-normal text-muted-foreground">
         <span>
           E-commerce management platform with essential commerce features
         </span>
@@ -42,25 +47,25 @@ const LandingHero = () => {
         <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
           <Button
             variant="premium"
-            className="md:text-lg p-4 md:p-6 rounded-full font-semibold"
+            className="rounded-full p-4 font-semibold md:p-6 md:text-lg"
           >
             Start For Free
           </Button>
         </Link>
       </div>
 
-      <div className="relative aspect-[32/18] rounded-2xl mt-10">
+      <div className="relative mt-10 aspect-[32/18] rounded-2xl">
         <Image
           fill
           src={
             theme === "light" ? "/screenshot-light.png" : "/screenshot-dark.png"
           }
           alt="hero-banner"
-          className="object-cover rounded-3xl"
+          className="rounded-3xl object-cover"
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LandingHero;
+export default LandingHero
