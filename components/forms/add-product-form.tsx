@@ -1,11 +1,10 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import Image from "next/image"
-import { useParams, useRouter } from "next/navigation"
 import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Category, Color, Product, Size } from "@prisma/client"
+import { Category, Color, Size } from "@prisma/client"
 import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -41,88 +40,67 @@ import LoadingButton from "../ui/loading-button"
 
 export type ProductFormInput = z.infer<typeof productSchema>
 
-interface ProductFormProps {
-  product: Product | null
+interface AddProductFormProps {
+  storeId: string
   categories: Category[]
   colors: Color[]
   sizes: Size[]
 }
 
-const ProductForm = ({
-  product,
+const AddProductForm = ({
+  storeId,
   categories,
   colors,
   sizes,
-}: ProductFormProps) => {
-  const params = useParams()
-  const router = useRouter()
-
-  const toastMessage = product
-    ? "Product updated successfully."
-    : "Product created successfully."
-  const action = product ? "Save changes" : "Create"
-
+}: AddProductFormProps) => {
   const [files, setFiles] = useState<FileWithPreview[] | null>(null)
-  const [isPending, startTransition] = useTransition()
   const { isUploading, startUpload } = useUploadThing("imageUploader")
-
-  const defaultValues = product
-    ? {
-        ...product,
-        price: parseFloat(String(product?.price)),
-      }
-    : {
-        name: "",
-        images: [],
-        price: 0,
-        inventory: 0,
-        categoryId: "",
-        colorId: "",
-        sizeId: "",
-        isFeatured: false,
-        isArchived: false,
-      }
 
   const form = useForm<ProductFormInput>({
     resolver: zodResolver(productSchema),
-    defaultValues,
+    defaultValues: {
+      name: "",
+      images: undefined,
+      price: 0,
+      inventory: 0,
+      categoryId: "",
+      colorId: "",
+      sizeId: "",
+      isFeatured: false,
+      isArchived: false,
+    },
   })
 
   const {
     control,
+    reset,
     formState: { errors, isSubmitting },
   } = form
 
-  const onSubmit = (values: ProductFormInput) => {
-    console.log("file: product-form.tsx:95 ~ onSubmit ~ values:", values)
-    startTransition(async () => {
-      try {
-        const images = isArrayOfFile(values.images)
-          ? await startUpload(values.images).then((imagesResponse) => {
-              const formattedImages = imagesResponse?.map((image) => ({
-                id: image.key,
-                name: image.key.split("_")[1] ?? image.key,
-                url: image.url,
-              }))
-              return formattedImages ?? null
-            })
-          : null
+  const onSubmit = async (values: ProductFormInput) => {
+    try {
+      if (!isArrayOfFile(values.images)) return
 
-        if (!product) {
-          await axios.post(`/api/${params.storeId}/products`, values)
-        } else {
-          await axios.patch(
-            `/api/${params.storeId}/products/${params.productId}`,
-            values
-          )
-        }
-        toast.success(toastMessage)
-        router.refresh()
-        router.push(`/${params.storeId}/products`)
-      } catch (error) {
-        catchError(error)
-      }
-    })
+      const images = await startUpload(values.images).then((imagesResponse) => {
+        const formattedImages = imagesResponse?.map((image) => ({
+          id: image.key,
+          name: image.key.split("_")[1] ?? image.key,
+          url: image.url,
+        }))
+        return formattedImages ?? null
+      })
+
+      await axios.post(`/api/${storeId}/products`, {
+        ...values,
+        images,
+      })
+
+      reset()
+      setFiles(null)
+      toast.success("Product created successfully.")
+    } catch (error) {
+      catchError(error)
+    }
   }
 
   return (
@@ -154,7 +132,7 @@ const ProductForm = ({
               files={files}
               setFiles={setFiles}
               isUploading={isUploading}
-              disabled={isPending}
+              disabled={isSubmitting}
             />
           </FormControl>
           <UncontrolledFormMessage message={errors.images?.message} />
@@ -360,11 +338,11 @@ const ProductForm = ({
         </div>
 
         <LoadingButton type="submit" isLoading={isSubmitting}>
-          {action}
+          Add Product
         </LoadingButton>
       </form>
     </Form>
   )
 }
 
-export default ProductForm
+export default AddProductForm

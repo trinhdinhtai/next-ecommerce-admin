@@ -71,7 +71,7 @@ export default function ImageUploadCard({
         <Image
           src={cropData ?? file.preview}
           alt={file.name}
-          className="h-10 w-10 shrink-0 rounded-md"
+          className="h-10 w-10 shrink-0 rounded-md object-cover"
           width={40}
           height={40}
           loading="lazy"

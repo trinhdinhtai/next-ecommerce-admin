@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs"
 
 import { prisma } from "@/lib/prismadb"
-import { productSchema } from "@/lib/validations/product"
 
 export async function GET(
   req: Request,
@@ -93,14 +92,14 @@ export async function POST(
       images,
       isFeatured,
       isArchived,
-    } = productSchema.parse(body)
+    } = body
 
     if (!name?.length) {
       return new NextResponse("Name is required", { status: 400 })
     }
 
-    if (!images?.length) {
-      return new NextResponse("Images are required", { status: 400 })
+    if (!Array.isArray(images)) {
+      return new NextResponse("Invalid images", { status: 400 })
     }
 
     if (!price) {
@@ -136,7 +135,9 @@ export async function POST(
         storeId: params.storeId,
         images: {
           createMany: {
-            data: [...images.map((image: { url: string }) => image)],
+            data: images.map((image: any) => ({
+              url: image.url,
+            })),
           },
         },
       },
@@ -144,7 +145,7 @@ export async function POST(
 
     return NextResponse.json(product)
   } catch (error) {
-    console.log("[BILLBOARDS_POST]", error)
+    console.log("[PRODUCT_POST]", error)
     return new NextResponse("Internal error", { status: 500 })
   }
 }

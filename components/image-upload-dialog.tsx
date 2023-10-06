@@ -187,7 +187,7 @@ export default function ImageUploadDialog<TFieldValues extends FieldValues>({
 
             <Button
               type="button"
-              variant="outline"
+              variant="destructive"
               size="sm"
               className="mt-2.5 w-full"
               onClick={() => setFiles(null)}

@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs"
 
 import { prisma } from "@/lib/prismadb"
-import { productSchema } from "@/lib/validations/product"
 
 export async function GET(
   _: Request,
@@ -51,7 +50,7 @@ export async function PATCH(
       sizeId,
       isFeatured,
       isArchived,
-    } = productSchema.parse(body)
+    } = body
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 })
@@ -80,8 +79,8 @@ export async function PATCH(
       return new NextResponse("Name is required", { status: 400 })
     }
 
-    if (!images?.length) {
-      return new NextResponse("Images are required", { status: 400 })
+    if (!Array.isArray(images)) {
+      return new NextResponse("Invalid images", { status: 400 })
     }
 
     if (!price) {
