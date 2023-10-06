@@ -10,7 +10,7 @@ interface BillboardsPageProps {
   }
 }
 
-const BillboardsPage = async ({ params }: BillboardsPageProps) => {
+export default async function BillboardsPage({ params }: BillboardsPageProps) {
   const billboards = await getBillboardsByStoreId(params.storeId)
 
   const formattedBillboards: BillboardColumn[] = billboards.map(
@@ -24,5 +24,3 @@ const BillboardsPage = async ({ params }: BillboardsPageProps) => {
 
   return <BillboardsTable data={formattedBillboards} />
 }
-
-export default BillboardsPage

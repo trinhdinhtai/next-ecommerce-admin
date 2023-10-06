@@ -1,13 +1,13 @@
-"use client";
+import { Shell } from "@/components/ui/shell"
+import PageHeading from "@/components/PageHeading"
 
-import { Loader } from "@/components/ui/loader";
-
-const Loading = () => {
+export default function BillboardsLoading() {
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <Loader />
-    </div>
-  );
-};
-
-export default Loading;
+    <Shell>
+      <PageHeading
+        title="Billboards"
+        description="Manage billboards for your store"
+      />
+    </Shell>
+  )
+}

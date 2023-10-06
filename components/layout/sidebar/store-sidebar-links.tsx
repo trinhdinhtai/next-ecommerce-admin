@@ -21,16 +21,16 @@ const StoreSidebarLinks = ({ storeId }: StoreSidebarLinksProps) => {
       isActive: segment === null,
     },
     {
-      label: "Categories",
-      href: `/dashboard/stores/${storeId}/categories`,
-      icon: Icons.layoutDashboard,
-      isActive: segment === "categories",
-    },
-    {
       label: "Billboards",
       href: `/dashboard/stores/${storeId}/billboards`,
       icon: Icons.monitor,
       isActive: segment === "billboards",
+    },
+    {
+      label: "Categories",
+      href: `/dashboard/stores/${storeId}/categories`,
+      icon: Icons.layoutDashboard,
+      isActive: segment === "categories",
     },
     {
       label: "Products",

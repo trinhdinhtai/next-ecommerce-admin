@@ -1,5 +1,7 @@
 import { Metadata } from "next"
 import Link from "next/link"
+import { redirect } from "next/navigation"
+import { auth } from "@clerk/nextjs"
 
 import { env } from "@/env.mjs"
 import { storeSubscriptionPlans } from "@/config/subscriptions"
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
   description: "Manage your billing and subscription",
 }
 
-const BillingPage = () => {
+export default async function BillingPage() {
   return (
     <Shell>
       <PageHeading
@@ -99,5 +101,3 @@ const BillingPage = () => {
     </Shell>
   )
 }
-
-export default BillingPage

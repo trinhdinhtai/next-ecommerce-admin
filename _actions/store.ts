@@ -16,7 +16,7 @@ export async function getStoresAction({
       userId,
     },
     orderBy: {
-      createdAt: "desc",
+      updatedAt: "desc",
     },
   })
 
