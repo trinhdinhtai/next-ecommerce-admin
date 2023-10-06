@@ -43,3 +43,11 @@ export type CuratedStore = {
   name: Store["name"]
   description: Store["description"]
 }
+
+export interface SubscriptionPlan {
+  id: "basic" | "standard" | "pro" | "enterprise"
+  name: string
+  description: string
+  features: string[]
+  price: number
+}

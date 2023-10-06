@@ -1,6 +1,6 @@
 import {
+  Check,
   CreditCard,
-  DollarSign,
   Gauge,
   LayoutDashboard,
   Minimize2,
@@ -20,7 +20,6 @@ export const Icons = {
   store: Store,
   credit: CreditCard,
   user: User,
-  dollarSign: DollarSign,
   rocket: Rocket,
   gauge: Gauge,
   layoutDashboard: LayoutDashboard,
@@ -32,4 +31,5 @@ export const Icons = {
   users: Users,
   zap: Zap,
   settings: Settings,
+  check: Check,
 }

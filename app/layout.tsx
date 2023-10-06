@@ -13,6 +13,7 @@ import ModalProvider from "@/components/providers/modal-provider"
 import QueryProvider from "@/components/providers/query-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import ToastProvider from "@/components/providers/toast-provider"
+import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -48,6 +49,7 @@ export default function RootLayout({
               <ToastProvider />
               <ConfettiProvider />
               {children}
+              <TailwindIndicator />
             </QueryProvider>
           </ThemeProvider>
         </body>

@@ -21,10 +21,5 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard/account",
       icon: "user",
     },
-    {
-      title: "Purchases",
-      href: "/dashboard/purchases",
-      icon: "dollarSign",
-    },
   ],
 }
