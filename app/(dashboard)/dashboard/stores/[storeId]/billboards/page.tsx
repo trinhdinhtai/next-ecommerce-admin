@@ -13,7 +13,8 @@ interface BillboardsPageProps {
 }
 
 export default async function BillboardsPage({ params }: BillboardsPageProps) {
-  const billboards = await getBillboardsByStoreId(params.storeId)
+  const { storeId } = params
+  const billboards = await getBillboardsByStoreId(storeId)
 
   const formattedBillboards: BillboardColumn[] = billboards.map(
     (billboard) => ({
@@ -28,7 +29,7 @@ export default async function BillboardsPage({ params }: BillboardsPageProps) {
         title="Billboards"
         description="Manage billboards for your store"
       />
-      <BillboardsTable data={formattedBillboards} />
+      <BillboardsTable data={formattedBillboards} storeId={storeId} />
     </Shell>
   )
 }

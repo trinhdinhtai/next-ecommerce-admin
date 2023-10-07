@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import { addBillboardAction } from "@/_actions/billboards"
 import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -64,9 +64,10 @@ export default function AddBillboardForm({ storeId }: AddBillboardFormProps) {
         return formattedImages ?? null
       })
 
-      await axios.post(`/api/${storeId}/billboards`, {
+      await addBillboardAction({
         ...values,
         images,
+        storeId,
       })
 
       reset()

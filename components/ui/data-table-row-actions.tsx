@@ -2,13 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSelectedLayoutSegment,
-  useSelectedLayoutSegments,
-} from "next/navigation"
+import { useParams, usePathname, useRouter } from "next/navigation"
 import { EntityName } from "@/types"
 import { Row } from "@tanstack/react-table"
 import axios from "axios"

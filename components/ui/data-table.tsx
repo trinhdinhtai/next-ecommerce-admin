@@ -31,12 +31,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   searchKey: keyof TData
+  deleteRowsAction?: (selectedRowIds: string[]) => void
 }
 
 export default function DataTable<TData, TValue>({
   columns,
   data,
   searchKey,
+  deleteRowsAction,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -68,7 +70,11 @@ export default function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} searchKey={searchKey} />
+      <DataTableToolbar
+        table={table}
+        searchKey={searchKey}
+        deleteRowsAction={deleteRowsAction}
+      />
 
       {/* Table */}
       <div className="rounded-md border">
