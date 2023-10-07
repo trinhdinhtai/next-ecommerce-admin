@@ -1,20 +1,22 @@
-"use client";
+"use client"
 
-import { MixerHorizontalIcon } from "@radix-ui/react-icons";
-import { Table } from "@tanstack/react-table";
+import { MixerHorizontalIcon } from "@radix-ui/react-icons"
+import { Table } from "@tanstack/react-table"
 
+import { toSentenceCase } from "@/lib/utils"
+
+import { Button } from "./button"
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuCheckboxItem,
-} from "./dropdown-menu";
-import { Button } from "./button";
+  DropdownMenuTrigger,
+} from "./dropdown-menu"
 
 interface DataTableViewOptionsProps<TData> {
-  table: Table<TData>;
+  table: Table<TData>
 }
 
 export function DataTableViewOptions<TData>({
@@ -49,11 +51,11 @@ export function DataTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {toSentenceCase(column.id)}
               </DropdownMenuCheckboxItem>
-            );
+            )
           })}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

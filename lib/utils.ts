@@ -46,3 +46,9 @@ export function getFileNameFromUrl(url: string): string {
   const fileName = pathArray[pathArray.length - 1]
   return fileName
 }
+
+export function toSentenceCase(str: string) {
+  return str
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase())
+}
