@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import LoadingButton from "@/components/ui/loading-button"
+import { Skeleton } from "@/components/ui/skeleton"
 import ImageUploadDialog from "@/components/image-upload-dialog"
 import { ZoomImage } from "@/components/zoom-image"
 
