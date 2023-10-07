@@ -19,36 +19,32 @@ interface DataTableLoadingProps {
 
 export function DataTableLoading({
   columnCount,
-  rowCount = 10,
-  isNewRowCreatable = false,
-  isRowsDeletable = false,
+  rowCount = 5,
   searchableFieldCount = 1,
   filterableFieldCount = 1,
 }: DataTableLoadingProps) {
   return (
-    <div className="w-full space-y-3 overflow-auto">
-      <div className="flex w-full items-center justify-between space-x-2 overflow-auto p-1">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
         <div className="flex flex-1 items-center space-x-2">
           {searchableFieldCount > 0
             ? Array.from({ length: searchableFieldCount }).map((_, index) => (
-                <Skeleton key={index} className="h-7 w-[150px] lg:w-[250px]" />
+                <Skeleton key={index} className="h-8 w-[150px] lg:w-[250px]" />
               ))
             : null}
           {filterableFieldCount > 0
             ? Array.from({ length: filterableFieldCount }).map((_, index) => (
-                <Skeleton key={index} className="h-7 w-[70px] border-dashed" />
+                <Skeleton key={index} className="h-8 w-[70px] border-dashed" />
               ))
             : null}
         </div>
         <div className="flex items-center space-x-2">
-          {isRowsDeletable ? (
-            <Skeleton className="h-7 w-[70px]" />
-          ) : isNewRowCreatable ? (
-            <Skeleton className="h-7 w-[70px]" />
-          ) : null}
-          <Skeleton className="ml-auto hidden h-7 w-[70px] lg:flex" />
+          <Skeleton className="h-8 w-40" />
+          <Skeleton className="h-8 w-20" />
+          <Skeleton className="h-8 w-20" />
         </div>
       </div>
+
       <div className="rounded-md border">
         <Table className="min-w-[640px]">
           <TableHeader>
@@ -75,6 +71,7 @@ export function DataTableLoading({
           </TableBody>
         </Table>
       </div>
+
       <div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto px-2 py-1 sm:flex-row sm:gap-8">
         <div className="flex-1">
           <Skeleton className="h-8 w-40" />

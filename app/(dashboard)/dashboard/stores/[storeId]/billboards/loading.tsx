@@ -10,11 +10,7 @@ export default function BillboardsLoading() {
         description="Manage billboards for your store"
       />
 
-      <DataTableLoading
-        columnCount={6}
-        isNewRowCreatable={true}
-        isRowsDeletable={true}
-      />
+      <DataTableLoading columnCount={5} filterableFieldCount={0} />
     </Shell>
   )
 }

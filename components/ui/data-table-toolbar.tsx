@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { statuses } from "@/constants"
 import { Table } from "@tanstack/react-table"
 import { Plus, X } from "lucide-react"
 
@@ -10,7 +9,6 @@ import { cn } from "@/lib/utils"
 import { DataTableExportButton } from "@/components/ui/data-table-export-button"
 
 import { Button, buttonVariants } from "./button"
-import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 import { DataTableViewOptions } from "./data-table-view-option"
 import { Input } from "./input"
 
@@ -25,7 +23,6 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
   const pathname = usePathname()
 
-  const isFiltered = table.getState().columnFilters.length > 0
   const searchField = String(searchKey)
 
   return (
@@ -41,25 +38,6 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-
-        {table.getColumn("category") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("category")}
-            title="Category"
-            options={statuses}
-          />
-        )}
-
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={() => table.resetColumnFilters()}
-            className="h-8 px-2 lg:px-3"
-          >
-            Reset
-            <X className="ml-2 h-4 w-4" />
-          </Button>
-        )}
       </div>
 
       <div className="flex items-center gap-2">
