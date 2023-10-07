@@ -49,12 +49,14 @@ export const categoryColumns: ColumnDef<CategoryColumn>[] = [
   },
   {
     accessorKey: "billboardLabel",
-    header: "Billboard",
+    header: "Billboard Label",
     cell: ({ row }) => row.original.billboardLabel,
   },
   {
     accessorKey: "createdAt",
-    header: "Date",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Created At" />
+    ),
   },
   {
     id: "actions",

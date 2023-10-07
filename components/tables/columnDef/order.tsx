@@ -1,6 +1,8 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { OrderColumn } from "@/types/columns";
-import { Checkbox } from "@/components/ui/checkbox";
+import { ColumnDef } from "@tanstack/react-table"
+
+import { OrderColumn } from "@/types/columns"
+import { Checkbox } from "@/components/ui/checkbox"
+import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
 
 export const orderColumns: ColumnDef<OrderColumn>[] = [
   {
@@ -49,6 +51,8 @@ export const orderColumns: ColumnDef<OrderColumn>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: "Date",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Created At" />
+    ),
   },
-];
+]

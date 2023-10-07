@@ -1,8 +1,9 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { SizeColumn } from "@/types/columns";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
-import DataTableRowActions from "@/components/ui/data-table-row-actions";
+import { ColumnDef } from "@tanstack/react-table"
+
+import { SizeColumn } from "@/types/columns"
+import { Checkbox } from "@/components/ui/checkbox"
+import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
+import DataTableRowActions from "@/components/ui/data-table-row-actions"
 
 export const sizeColumns: ColumnDef<SizeColumn>[] = [
   {
@@ -36,10 +37,12 @@ export const sizeColumns: ColumnDef<SizeColumn>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: "Date",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Created At" />
+    ),
   },
   {
     id: "actions",
     cell: ({ row }) => <DataTableRowActions row={row} entityName="sizes" />,
   },
-];
+]
