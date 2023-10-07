@@ -1,13 +1,16 @@
-"use client";
+import { Shell } from "@/components/ui/shell"
+import { DataTableLoading } from "@/components/data-table-loading"
+import PageHeading from "@/components/PageHeading"
 
-import { Loader } from "@/components/ui/loader";
-
-const Loading = () => {
+export default function CategoriesLoading() {
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <Loader />
-    </div>
-  );
-};
+    <Shell>
+      <PageHeading
+        title="Categories"
+        description="Manage categories for your store"
+      />
 
-export default Loading;
+      <DataTableLoading columnCount={6} filterableFieldCount={0} />
+    </Shell>
+  )
+}

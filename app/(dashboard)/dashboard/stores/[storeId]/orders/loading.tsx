@@ -1,13 +1,12 @@
-"use client";
+import { Shell } from "@/components/ui/shell"
+import { DataTableLoading } from "@/components/data-table-loading"
+import PageHeading from "@/components/PageHeading"
 
-import { Loader } from "@/components/ui/loader";
-
-const Loading = () => {
+export default function OrdersLoading() {
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <Loader />
-    </div>
-  );
-};
-
-export default Loading;
+    <Shell>
+      <PageHeading title="Orders" description="Manage orders for your store" />
+      <DataTableLoading columnCount={8} filterableFieldCount={0} />
+    </Shell>
+  )
+}
