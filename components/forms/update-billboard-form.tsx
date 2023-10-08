@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { updateBillboardAction } from "@/_actions/billboards"
 import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Billboard } from "@prisma/client"
-import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import LoadingButton from "@/components/ui/loading-button"
-import { Skeleton } from "@/components/ui/skeleton"
 import ImageUploadDialog from "@/components/image-upload-dialog"
 import { ZoomImage } from "@/components/zoom-image"
 
@@ -58,9 +57,9 @@ const UpdateBillboardForm = ({ storeId, billboard }: BillboardFormProps) => {
 
   const form = useForm<BillboardFormInput>({
     resolver: zodResolver(billboardSchema),
-    defaultValues: billboard ?? {
-      label: "",
-      images: "",
+    defaultValues: {
+      label: billboard.label,
+      images: undefined,
     },
   })
 
@@ -72,9 +71,17 @@ const UpdateBillboardForm = ({ storeId, billboard }: BillboardFormProps) => {
 
   const onSubmit = async (values: BillboardFormInput) => {
     try {
-      if (!isArrayOfFile(values.images)) return
+      if (!files?.length) return
 
-      const targetImages = values.images.filter((image) => image.size)
+      const currentImages = files
+        .filter((image) => !image.size)
+        .map((image) => ({
+          id: image.name,
+          name: image.name,
+          url: image.preview,
+        }))
+
+      const targetImages = files.filter((image) => image.size)
 
       const uploadedImages = await startUpload(targetImages).then(
         (imagesResponse) => {
@@ -87,13 +94,19 @@ const UpdateBillboardForm = ({ storeId, billboard }: BillboardFormProps) => {
         }
       )
 
-      await axios.patch(`/api/${storeId}/billboards/${billboard.id}`, {
+      if (!uploadedImages) {
+        toast.error("Image upload failed")
+        return
+      }
+
+      await updateBillboardAction({
         ...values,
-        uploadedImages,
+        id: billboard.id,
+        storeId: billboard.storeId,
+        images: [...currentImages, ...uploadedImages],
       })
 
       toast.success("Billboard updated successfully.")
-      router.refresh()
       router.push(`/dashboard/stores/${storeId}/billboards`)
     } catch (error) {
       catchError(error)

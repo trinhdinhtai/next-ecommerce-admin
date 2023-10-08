@@ -37,6 +37,27 @@ export async function addBillboardAction(
   revalidatePath(`/dashboard/stores/${input.storeId}/billboards`)
 }
 
+export async function updateBillboardAction(
+  input: z.infer<typeof billboardSchema> & {
+    id: string
+    storeId: string
+    images: StoredFile[] | null
+  }
+) {
+  await prisma.billboard.update({
+    where: {
+      id: input.id,
+    },
+    data: {
+      storeId: input.storeId,
+      label: input.label,
+      imageUrl: input.images?.[0].url!,
+    },
+  })
+
+  revalidatePath(`/dashboard/stores/${input.storeId}/billboards`)
+}
+
 export async function deleteBillboardByIdsAction(
   billboardIds: string[],
   storeId: string
