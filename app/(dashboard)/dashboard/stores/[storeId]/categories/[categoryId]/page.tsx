@@ -1,7 +1,9 @@
-import { getBillboardsByStoreId } from "@/_actions/billboards"
+import { notFound } from "next/navigation"
+import { getBillboardsByStoreIdAction } from "@/_actions/billboards"
 import { getCategoryById } from "@/_actions/categories"
 
-import CategoryForm from "@/components/forms/CategoryForm"
+import { Shell } from "@/components/ui/shell"
+import UpdateCategoryForm from "@/components/forms/update-category-form"
 import PageHeading from "@/components/PageHeading"
 
 interface CategoryIdPageProps {
@@ -12,22 +14,27 @@ interface CategoryIdPageProps {
 }
 
 const CategoryIdPage = async ({ params }: CategoryIdPageProps) => {
+  const { storeId, categoryId } = params
+
   const response = await Promise.all([
-    getCategoryById(params.categoryId),
-    getBillboardsByStoreId(params.storeId),
+    getCategoryById(categoryId),
+    getBillboardsByStoreIdAction(storeId),
   ])
 
   const category = response[0]
   const billboards = response[1]
 
+  if (!category) return notFound()
+
   return (
-    <>
-      <PageHeading
-        title={category ? category.name : "Add Category"}
-        description={category ? "Edit category" : "Add a new category"}
+    <Shell>
+      <PageHeading title={category.name} description="Edit category" />
+      <UpdateCategoryForm
+        storeId={storeId}
+        category={category}
+        billboards={billboards}
       />
-      <CategoryForm category={category} billboards={billboards} />
-    </>
+    </Shell>
   )
 }
 

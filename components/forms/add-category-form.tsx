@@ -2,9 +2,10 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { addBillboardAction } from "@/_actions/billboards"
+import { addCategoryAction } from "@/_actions/categories"
 import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Billboard } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -12,7 +13,7 @@ import * as z from "zod"
 import { catchError } from "@/lib/error"
 import { useUploadThing } from "@/lib/uploadthing"
 import { isArrayOfFile } from "@/lib/utils"
-import { billboardSchema } from "@/lib/validations/billboard"
+import { categorySchema } from "@/lib/validations/category"
 import {
   Form,
   FormControl,
@@ -22,36 +23,50 @@ import {
   FormMessage,
   UncontrolledFormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import LoadingButton from "@/components/ui/loading-button"
 import ImageUploadDialog from "@/components/image-upload-dialog"
 import { ZoomImage } from "@/components/zoom-image"
 
-type BillboardFormInput = z.infer<typeof billboardSchema>
+import { Input } from "../ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select"
 
-interface AddBillboardFormProps {
+type CategoryFormInput = z.infer<typeof categorySchema>
+
+interface AddCategoryFormProps {
   storeId: string
+  billboards: Billboard[]
 }
 
-export default function AddBillboardForm({ storeId }: AddBillboardFormProps) {
+export default function AddCategoryForm({
+  storeId,
+  billboards,
+}: AddCategoryFormProps) {
   const { isUploading, startUpload } = useUploadThing("imageUploader")
   const [files, setFiles] = useState<FileWithPreview[] | null>(null)
 
-  const form = useForm<BillboardFormInput>({
-    resolver: zodResolver(billboardSchema),
+  const form = useForm<CategoryFormInput>({
+    resolver: zodResolver(categorySchema),
     defaultValues: {
-      label: "",
+      name: "",
       images: undefined,
+      billboardId: "",
     },
   })
 
   const {
     control,
+    setValue,
     reset,
     formState: { errors, isSubmitting },
   } = form
 
-  const onSubmit = async (values: BillboardFormInput) => {
+  const onSubmit = async (values: CategoryFormInput) => {
     try {
       if (!isArrayOfFile(values.images)) return
 
@@ -64,7 +79,7 @@ export default function AddBillboardForm({ storeId }: AddBillboardFormProps) {
         return formattedImages ?? null
       })
 
-      await addBillboardAction({
+      await addCategoryAction({
         ...values,
         images,
         storeId,
@@ -72,7 +87,7 @@ export default function AddBillboardForm({ storeId }: AddBillboardFormProps) {
 
       reset()
       setFiles(null)
-      toast.success("Billboard created successfully.")
+      toast.success("Category created successfully.")
     } catch (error) {
       toast.error(catchError(error))
     }
@@ -101,7 +116,7 @@ export default function AddBillboardForm({ storeId }: AddBillboardFormProps) {
             ) : null}
             <FormControl>
               <ImageUploadDialog
-                setValue={form.setValue}
+                setValue={setValue}
                 name="images"
                 maxFiles={1}
                 maxSize={1024 * 1024 * 4}
@@ -114,26 +129,61 @@ export default function AddBillboardForm({ storeId }: AddBillboardFormProps) {
             <UncontrolledFormMessage message={errors.images?.message} />
           </FormItem>
 
-          <FormField
-            control={control}
-            name="label"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Label</FormLabel>
-                <FormControl>
-                  <Input
+          <div className="grid grid-cols-2 gap-10">
+            <FormField
+              control={control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isSubmitting}
+                      placeholder="Category name"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={control}
+              name="billboardId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Billboard</FormLabel>
+                  <Select
                     disabled={isSubmitting}
-                    placeholder="Billboard label"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a category"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {billboards.map((billboard) => (
+                        <SelectItem key={billboard.id} value={billboard.id}>
+                          {billboard.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <LoadingButton type="submit" isLoading={isSubmitting}>
-            Create Billboard
+            Create Category
           </LoadingButton>
         </form>
       </Form>

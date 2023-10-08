@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs"
 
 import { prisma } from "@/lib/prismadb"
-import { categorySchema } from "@/lib/validations"
 
 export async function GET(
   _: Request,
@@ -58,7 +57,7 @@ export async function PATCH(
     }
 
     const body = await req.json()
-    const { name, billboardId } = categorySchema.parse(body)
+    const { name, billboardId } = body
 
     if (!name) {
       return new NextResponse("Category name is required", { status: 400 })

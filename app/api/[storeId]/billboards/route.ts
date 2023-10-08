@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { getBillboardsByStoreId } from "@/_actions/billboards"
+import { getBillboardsByStoreIdAction } from "@/_actions/billboards"
 import { auth } from "@clerk/nextjs"
 
 import { prisma } from "@/lib/prismadb"
@@ -13,7 +13,7 @@ export async function GET(
       return new NextResponse("Store id is required", { status: 400 })
     }
 
-    const billboards = await getBillboardsByStoreId(params.storeId)
+    const billboards = await getBillboardsByStoreIdAction(params.storeId)
     return NextResponse.json(billboards)
   } catch (error) {
     console.log("[BILLBOARDS_GET]", error)
