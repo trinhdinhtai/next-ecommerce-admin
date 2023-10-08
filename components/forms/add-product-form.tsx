@@ -99,7 +99,7 @@ const AddProductForm = ({
       setFiles(null)
       toast.success("Product created successfully.")
     } catch (error) {
-      catchError(error)
+      toast.error(catchError(error))
     }
   }
 

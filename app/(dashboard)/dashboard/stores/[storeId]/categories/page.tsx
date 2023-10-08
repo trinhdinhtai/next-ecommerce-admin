@@ -11,12 +11,19 @@ interface CategoriesPageProps {
 }
 
 const CategoriesPage = async ({ params }: CategoriesPageProps) => {
+  const { storeId } = params
+
   const categories = await prisma.category.findMany({
     where: {
-      storeId: params.storeId,
+      storeId,
     },
     include: {
-      billboard: true,
+      billboard: {
+        select: {
+          id: true,
+          label: true,
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
@@ -31,7 +38,7 @@ const CategoriesPage = async ({ params }: CategoriesPageProps) => {
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }))
 
-  return <CategoriesTable data={formattedCategories} />
+  return <CategoriesTable data={formattedCategories} storeId={storeId} />
 }
 
 export default CategoriesPage

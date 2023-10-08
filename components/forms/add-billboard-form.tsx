@@ -74,7 +74,7 @@ export default function AddBillboardForm({ storeId }: AddBillboardFormProps) {
       setFiles(null)
       toast.success("Billboard created successfully.")
     } catch (error) {
-      catchError(error)
+      toast.error(catchError(error))
     }
   }
 

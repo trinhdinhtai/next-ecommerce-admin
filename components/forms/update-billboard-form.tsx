@@ -13,7 +13,7 @@ import * as z from "zod"
 
 import { catchError } from "@/lib/error"
 import { useUploadThing } from "@/lib/uploadthing"
-import { getFileNameFromUrl, isArrayOfFile } from "@/lib/utils"
+import { getFileNameFromUrl } from "@/lib/utils"
 import { billboardSchema } from "@/lib/validations/billboard"
 import {
   Form,
@@ -109,7 +109,7 @@ const UpdateBillboardForm = ({ storeId, billboard }: BillboardFormProps) => {
       toast.success("Billboard updated successfully.")
       router.push(`/dashboard/stores/${storeId}/billboards`)
     } catch (error) {
-      catchError(error)
+      toast.error(catchError(error))
     }
   }
 

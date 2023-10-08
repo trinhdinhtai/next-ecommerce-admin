@@ -1,4 +1,4 @@
-import { getBillboardsByStoreId } from "@/_actions/billboards"
+import { getBillboardsByStoreIdAction } from "@/_actions/billboards"
 import { format } from "date-fns"
 
 import { BillboardColumn } from "@/types/columns"
@@ -14,7 +14,7 @@ interface BillboardsPageProps {
 
 export default async function BillboardsPage({ params }: BillboardsPageProps) {
   const { storeId } = params
-  const billboards = await getBillboardsByStoreId(storeId)
+  const billboards = await getBillboardsByStoreIdAction(storeId)
 
   const formattedBillboards: BillboardColumn[] = billboards.map(
     (billboard) => ({

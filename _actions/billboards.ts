@@ -7,7 +7,7 @@ import { z } from "zod"
 import { prisma } from "@/lib/prismadb"
 import { billboardSchema } from "@/lib/validations/billboard"
 
-export async function getBillboardsByStoreId(storeId: string) {
+export async function getBillboardsByStoreIdAction(storeId: string) {
   const billboards = await prisma.billboard.findMany({
     where: {
       storeId,
@@ -62,14 +62,17 @@ export async function deleteBillboardByIdsAction(
   billboardIds: string[],
   storeId: string
 ) {
-  await prisma.billboard.deleteMany({
-    where: {
-      storeId,
-      id: {
-        in: billboardIds,
+  try {
+    await prisma.billboard.deleteMany({
+      where: {
+        storeId,
+        id: {
+          in: billboardIds,
+        },
       },
-    },
-  })
-
-  revalidatePath(`/dashboard/stores/${storeId}/billboards`)
+    })
+    revalidatePath(`/dashboard/stores/${storeId}/billboards`)
+  } catch (error) {
+    throw new Error("Product not found.")
+  }
 }

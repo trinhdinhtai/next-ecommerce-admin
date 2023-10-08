@@ -8,19 +8,17 @@ import { catchError } from "@/lib/error"
 import DataTable from "@/components/ui/data-table"
 import { billboardColumns } from "@/components/tables/columnDef/billboard"
 
-interface CategoriesContentProps {
+interface BillboardsTableProps {
   data: BillboardColumn[]
   storeId: string
 }
 
-const BillboardsTable = ({ data, storeId }: CategoriesContentProps) => {
+const BillboardsTable = ({ data, storeId }: BillboardsTableProps) => {
   const handleDeleteSelectedRows = async (selectedRowIds: string[]) => {
     toast.promise(deleteBillboardByIdsAction(selectedRowIds, storeId), {
       loading: "Deleting...",
       success: () => "Billboards deleted successfully.",
-      error: (error) => {
-        return catchError(error)
-      },
+      error: (error) => catchError(error),
     })
   }
 

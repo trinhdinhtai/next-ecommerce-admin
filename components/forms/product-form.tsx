@@ -120,7 +120,7 @@ const ProductForm = ({
         router.refresh()
         router.push(`/${params.storeId}/products`)
       } catch (error) {
-        catchError(error)
+        toast.error(catchError(error))
       }
     })
   }
