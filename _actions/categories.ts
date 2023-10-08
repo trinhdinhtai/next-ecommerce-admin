@@ -87,7 +87,7 @@ export async function updateCategoryAction(
 }
 
 export async function deleteCategoriesByIdsAction(
-  categories: string[],
+  categoryIds: string[],
   storeId: string
 ) {
   try {
@@ -95,7 +95,7 @@ export async function deleteCategoriesByIdsAction(
       where: {
         storeId,
         id: {
-          in: categories,
+          in: categoryIds,
         },
       },
     })

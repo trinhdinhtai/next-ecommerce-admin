@@ -2,10 +2,10 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import { addProductAction } from "@/_actions/products"
 import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Category, Color, Size } from "@prisma/client"
-import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -53,8 +53,8 @@ const AddProductForm = ({
   colors,
   sizes,
 }: AddProductFormProps) => {
-  const [files, setFiles] = useState<FileWithPreview[] | null>(null)
   const { isUploading, startUpload } = useUploadThing("imageUploader")
+  const [files, setFiles] = useState<FileWithPreview[] | null>(null)
 
   const form = useForm<ProductFormInput>({
     resolver: zodResolver(productSchema),
@@ -66,7 +66,6 @@ const AddProductForm = ({
       categoryId: "",
       colorId: "",
       sizeId: "",
-      isFeatured: false,
       isArchived: false,
     },
   })
@@ -90,9 +89,10 @@ const AddProductForm = ({
         return formattedImages ?? null
       })
 
-      await axios.post(`/api/${storeId}/products`, {
+      await addProductAction({
         ...values,
         images,
+        storeId,
       })
 
       reset()
@@ -288,28 +288,6 @@ const AddProductForm = ({
                   </SelectContent>
                 </Select>
                 <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={control}
-            name="isFeatured"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    // @ts-ignore
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>Featured</FormLabel>
-                  <FormDescription>
-                    This product will appear on the home page
-                  </FormDescription>
-                </div>
               </FormItem>
             )}
           />

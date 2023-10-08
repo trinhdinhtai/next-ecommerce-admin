@@ -1,8 +1,10 @@
+import { getProductByStoreIdAction } from "@/_actions/products"
 import { formatter } from "@/helpers/utils"
 import { format } from "date-fns"
 
 import { ProductColumn } from "@/types/columns"
-import { prisma } from "@/lib/prismadb"
+import { Shell } from "@/components/ui/shell"
+import PageHeading from "@/components/PageHeading"
 import ProductsTable from "@/components/tables/Products"
 
 interface ProductsPageProps {
@@ -12,19 +14,9 @@ interface ProductsPageProps {
 }
 
 const ProductsPage = async ({ params }: ProductsPageProps) => {
-  const products = await prisma.product.findMany({
-    where: {
-      storeId: params.storeId,
-    },
-    include: {
-      category: true,
-      size: true,
-      color: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  })
+  const { storeId } = params
+
+  const products = await getProductByStoreIdAction(storeId)
 
   const formattedProducts: ProductColumn[] = products.map((item) => ({
     id: item.id,
@@ -39,7 +31,15 @@ const ProductsPage = async ({ params }: ProductsPageProps) => {
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }))
 
-  return <ProductsTable data={formattedProducts} />
+  return (
+    <Shell>
+      <PageHeading
+        title="Products"
+        description="Manage products for your store"
+      />
+      <ProductsTable data={formattedProducts} storeId={storeId} />
+    </Shell>
+  )
 }
 
 export default ProductsPage

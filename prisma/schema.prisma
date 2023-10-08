@@ -65,7 +65,6 @@ model Product {
   description String?
   price       Decimal
   inventory   Int       @default(0)
-  isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
   sizeId      String    // Foreign Key to Size
   size        Size      @relation(fields: [sizeId], references: [id])

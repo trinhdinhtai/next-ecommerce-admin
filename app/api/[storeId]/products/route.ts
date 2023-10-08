@@ -34,7 +34,6 @@ export async function GET(
         categoryId,
         colorId,
         sizeId,
-        isFeatured: isFeaturedValue,
         isArchived: false,
       },
       include: {
@@ -90,7 +89,6 @@ export async function POST(
       colorId,
       sizeId,
       images,
-      isFeatured,
       isArchived,
     } = body
 
@@ -127,7 +125,6 @@ export async function POST(
         name,
         price,
         inventory,
-        isFeatured,
         isArchived,
         categoryId,
         colorId,
