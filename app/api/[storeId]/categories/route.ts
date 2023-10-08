@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs"
 
 import { prisma } from "@/lib/prismadb"
-import { categorySchema } from "@/lib/validations"
 
 export async function GET(
   _: Request,
@@ -38,7 +37,7 @@ export async function POST(
     }
 
     const body = await req.json()
-    const { name, billboardId, imageUrl } = categorySchema.parse(body)
+    const { name, billboardId, images } = body
 
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 })
@@ -59,14 +58,14 @@ export async function POST(
       return new NextResponse("Name is required", { status: 400 })
     }
 
-    if (!imageUrl) {
-      return new NextResponse("Image is required", { status: 400 })
+    if (!Array.isArray(images)) {
+      return new NextResponse("Invalid images", { status: 400 })
     }
 
     const category = await prisma.category.create({
       data: {
         name,
-        imageUrl,
+        imageUrl: images[0].url,
         billboardId: billboardId,
         storeId: params.storeId,
       },

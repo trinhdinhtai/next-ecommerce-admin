@@ -38,8 +38,8 @@ export const categoryColumns: ColumnDef<CategoryColumn>[] = [
     cell: ({ row }) => {
       return (
         <Image
-          width={80}
-          height={80}
+          width={60}
+          height={60}
           src={row.original.imageUrl}
           className="aspect-square rounded-lg object-cover"
           alt="Category Image"

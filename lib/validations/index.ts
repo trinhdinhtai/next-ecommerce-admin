@@ -4,12 +4,6 @@ export const createStoreSchema = z.object({
   name: z.string().min(1),
 })
 
-export const categorySchema = z.object({
-  name: z.string().min(2),
-  imageUrl: z.string().url().nonempty("Please upload an image"),
-  billboardId: z.string(),
-})
-
 export const colorSchema = z.object({
   name: z.string().min(2),
   value: z.string().min(4).max(9).regex(/^#/, {
