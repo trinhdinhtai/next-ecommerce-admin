@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { useMounted } from "@/hooks/use-mounted"
+import LoadingDots from "@/components/ui/loading-dot"
 
 import { Button, ButtonProps, buttonVariants } from "./button"
 import { Skeleton } from "./skeleton"
@@ -36,9 +36,7 @@ const LoadingButton = React.forwardRef<
       ref={ref}
       disabled={isLoading}
     >
-      {isLoading && (
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-      )}
+      {isLoading && <LoadingDots className="mr-2" />}
       {props.children}
     </Button>
   )
