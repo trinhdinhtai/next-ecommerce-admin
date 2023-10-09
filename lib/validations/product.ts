@@ -9,6 +9,8 @@ export const productSchema = z.object({
       if (val.some((file) => !(file instanceof File))) return false
       return true
     }, "Please upload an images")
+    .optional()
+    .nullable()
     .default(null),
   price: z.coerce.number().min(1),
   inventory: z.number(),

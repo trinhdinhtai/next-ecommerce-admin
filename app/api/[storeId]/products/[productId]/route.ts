@@ -113,7 +113,6 @@ export async function PATCH(
         images: {
           deleteMany: {},
         },
-        isFeatured,
         isArchived,
       },
     })

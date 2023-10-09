@@ -73,25 +73,29 @@ const AddProductForm = ({
   const {
     control,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = form
 
   const onSubmit = async (values: ProductFormInput) => {
     try {
-      if (!isArrayOfFile(values.images)) return
-
-      const images = await startUpload(values.images).then((imagesResponse) => {
-        const formattedImages = imagesResponse?.map((image) => ({
-          id: image.key,
-          name: image.key.split("_")[1] ?? image.key,
-          url: image.url,
-        }))
-        return formattedImages ?? null
-      })
+      let targetImages = null
+      if (values.images && isArrayOfFile(values.images)) {
+        targetImages = await startUpload(values.images).then(
+          (imagesResponse) => {
+            const formattedImages = imagesResponse?.map((image) => ({
+              id: image.key,
+              name: image.key.split("_")[1] ?? image.key,
+              url: image.url,
+            }))
+            return formattedImages ?? null
+          }
+        )
+      }
 
       await addProductAction({
         ...values,
-        images,
+        images: targetImages,
         storeId,
       })
 
@@ -125,7 +129,7 @@ const AddProductForm = ({
           ) : null}
           <FormControl>
             <ImageUploadDialog
-              setValue={form.setValue}
+              setValue={setValue}
               name="images"
               maxFiles={4}
               maxSize={1024 * 1024 * 4}

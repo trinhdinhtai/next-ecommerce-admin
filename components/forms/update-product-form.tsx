@@ -1,19 +1,19 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
-import { useParams, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
+import { updateProductAction } from "@/_actions/products"
 import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Category, Color, Product, Size } from "@prisma/client"
-import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
 import { catchError } from "@/lib/error"
 import { useUploadThing } from "@/lib/uploadthing"
-import { isArrayOfFile } from "@/lib/utils"
+import { getFileNameFromUrl } from "@/lib/utils"
 import { productSchema } from "@/lib/validations/product"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -41,88 +41,105 @@ import LoadingButton from "../ui/loading-button"
 
 export type ProductFormInput = z.infer<typeof productSchema>
 
-interface ProductFormProps {
-  product: Product | null
+interface UpdateProductFormProps {
+  storeId: string
+  product: Product & {
+    images?: {
+      url: string
+    }[]
+  }
   categories: Category[]
   colors: Color[]
   sizes: Size[]
 }
 
-const ProductForm = ({
+export default function UpdateProductForm({
+  storeId,
   product,
   categories,
   colors,
   sizes,
-}: ProductFormProps) => {
-  const params = useParams()
+}: UpdateProductFormProps) {
   const router = useRouter()
-
-  const toastMessage = product
-    ? "Product updated successfully."
-    : "Product created successfully."
-  const action = product ? "Save changes" : "Create"
-
-  const [files, setFiles] = useState<FileWithPreview[] | null>(null)
-  const [isPending, startTransition] = useTransition()
   const { isUploading, startUpload } = useUploadThing("imageUploader")
+  const [files, setFiles] = useState<FileWithPreview[] | null>(null)
 
-  const defaultValues = product
-    ? {
-        ...product,
-        price: parseFloat(String(product?.price)),
-      }
-    : {
-        name: "",
-        images: [],
-        price: 0,
-        inventory: 0,
-        categoryId: "",
-        colorId: "",
-        sizeId: "",
-        isFeatured: false,
-        isArchived: false,
-      }
+  useEffect(() => {
+    if (product?.images?.length) {
+      setFiles(
+        product.images.map((image) => {
+          const file = new File([], getFileNameFromUrl(image.url), {
+            type: "image",
+          })
+          const fileWithPreview = Object.assign(file, {
+            preview: image.url,
+          })
+
+          return fileWithPreview
+        })
+      )
+    }
+  }, [product])
 
   const form = useForm<ProductFormInput>({
     resolver: zodResolver(productSchema),
-    defaultValues,
+    defaultValues: {
+      ...product,
+      price: parseFloat(String(product?.price)),
+    },
   })
 
   const {
     control,
+    setValue,
     formState: { errors, isSubmitting },
   } = form
 
-  const onSubmit = (values: ProductFormInput) => {
-    console.log("file: product-form.tsx:95 ~ onSubmit ~ values:", values)
-    startTransition(async () => {
-      try {
-        const images = isArrayOfFile(values.images)
-          ? await startUpload(values.images).then((imagesResponse) => {
-              const formattedImages = imagesResponse?.map((image) => ({
-                id: image.key,
-                name: image.key.split("_")[1] ?? image.key,
-                url: image.url,
-              }))
-              return formattedImages ?? null
-            })
-          : null
+  const onSubmit = async (values: ProductFormInput) => {
+    try {
+      let productImages = null
+      if (files?.length) {
+        const currentImages = files
+          .filter((image) => !image.size)
+          .map((image) => ({
+            id: image.name,
+            name: image.name,
+            url: image.preview,
+          }))
 
-        if (!product) {
-          await axios.post(`/api/${params.storeId}/products`, values)
-        } else {
-          await axios.patch(
-            `/api/${params.storeId}/products/${params.productId}`,
-            values
-          )
+        const targetImages = files?.filter((image) => image.size)
+
+        const uploadedImages = await startUpload(targetImages).then(
+          (imagesResponse) => {
+            const formattedImages = imagesResponse?.map((image) => ({
+              id: image.key,
+              name: image.key.split("_")[1] ?? image.key,
+              url: image.url,
+            }))
+            return formattedImages ?? null
+          }
+        )
+
+        if (!uploadedImages) {
+          toast.error("Image upload failed")
+          return
         }
-        toast.success(toastMessage)
-        router.refresh()
-        router.push(`/${params.storeId}/products`)
-      } catch (error) {
-        toast.error(catchError(error))
+
+        productImages = [...currentImages, ...uploadedImages]
       }
-    })
+
+      await updateProductAction({
+        ...values,
+        id: product.id,
+        storeId,
+        images: productImages,
+      })
+
+      toast.success("Product updated successfully.")
+      router.push(`/dashboard/stores/${storeId}/products`)
+    } catch (error) {
+      toast.error(catchError(error))
+    }
   }
 
   return (
@@ -147,14 +164,14 @@ const ProductForm = ({
           ) : null}
           <FormControl>
             <ImageUploadDialog
-              setValue={form.setValue}
+              setValue={setValue}
               name="images"
               maxFiles={4}
               maxSize={1024 * 1024 * 4}
               files={files}
               setFiles={setFiles}
               isUploading={isUploading}
-              disabled={isPending}
+              disabled={isSubmitting}
             />
           </FormControl>
           <UncontrolledFormMessage message={errors.images?.message} />
@@ -316,28 +333,6 @@ const ProductForm = ({
 
           <FormField
             control={control}
-            name="isFeatured"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    // @ts-ignore
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>Featured</FormLabel>
-                  <FormDescription>
-                    This product will appear on the home page
-                  </FormDescription>
-                </div>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={control}
             name="isArchived"
             render={({ field }) => (
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
@@ -360,11 +355,9 @@ const ProductForm = ({
         </div>
 
         <LoadingButton type="submit" isLoading={isSubmitting}>
-          {action}
+          Update Product
         </LoadingButton>
       </form>
     </Form>
   )
 }
-
-export default ProductForm

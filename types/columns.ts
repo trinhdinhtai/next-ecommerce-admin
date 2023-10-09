@@ -16,13 +16,13 @@ export type CategoryColumn = {
 export type ProductColumn = {
   id: string
   name: string
+  images: string[]
   price: string
   inventory: number
   category: string
   size: string
   color: string
   createdAt: string
-  isFeatured: boolean
   isArchived: boolean
 }
 

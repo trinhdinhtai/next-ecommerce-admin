@@ -38,9 +38,7 @@ interface BillboardFormProps {
 
 const UpdateBillboardForm = ({ storeId, billboard }: BillboardFormProps) => {
   const router = useRouter()
-
   const { isUploading, startUpload } = useUploadThing("imageUploader")
-
   const [files, setFiles] = useState<FileWithPreview[] | null>(null)
 
   useEffect(() => {

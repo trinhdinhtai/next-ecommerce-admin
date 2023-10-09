@@ -29,6 +29,7 @@ export async function getProductByStoreIdAction(storeId: string) {
       category: true,
       size: true,
       color: true,
+      images: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -56,7 +57,7 @@ export async function addProductAction(
     storeId,
   } = input
 
-  await prisma.product.create({
+  const product = await prisma.product.create({
     data: {
       name,
       price,
@@ -66,13 +67,71 @@ export async function addProductAction(
       colorId,
       sizeId,
       storeId,
-      images: {
-        createMany: {
-          data: images,
-        },
-      },
     },
   })
+
+  if (images?.length) {
+    await prisma.image.createMany({
+      data: images.map((image) => ({
+        url: image.url,
+        productId: product.id,
+      })),
+    })
+  }
+
+  revalidatePath(`/dashboard/stores/${storeId}/products`)
+}
+
+export async function updateProductAction(
+  input: z.infer<typeof productSchema> & {
+    id: string
+    storeId: string
+    images: StoredFile[] | null
+  }
+) {
+  const {
+    id,
+    name,
+    price,
+    inventory,
+    categoryId,
+    colorId,
+    sizeId,
+    images,
+    isArchived,
+    storeId,
+  } = input
+
+  const product = await prisma.product.update({
+    where: {
+      id,
+    },
+    data: {
+      name,
+      price,
+      inventory,
+      isArchived,
+      categoryId,
+      colorId,
+      sizeId,
+      storeId,
+    },
+  })
+
+  await prisma.image.deleteMany({
+    where: {
+      productId: id,
+    },
+  })
+
+  if (images?.length) {
+    await prisma.image.createMany({
+      data: images.map((image) => ({
+        url: image.url,
+        productId: product.id,
+      })),
+    })
+  }
 
   revalidatePath(`/dashboard/stores/${storeId}/products`)
 }

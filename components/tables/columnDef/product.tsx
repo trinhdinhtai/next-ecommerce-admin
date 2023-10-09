@@ -1,6 +1,8 @@
+import Image from "next/image"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { ProductColumn } from "@/types/columns"
+import AvatarGroup from "@/components/ui/avatar-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
 import DataTableRowActions from "@/components/ui/data-table-row-actions"
@@ -30,6 +32,11 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
+  },
+  {
+    accessorKey: "images",
+    header: "Images",
+    cell: ({ row }) => <AvatarGroup avatars={row.original.images} />,
   },
   {
     accessorKey: "price",
@@ -66,11 +73,6 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
     accessorKey: "isArchived",
     header: "Archived",
     cell: ({ row }) => <Checkbox checked={row.original.isArchived} disabled />,
-  },
-  {
-    accessorKey: "isFeatured",
-    header: "Featured",
-    cell: ({ row }) => <Checkbox checked={row.original.isFeatured} disabled />,
   },
   {
     accessorKey: "createdAt",

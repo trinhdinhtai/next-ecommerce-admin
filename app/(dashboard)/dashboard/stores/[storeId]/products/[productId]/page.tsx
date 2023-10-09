@@ -1,10 +1,11 @@
+import { notFound } from "next/navigation"
 import { getCategoriesByStoreId } from "@/_actions/categories"
 import { getColorsByStoreId } from "@/_actions/colors"
 import { getProductById } from "@/_actions/products"
 import { getSizesByStoreId } from "@/_actions/sizes"
 
 import { Shell } from "@/components/ui/shell"
-import ProductForm from "@/components/forms/product-form"
+import UpdateProductForm from "@/components/forms/update-product-form"
 import PageHeading from "@/components/PageHeading"
 
 interface ProductIdPageProps {
@@ -15,11 +16,12 @@ interface ProductIdPageProps {
 }
 
 const ProductIdPage = async ({ params }: ProductIdPageProps) => {
+  const { storeId, productId } = params
   const response = await Promise.all([
-    getProductById(params.productId),
-    getCategoriesByStoreId(params.storeId),
-    getColorsByStoreId(params.storeId),
-    getSizesByStoreId(params.storeId),
+    getProductById(productId),
+    getCategoriesByStoreId(storeId),
+    getColorsByStoreId(storeId),
+    getSizesByStoreId(storeId),
   ])
 
   const product = response[0]
@@ -27,13 +29,13 @@ const ProductIdPage = async ({ params }: ProductIdPageProps) => {
   const colors = response[2]
   const sizes = response[3]
 
+  if (!product) return notFound()
+
   return (
     <Shell>
-      <PageHeading
-        title={product ? product.name : "Add Product"}
-        description={product ? "Edit Product" : "Add a new Product"}
-      />
-      <ProductForm
+      <PageHeading title={product.name} description="Edit Product" />
+      <UpdateProductForm
+        storeId={storeId}
         product={product}
         categories={categories}
         colors={colors}
