@@ -13,22 +13,16 @@ export async function GET(
     const categoryId = searchParams.get("categoryId") || undefined
     const colorId = searchParams.get("colorId") || undefined
     const sizeId = searchParams.get("sizeId") || undefined
-    const isFeatured = searchParams.get("isFeatured")
-
-    let isFeaturedValue
-    if (isFeatured === "true") {
-      isFeaturedValue = true
-    } else if (isFeatured === "false") {
-      isFeaturedValue = false
-    } else {
-      isFeaturedValue = undefined
-    }
+    const limit = searchParams.get("limit")
+    const offset = searchParams.get("offset")
 
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 })
     }
 
     const products = await prisma.product.findMany({
+      skip: offset ? parseInt(offset) : undefined,
+      take: limit ? parseInt(limit) : undefined,
       where: {
         storeId: params.storeId,
         categoryId,
