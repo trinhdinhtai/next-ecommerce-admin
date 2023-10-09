@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation"
 import { getCategoriesByStoreId } from "@/_actions/categories"
-import { getColorsByStoreId } from "@/_actions/colors"
+import { getColorsByStoreIdAction } from "@/_actions/colors"
 import { getProductById } from "@/_actions/products"
-import { getSizesByStoreId } from "@/_actions/sizes"
+import { getSizesByStoreIdAction } from "@/_actions/sizes"
 
 import { Shell } from "@/components/ui/shell"
 import UpdateProductForm from "@/components/forms/update-product-form"
@@ -20,8 +20,8 @@ const ProductIdPage = async ({ params }: ProductIdPageProps) => {
   const response = await Promise.all([
     getProductById(productId),
     getCategoriesByStoreId(storeId),
-    getColorsByStoreId(storeId),
-    getSizesByStoreId(storeId),
+    getColorsByStoreIdAction(storeId),
+    getSizesByStoreIdAction(storeId),
   ])
 
   const product = response[0]

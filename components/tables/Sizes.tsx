@@ -1,22 +1,35 @@
 "use client"
 
+import { deleteSizesBySizeIdsAction } from "@/_actions/sizes"
+import { toast } from "sonner"
+
 import { SizeColumn } from "@/types/columns"
+import { catchError } from "@/lib/error"
 import DataTable from "@/components/ui/data-table"
-import { Shell } from "@/components/ui/shell"
-import PageHeading from "@/components/PageHeading"
 
 import { sizeColumns } from "./columnDef/size"
 
 interface SizesTableProps {
+  storeId: string
   data: SizeColumn[]
 }
 
-const SizesTable = ({ data }: SizesTableProps) => {
+const SizesTable = ({ storeId, data }: SizesTableProps) => {
+  const handleDeleteSelectedRows = async (selectedRowIds: string[]) => {
+    toast.promise(deleteSizesBySizeIdsAction(selectedRowIds, storeId), {
+      loading: "Deleting...",
+      success: () => "Sizes deleted successfully.",
+      error: (error) => catchError(error),
+    })
+  }
+
   return (
-    <Shell>
-      <PageHeading title="Sizes" description="Manage sizes for your store" />
-      <DataTable columns={sizeColumns} data={data} searchKey="name" />
-    </Shell>
+    <DataTable
+      columns={sizeColumns}
+      data={data}
+      searchKey="name"
+      deleteRowsAction={handleDeleteSelectedRows}
+    />
   )
 }
 

@@ -1,29 +1,29 @@
-import PageHeading from "@/components/PageHeading";
-import SizeForm from "@/components/forms/SideForm";
-import { prisma } from "@/lib/prismadb";
+import { notFound } from "next/navigation"
+import { getSizeByIdAction } from "@/_actions/sizes"
+
+import { Shell } from "@/components/ui/shell"
+import UpdateSizeForm from "@/components/forms/update-size-form"
+import PageHeading from "@/components/PageHeading"
 
 interface SizeIdPageProps {
   params: {
-    sizeId: string;
-  };
+    storeId: string
+    sizeId: string
+  }
 }
 
 const SizeIdPage = async ({ params }: SizeIdPageProps) => {
-  const size = await prisma.size.findUnique({
-    where: {
-      id: params.sizeId,
-    },
-  });
+  const { sizeId } = params
+  const size = await getSizeByIdAction(sizeId)
+
+  if (!size) return notFound()
 
   return (
-    <>
-      <PageHeading
-        title={size ? size.name : "Add Size"}
-        description={size ? "Edit category" : "Add a new size"}
-      />
-      <SizeForm size={size} />
-    </>
-  );
-};
+    <Shell>
+      <PageHeading title={size.name} description="Edit size" />
+      <UpdateSizeForm storeId={params.storeId} size={size} />
+    </Shell>
+  )
+}
 
-export default SizeIdPage;
+export default SizeIdPage

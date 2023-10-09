@@ -1,16 +1,13 @@
 "use client"
 
-import { useState } from "react"
-import { useParams, useRouter } from "next/navigation"
+import { addSizeAction } from "@/_actions/sizes"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Size } from "@prisma/client"
-import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { catchError } from "@/lib/error"
 import { sizeSchema } from "@/lib/validations"
-import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -20,56 +17,40 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import LoadingButton from "@/components/ui/loading-button"
 
 type SizeFormInput = z.infer<typeof sizeSchema>
 
-interface SizeFormProps {
-  size: Size | null
+interface AddSizeFormProps {
+  storeId: string
 }
 
-const SizeForm = ({ size }: SizeFormProps) => {
-  const params = useParams()
-  const router = useRouter()
-
-  const [isLoading, setIsLoading] = useState(false)
-
-  const loadingMessage = size ? "Updating size ..." : "Creating size ..."
-  const toastMessage = size ? "Size updated." : "Size created."
-  const action = size ? "Save changes" : "Create"
-
+export default function AddSizeForm({ storeId }: AddSizeFormProps) {
   const form = useForm<SizeFormInput>({
     resolver: zodResolver(sizeSchema),
     defaultValues: {
-      name: size?.name || "",
-      value: size?.value || "",
+      name: "",
+      value: "",
     },
   })
 
-  const onSubmit = async (values: SizeFormInput) => {
-    toast.promise(onCreateSize(values), {
-      loading: loadingMessage,
-      success: toastMessage,
-      error: "Something went wrong",
-    })
-  }
+  const {
+    control,
+    reset,
+    formState: { isSubmitting },
+  } = form
 
-  const onCreateSize = async (values: SizeFormInput) => {
+  const onSubmit = async (values: SizeFormInput) => {
     try {
-      setIsLoading(true)
-      if (!size) {
-        await axios.post(`/api/${params.storeId}/sizes`, values)
-      } else {
-        await axios.patch(
-          `/api/${params.storeId}/sizes/${params.sizeId}`,
-          values
-        )
-      }
-      router.refresh()
-      router.push(`/${params.storeId}/sizes`)
+      await addSizeAction({
+        ...values,
+        storeId,
+      })
+
+      reset()
+      toast.success("Size created successfully.")
     } catch (error) {
-      throw error
-    } finally {
-      setIsLoading(false)
+      toast.error(catchError(error))
     }
   }
 
@@ -79,14 +60,14 @@ const SizeForm = ({ size }: SizeFormProps) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="grid grid-cols-2 gap-10">
             <FormField
-              control={form.control}
+              control={control}
               name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
-                      disabled={isLoading}
+                      disabled={isSubmitting}
                       placeholder="Size name"
                       {...field}
                     />
@@ -104,7 +85,7 @@ const SizeForm = ({ size }: SizeFormProps) => {
                   <FormLabel>Size value</FormLabel>
                   <FormControl>
                     <Input
-                      disabled={isLoading}
+                      disabled={isSubmitting}
                       placeholder="Size value"
                       {...field}
                     />
@@ -115,13 +96,11 @@ const SizeForm = ({ size }: SizeFormProps) => {
             />
           </div>
 
-          <Button type="submit" disabled={isLoading}>
-            {action}
-          </Button>
+          <LoadingButton type="submit" isLoading={isSubmitting}>
+            Add Size
+          </LoadingButton>
         </form>
       </Form>
     </>
   )
 }
-
-export default SizeForm

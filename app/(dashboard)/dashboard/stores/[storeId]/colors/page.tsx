@@ -1,32 +1,33 @@
-import ColorsTable from "@/components/tables/Colors";
-import { prisma } from "@/lib/prismadb";
-import { ColorColumn } from "@/types/columns";
-import { format } from "date-fns";
+import { getColorsByStoreIdAction } from "@/_actions/colors"
+import { format } from "date-fns"
+
+import { ColorColumn } from "@/types/columns"
+import { prisma } from "@/lib/prismadb"
+import { Shell } from "@/components/ui/shell"
+import PageHeading from "@/components/PageHeading"
+import ColorsTable from "@/components/tables/Colors"
 
 interface ColorsPageProps {
   params: {
-    storeId: string;
-  };
+    storeId: string
+  }
 }
 
 const ColorsPage = async ({ params }: ColorsPageProps) => {
-  const colors = await prisma.color.findMany({
-    where: {
-      storeId: params.storeId,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const { storeId } = params
+  const colors = await getColorsByStoreIdAction(storeId)
 
   const formattedColors: ColorColumn[] = colors.map((item) => ({
-    id: item.id,
-    name: item.name,
-    value: item.value,
+    ...item,
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
-  }));
+  }))
 
-  return <ColorsTable data={formattedColors} />;
-};
+  return (
+    <Shell>
+      <PageHeading title="Colors" description="Manage colors for your store" />
+      <ColorsTable data={formattedColors} storeId={storeId} />
+    </Shell>
+  )
+}
 
-export default ColorsPage;
+export default ColorsPage

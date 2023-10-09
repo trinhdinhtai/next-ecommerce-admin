@@ -1,6 +1,6 @@
 import { getCategoriesByStoreId } from "@/_actions/categories"
-import { getColorsByStoreId } from "@/_actions/colors"
-import { getSizesByStoreId } from "@/_actions/sizes"
+import { getColorsByStoreIdAction } from "@/_actions/colors"
+import { getSizesByStoreIdAction } from "@/_actions/sizes"
 
 import { Shell } from "@/components/ui/shell"
 import AddProductForm from "@/components/forms/add-product-form"
@@ -16,8 +16,8 @@ export default async function NewProductPage({ params }: NewProductPageProps) {
   const { storeId } = params
   const response = await Promise.all([
     getCategoriesByStoreId(storeId),
-    getColorsByStoreId(storeId),
-    getSizesByStoreId(storeId),
+    getColorsByStoreIdAction(storeId),
+    getSizesByStoreIdAction(storeId),
   ])
 
   const categories = response[0]

@@ -1,32 +1,32 @@
-import SizesTable from "@/components/tables/Sizes";
-import { prisma } from "@/lib/prismadb";
-import { SizeColumn } from "@/types/columns";
-import { format } from "date-fns";
+import { getSizesByStoreIdAction } from "@/_actions/sizes"
+import { format } from "date-fns"
+
+import { SizeColumn } from "@/types/columns"
+import { Shell } from "@/components/ui/shell"
+import PageHeading from "@/components/PageHeading"
+import SizesTable from "@/components/tables/Sizes"
 
 interface ColorsPageProps {
   params: {
-    storeId: string;
-  };
+    storeId: string
+  }
 }
 
 const SizesPage = async ({ params }: ColorsPageProps) => {
-  const sizes = await prisma.size.findMany({
-    where: {
-      storeId: params.storeId,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const { storeId } = params
+  const sizes = await getSizesByStoreIdAction(storeId)
 
   const formattedSizes: SizeColumn[] = sizes.map((item) => ({
-    id: item.id,
-    name: item.name,
-    value: item.value,
+    ...item,
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
-  }));
+  }))
 
-  return <SizesTable data={formattedSizes} />;
-};
+  return (
+    <Shell>
+      <PageHeading title="Sizes" description="Manage sizes for your store" />
+      <SizesTable data={formattedSizes} storeId={storeId} />
+    </Shell>
+  )
+}
 
-export default SizesPage;
+export default SizesPage
