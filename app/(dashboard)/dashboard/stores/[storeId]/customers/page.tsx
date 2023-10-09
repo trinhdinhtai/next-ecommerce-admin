@@ -1,8 +1,9 @@
-import PageHeading from "@/components/PageHeading";
+import { Shell } from "@/components/ui/shell"
+import PageHeading from "@/components/PageHeading"
 
 const CustomersPage = () => {
   return (
-    <div>
+    <Shell>
       <PageHeading
         title="Customers"
         description="Manage customers for your store"
@@ -11,8 +12,8 @@ const CustomersPage = () => {
       <h2 className="mt-4 text-lg font-semibold">
         This page is in development
       </h2>
-    </div>
-  );
-};
+    </Shell>
+  )
+}
 
-export default CustomersPage;
+export default CustomersPage
