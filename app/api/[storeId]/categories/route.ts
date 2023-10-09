@@ -16,6 +16,12 @@ export async function GET(
       where: {
         storeId: params.storeId,
       },
+      select: {
+        id: true,
+        name: true,
+        imageUrl: true,
+        _count: true,
+      },
     })
 
     return NextResponse.json(categories)
