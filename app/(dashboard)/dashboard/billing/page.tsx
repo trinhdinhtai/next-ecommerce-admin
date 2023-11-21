@@ -1,7 +1,5 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
-import { auth } from "@clerk/nextjs"
 
 import { env } from "@/env.mjs"
 import { storeSubscriptionPlans } from "@/config/subscriptions"
@@ -48,7 +46,7 @@ export default async function BillingPage() {
           className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4"
         >
           {storeSubscriptionPlans.map((plan) => (
-            <div key={plan.id}>
+            <div key={plan.id} className="mt-8">
               <RadioGroupItem
                 id={plan.id}
                 value={plan.id}
@@ -56,8 +54,14 @@ export default async function BillingPage() {
               />
               <Label
                 htmlFor={plan.id}
-                className="flex flex-col justify-between rounded-md border-2 border-muted bg-popover p-6 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                className="relative flex flex-col justify-between rounded-md border-2 border-muted bg-popover p-6 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-purple-500 [&:has([data-state=checked])]:border-primary"
               >
+                {plan.popular && (
+                  <div className="absolute left-1/2 top-0 inline-block -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-gradient-to-r from-pink-500 to-purple-500 px-3 py-1 text-sm text-white">
+                    Popular
+                  </div>
+                )}
+
                 <p className="text-lg font-semibold sm:text-xl">{plan.name}</p>
 
                 <p className="text-sm text-muted-foreground">
@@ -86,7 +90,9 @@ export default async function BillingPage() {
                   <Link
                     href="/dashboard/stores"
                     className={cn(
-                      buttonVariants({ variant: "default" }),
+                      buttonVariants({
+                        variant: plan.popular ? "gradient" : "default",
+                      }),
                       "w-full"
                     )}
                   >

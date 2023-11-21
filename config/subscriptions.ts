@@ -14,6 +14,7 @@ export const storeSubscriptionPlans: SubscriptionPlan[] = [
     description: "Perfect for midsize businesses that want to sell online.",
     features: ["Create up to 2 store", "Create up to 20 products per store"],
     price: 10,
+    popular: true,
   },
   {
     id: "pro",

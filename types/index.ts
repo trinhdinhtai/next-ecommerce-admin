@@ -51,6 +51,7 @@ export interface SubscriptionPlan {
   description: string
   features: string[]
   price: number
+  popular?: boolean
 }
 
 export type FileWithPreview = FileWithPath & {
