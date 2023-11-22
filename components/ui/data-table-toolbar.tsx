@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Cross2Icon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
 import { Plus } from "lucide-react"
 
@@ -10,7 +11,7 @@ import DataTableDeleteButton from "@/components/ui/data-table-delete-button"
 import { DataTableExportButton } from "@/components/ui/data-table-export-button"
 import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filter"
 
-import { buttonVariants } from "./button"
+import { Button, buttonVariants } from "./button"
 import { DataTableViewOptions } from "./data-table-view-option"
 import { Input } from "./input"
 
@@ -27,6 +28,10 @@ export function DataTableToolbar<TData>({
   filterableColumns = [],
   deleteRowsAction,
 }: DataTableToolbarProps<TData>) {
+  console.log(
+    "file: data-table-toolbar.tsx:31 ~ filterableColumns:",
+    filterableColumns
+  )
   const pathname = usePathname()
 
   const searchField = String(searchKey)
@@ -58,6 +63,18 @@ export function DataTableToolbar<TData>({
                 />
               )
           )}
+
+        {isFiltered && (
+          <Button
+            aria-label="Reset filters"
+            variant="ghost"
+            className="h-8 px-2 lg:px-3"
+            onClick={() => table.resetColumnFilters()}
+          >
+            Reset
+            <Cross2Icon className="ml-2 h-4 w-4" aria-hidden="true" />
+          </Button>
+        )}
       </div>
 
       <div className="flex items-center gap-2">

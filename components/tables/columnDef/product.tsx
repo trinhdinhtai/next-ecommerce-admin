@@ -53,6 +53,9 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
         {row.original.category}
       </Badge>
     ),
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
   },
   {
     accessorKey: "size",
