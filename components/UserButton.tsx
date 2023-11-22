@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { User } from "@/types"
 import { useClerk } from "@clerk/nextjs"
@@ -63,8 +64,8 @@ const UserButton = ({ user }: UserProps) => {
 
       <DropdownMenuContent className="w-64">
         <DropdownMenuGroup className="mt-2 space-y-3">
-          <DropdownMenuItem onClick={() => router.push("/")}>
-            Dashboard
+          <DropdownMenuItem onClick={() => router.push("/dashboard/stores")}>
+            Stores
           </DropdownMenuItem>
           <DropdownMenuItem>My Profile</DropdownMenuItem>
         </DropdownMenuGroup>
@@ -92,7 +93,9 @@ const UserButton = ({ user }: UserProps) => {
 
         <DropdownMenuGroup className="mt-4 space-y-3">
           <DropdownMenuItem className="mt-4 flex items-center justify-between">
-            <span>GM Solutions Homepage</span>
+            <Link href="https://gm-group.vn/" target="_blank">
+              Homepage
+            </Link>
             <ExternalLink className="h-4 w-4" />
           </DropdownMenuItem>
           <DropdownMenuItem
