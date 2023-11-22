@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Shell } from "@/components/ui/shell"
+import DeleteStoreSection from "@/components/delete-store-section"
 import UpdateStoreForm from "@/components/forms/update-store-form"
 import PageHeading from "@/components/PageHeading"
 
@@ -45,6 +46,8 @@ const SettingsPage = async ({ params }: SettingsPageProps) => {
           <UpdateStoreForm store={store} />
         </CardContent>
       </Card>
+
+      <DeleteStoreSection storeId={store.id} />
     </Shell>
   )
 }

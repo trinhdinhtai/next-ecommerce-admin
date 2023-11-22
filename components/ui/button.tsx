@@ -21,6 +21,8 @@ const buttonVariants = cva(
         premium:
           "bg-gradient-to-r from-[#1C79BD] via-purple-500 to-[#5AA2D6] text-white border-0",
         gradient: "bg-gradient-to-r from-pink-500 to-purple-500 text-white",
+        warning:
+          "border border-input bg-background text-red-600 hover:border-red-600 hover:bg-background",
       },
       size: {
         default: "h-10 px-4 py-2",
