@@ -27,7 +27,6 @@ const SizesTable = ({ storeId, data }: SizesTableProps) => {
     <DataTable
       columns={sizeColumns}
       data={data}
-      searchKey="name"
       deleteRowsAction={handleDeleteSelectedRows}
     />
   )

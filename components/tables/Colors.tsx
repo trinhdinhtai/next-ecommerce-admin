@@ -28,7 +28,6 @@ const ColorsTable = ({ storeId, data }: ColorsTableProps) => {
     <DataTable
       columns={colorColumns}
       data={data}
-      searchKey="name"
       deleteRowsAction={handleDeleteSelectedRows}
     />
   )

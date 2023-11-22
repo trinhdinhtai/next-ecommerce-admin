@@ -26,7 +26,6 @@ const BillboardsTable = ({ data, storeId }: BillboardsTableProps) => {
     <DataTable
       columns={billboardColumns}
       data={data}
-      searchKey="label"
       deleteRowsAction={handleDeleteSelectedRows}
     />
   )

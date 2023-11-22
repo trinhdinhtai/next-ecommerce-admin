@@ -6,6 +6,10 @@ import { Cross2Icon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
 import { Plus } from "lucide-react"
 
+import {
+  DataTableFilterableColumn,
+  DataTableSearchableColumn,
+} from "@/types/data-table"
 import { cn } from "@/lib/utils"
 import DataTableDeleteButton from "@/components/ui/data-table-delete-button"
 import { DataTableExportButton } from "@/components/ui/data-table-export-button"
@@ -17,14 +21,14 @@ import { Input } from "./input"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
-  searchKey: keyof TData
+  searchableColumns?: DataTableSearchableColumn<TData>[]
   filterableColumns?: DataTableFilterableColumn<TData>[]
   deleteRowsAction?: (selectedRowIds: string[]) => void
 }
 
 export function DataTableToolbar<TData>({
   table,
-  searchKey,
+  searchableColumns = [],
   filterableColumns = [],
   deleteRowsAction,
 }: DataTableToolbarProps<TData>) {
@@ -34,22 +38,32 @@ export function DataTableToolbar<TData>({
   )
   const pathname = usePathname()
 
-  const searchField = String(searchKey)
   const isFiltered = table.getState().columnFilters.length > 0
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
-        <Input
-          placeholder={`Filter by ${searchField}...`}
-          value={
-            (table.getColumn(searchField)?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn(searchField)?.setFilterValue(event.target.value)
-          }
-          className="h-8 w-[150px] lg:w-[250px]"
-        />
+        {searchableColumns.length > 0 &&
+          searchableColumns.map(
+            (column) =>
+              table.getColumn(column.id ? String(column.id) : "") && (
+                <Input
+                  key={String(column.id)}
+                  placeholder={`Filter ${column.title}...`}
+                  value={
+                    (table
+                      .getColumn(String(column.id))
+                      ?.getFilterValue() as string) ?? ""
+                  }
+                  onChange={(event) =>
+                    table
+                      .getColumn(String(column.id))
+                      ?.setFilterValue(event.target.value)
+                  }
+                  className="h-8 w-[150px] lg:w-[250px]"
+                />
+              )
+          )}
 
         {filterableColumns.length > 0 &&
           filterableColumns.map(

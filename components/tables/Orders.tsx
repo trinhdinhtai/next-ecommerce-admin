@@ -15,7 +15,7 @@ const OrdersTable = ({ data }: OrderTableProps) => {
   return (
     <Shell>
       <PageHeading title="Orders" description="Manage orders for your store" />
-      <DataTable columns={orderColumns} data={data} searchKey="products" />
+      <DataTable columns={orderColumns} data={data} />
     </Shell>
   )
 }

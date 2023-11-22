@@ -15,7 +15,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
-import { DataTableFilterableColumn } from "@/types/data-table"
+import {
+  DataTableFilterableColumn,
+  DataTableSearchableColumn,
+} from "@/types/data-table"
 import {
   Table,
   TableBody,
@@ -31,7 +34,7 @@ import { DataTableToolbar } from "./data-table-toolbar"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  searchKey: keyof TData
+  searchableColumns?: DataTableSearchableColumn<TData>[]
   filterableColumns?: DataTableFilterableColumn<TData>[]
   deleteRowsAction?: (selectedRowIds: string[]) => void
 }
@@ -39,8 +42,8 @@ interface DataTableProps<TData, TValue> {
 export default function DataTable<TData, TValue>({
   columns,
   data,
-  searchKey,
   deleteRowsAction,
+  searchableColumns = [],
   filterableColumns = [],
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -75,7 +78,7 @@ export default function DataTable<TData, TValue>({
     <div className="space-y-4">
       <DataTableToolbar
         table={table}
-        searchKey={searchKey}
+        searchableColumns={searchableColumns}
         filterableColumns={filterableColumns}
         deleteRowsAction={deleteRowsAction}
       />

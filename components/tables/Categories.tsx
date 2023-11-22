@@ -33,7 +33,6 @@ const CategoriesTable = ({ storeId, data }: CategoriesTableProps) => {
       <DataTable
         columns={categoryColumns}
         data={data}
-        searchKey="name"
         deleteRowsAction={handleDeleteSelectedRows}
       />
     </Shell>

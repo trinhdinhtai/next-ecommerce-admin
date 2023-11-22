@@ -30,11 +30,29 @@ const ProductsTable = ({ storeId, data }: ProductsTableProps) => {
     queryFn: () => fetcher(`/api/${storeId}/categories`),
   })
 
+  const filterableColumns = [
+    {
+      id: "category",
+      title: "Category",
+      options: categories
+        ? categories.map(({ name }: Category) => ({
+            label: `${name.charAt(0).toUpperCase()}${name.slice(1)}`,
+            value: name,
+          }))
+        : [],
+    },
+  ]
+
   return (
     <DataTable
       columns={productColumns}
       data={data}
-      searchKey="name"
+      searchableColumns={[
+        {
+          id: "name",
+          title: "names",
+        },
+      ]}
       filterableColumns={[
         {
           id: "category",

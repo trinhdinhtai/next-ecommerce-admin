@@ -5,7 +5,7 @@ import { format } from "date-fns"
 import { ProductColumn } from "@/types/columns"
 import { Shell } from "@/components/ui/shell"
 import PageHeading from "@/components/PageHeading"
-import ProductsTable from "@/components/tables/Products"
+import ProductsTable from "@/components/tables/product-table"
 
 interface ProductsPageProps {
   params: {
