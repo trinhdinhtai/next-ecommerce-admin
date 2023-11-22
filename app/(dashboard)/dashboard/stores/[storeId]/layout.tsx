@@ -40,12 +40,10 @@ export default async function StoreIdLayout({
   }
 
   return (
-    <div className="flex h-full">
-      <div className="w-72">
-        <StoreSidebar stores={stores} currentStore={store} />
-      </div>
+    <div className="grid grid-cols-[288px_minmax(0,1fr)]">
+      <StoreSidebar stores={stores} currentStore={store} />
 
-      <div className="flex-1">{children}</div>
+      <div>{children}</div>
     </div>
   )
 }

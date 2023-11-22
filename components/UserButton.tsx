@@ -67,7 +67,9 @@ const UserButton = ({ user }: UserProps) => {
           <DropdownMenuItem onClick={() => router.push("/dashboard/stores")}>
             Stores
           </DropdownMenuItem>
-          <DropdownMenuItem>My Profile</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => router.push("/settings/account")}>
+            Settings
+          </DropdownMenuItem>
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator className="mt-4" />

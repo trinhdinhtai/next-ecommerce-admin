@@ -5,7 +5,7 @@ export const storeSubscriptionPlans: SubscriptionPlan[] = [
     id: "basic",
     name: "Basic",
     description: "Perfect for small businesses that want to sell online.",
-    features: ["Create up to 1 store", "Create up to 20 products"],
+    features: ["Create up to 1 store", "Create up to 20 products per store"],
     price: 0,
   },
   {
@@ -13,7 +13,7 @@ export const storeSubscriptionPlans: SubscriptionPlan[] = [
     name: "Standard",
     description: "Perfect for midsize businesses that want to sell online.",
     features: ["Create up to 2 store", "Create up to 20 products per store"],
-    price: 10,
+    price: 20,
     popular: true,
   },
   {
@@ -21,7 +21,7 @@ export const storeSubscriptionPlans: SubscriptionPlan[] = [
     name: "Pro",
     description: "Perfect for big businesses that want to sell online.",
     features: ["Create up to 3 stores", "Create up to 20 products per store"],
-    price: 20,
+    price: 100,
   },
   {
     id: "enterprise",

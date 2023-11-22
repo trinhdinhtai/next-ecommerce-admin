@@ -8,7 +8,7 @@ interface StoreProps {
 
 export default function StoreSidebar({ stores, currentStore }: StoreProps) {
   return (
-    <nav className="flex h-full flex-col overflow-auto border-r bg-background py-5">
+    <nav className="sticky top-16 flex h-[calc(100vh-4rem)] flex-col overflow-auto border-r bg-background py-5">
       <div className="flex justify-center">
         <StoreSwitcher stores={stores} currentStore={currentStore} />
       </div>
