@@ -15,6 +15,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
+import { DataTableFilterableColumn } from "@/types/data-table"
 import {
   Table,
   TableBody,
@@ -31,6 +32,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   searchKey: keyof TData
+  filterableColumns?: DataTableFilterableColumn<TData>[]
   deleteRowsAction?: (selectedRowIds: string[]) => void
 }
 
@@ -39,6 +41,7 @@ export default function DataTable<TData, TValue>({
   data,
   searchKey,
   deleteRowsAction,
+  filterableColumns = [],
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -66,6 +69,10 @@ export default function DataTable<TData, TValue>({
       columnFilters,
       rowSelection,
     },
+  })
+
+  const filterableColumnFilters = columnFilters.filter((filter) => {
+    return filterableColumns.find((column) => column.id === filter.id)
   })
 
   return (
