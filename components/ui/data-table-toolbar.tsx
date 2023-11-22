@@ -8,6 +8,7 @@ import { Plus } from "lucide-react"
 import { cn } from "@/lib/utils"
 import DataTableDeleteButton from "@/components/ui/data-table-delete-button"
 import { DataTableExportButton } from "@/components/ui/data-table-export-button"
+import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filter"
 
 import { buttonVariants } from "./button"
 import { DataTableViewOptions } from "./data-table-view-option"
@@ -16,17 +17,20 @@ import { Input } from "./input"
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
   searchKey: keyof TData
+  filterableColumns?: DataTableFilterableColumn<TData>[]
   deleteRowsAction?: (selectedRowIds: string[]) => void
 }
 
 export function DataTableToolbar<TData>({
   table,
   searchKey,
+  filterableColumns = [],
   deleteRowsAction,
 }: DataTableToolbarProps<TData>) {
   const pathname = usePathname()
 
   const searchField = String(searchKey)
+  const isFiltered = table.getState().columnFilters.length > 0
 
   return (
     <div className="flex items-center justify-between">
@@ -41,6 +45,19 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
+
+        {filterableColumns.length > 0 &&
+          filterableColumns.map(
+            (column) =>
+              table.getColumn(column.id ? String(column.id) : "") && (
+                <DataTableFacetedFilter
+                  key={String(column.id)}
+                  column={table.getColumn(column.id ? String(column.id) : "")}
+                  title={column.title}
+                  options={column.options}
+                />
+              )
+          )}
       </div>
 
       <div className="flex items-center gap-2">

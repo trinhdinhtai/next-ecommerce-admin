@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { ProductColumn } from "@/types/columns"
 import AvatarGroup from "@/components/ui/avatar-group"
+import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
 import DataTableRowActions from "@/components/ui/data-table-row-actions"
@@ -47,6 +48,11 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "category",
     header: "Category",
+    cell: ({ row }) => (
+      <Badge variant="outline" className="capitalize">
+        {row.original.category}
+      </Badge>
+    ),
   },
   {
     accessorKey: "size",

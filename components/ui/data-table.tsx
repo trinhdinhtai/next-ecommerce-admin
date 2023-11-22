@@ -71,15 +71,12 @@ export default function DataTable<TData, TValue>({
     },
   })
 
-  const filterableColumnFilters = columnFilters.filter((filter) => {
-    return filterableColumns.find((column) => column.id === filter.id)
-  })
-
   return (
     <div className="space-y-4">
       <DataTableToolbar
         table={table}
         searchKey={searchKey}
+        filterableColumns={filterableColumns}
         deleteRowsAction={deleteRowsAction}
       />
 
