@@ -1,10 +1,9 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import axios from "axios"
+import { deleteStore } from "@/_actions/store"
 import { toast } from "sonner"
 
+import { useAction } from "@/hooks/use-action"
 import LoadingButton from "@/components/ui/loading-button"
 
 interface DeleteStoreSectionProps {
@@ -14,23 +13,14 @@ interface DeleteStoreSectionProps {
 export default function DeleteStoreSection({
   storeId,
 }: DeleteStoreSectionProps) {
-  const router = useRouter()
-  const [isDeleting, setIsDeleting] = useState(false)
-
-  const handleDeleteStore = async () => {
-    setIsDeleting(true)
-
-    try {
-      await axios.delete(`/api/${storeId}`)
-      toast.success("Store deleted successfully!")
-      router.refresh()
-      router.push("/dashboard/stores")
-    } catch (error) {
-      throw error
-    } finally {
-      setIsDeleting(false)
-    }
-  }
+  const { execute, isLoading } = useAction(deleteStore, {
+    onSuccess: ({ name }) => {
+      toast.success(`Store ${name} deleted successfully`)
+    },
+    onError: (error) => {
+      toast.error(error)
+    },
+  })
 
   return (
     <div className="relative rounded-lg border border-red-600">
@@ -51,8 +41,8 @@ export default function DeleteStoreSection({
         <LoadingButton
           type="submit"
           variant="warning"
-          isLoading={isDeleting}
-          onClick={handleDeleteStore}
+          isLoading={isLoading}
+          onClick={() => execute({ id: storeId })}
           className="mt-4"
         >
           Delete store

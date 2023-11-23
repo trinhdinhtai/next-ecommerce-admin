@@ -27,7 +27,7 @@ type CreateStoreFormInput = z.infer<typeof storeSchema>
 const CreateStoreForm = () => {
   const router = useRouter()
   const { onClose } = useCreateStoreModal()
-  const { mutate: createStore, isLoading } = useMutation({
+  const { mutate: createStore, isPending } = useMutation({
     mutationFn: async (values: CreateStoreFormInput) => {
       const response = await axios.post("/api/stores", values)
       return response.data
@@ -85,7 +85,7 @@ const CreateStoreForm = () => {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
-                  disabled={isLoading}
+                  disabled={isPending}
                   placeholder="Type store description here."
                   {...field}
                 />
@@ -95,7 +95,7 @@ const CreateStoreForm = () => {
           )}
         />
 
-        <LoadingButton type="submit" isLoading={isLoading}>
+        <LoadingButton type="submit" isLoading={isPending}>
           Create store
         </LoadingButton>
       </form>
