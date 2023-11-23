@@ -89,8 +89,8 @@
       -45deg,
       transparent,
       transparent 20px,
-      #1a1a1a 20px,
-      #1a1a1a 40px
+      hsl(var(--secondary)) 20px,
+      hsl(var(--secondary)) 40px
     );
   }
 }

@@ -24,7 +24,7 @@ export default function DeleteStoreSection({
 
   return (
     <div className="relative rounded-lg border border-red-600">
-      <div className="warning absolute inset-0 -z-10 opacity-30" />
+      <div className="warning absolute inset-0 -z-10 opacity-40 dark:opacity-20" />
 
       <div className="flex flex-col justify-between space-y-2 px-3 py-4 lg:flex-row lg:items-center lg:space-x-12">
         <div>
