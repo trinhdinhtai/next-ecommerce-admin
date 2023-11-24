@@ -64,6 +64,7 @@ model Product {
   name        String
   description String?
   price       Decimal
+  rating      Int       @default(0)
   inventory   Int       @default(0)
   isArchived  Boolean   @default(false)
   sizeId      String    // Foreign Key to Size
@@ -130,6 +131,7 @@ model OrderItem {
   order     Order   @relation(fields: [orderId], references: [id])
   productId String  // Foreign Key to Product
   product   Product @relation(fields: [productId], references: [id])
+  quantity  Int     @default(1)
 
   @@index([orderId])
   @@index([productId])
@@ -160,7 +162,9 @@ model Image {
 model UserSubscription {
   id                        String    @id @default(cuid())
   userId                    String    @unique
-  planType                  PlanType
+
+  planType                  PLAN_TYPE
+
   stripeCustomerId          String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId      String?   @unique @map(name: "stripe_subscription_id")
   stripePriceId             String?   @map(name: "stripe_price_id")
@@ -184,7 +188,9 @@ model CartItem {
   @@index([productId])
 }
 
-enum PlanType {
-  user
-  system
+enum PLAN_TYPE {
+  FREE
+  STANDARD
+  PRO
+  ENTERPRISE
 }
