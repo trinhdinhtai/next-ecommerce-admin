@@ -18,11 +18,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
 import { Shell } from "@/components/ui/shell"
 import ManageSubscriptionForm from "@/components/forms/manage-subscription-form"
-import { Icons } from "@/components/icons"
 import PageHeading from "@/components/PageHeading"
+import { getSubscriptionPlanAction } from "@/app/_actions/subscription-plan"
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -37,11 +36,7 @@ export default async function BillingPage() {
     return redirect("/sign-in")
   }
 
-  const subscriptionPlan = await prisma.userSubscription.findFirst({
-    where: {
-      userId,
-    },
-  })
+  const subscriptionPlan = await getSubscriptionPlanAction(userId)
 
   return (
     <Shell>
