@@ -150,8 +150,8 @@ dependencies:
     specifier: ^1.0.3
     version: 1.0.3(react-dom@18.2.0)(react@18.2.0)
   stripe:
-    specifier: ^13.6.0
-    version: 13.6.0
+    specifier: ^14.5.0
+    version: 14.5.0
   tailwind-merge:
     specifier: ^1.14.0
     version: 1.14.0
@@ -5031,8 +5031,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /stripe@13.6.0:
-    resolution: {integrity: sha512-0VSzva12onR75i708y2CB+UCeQKfPeLRkOCaGZYzHXiXiubB0C3pLKq+MPNfnajzfOeO6EVBita6rEAFGj0ZGA==}
+  /stripe@14.5.0:
+    resolution: {integrity: sha512-MTt0P0VYDAj2VZyZMW41AxcXVs9s06EDFIHYat4UUkluJgnBHo4T4E2byPhnxoJCPvdzWBwBLnhWbSOg//VTpA==}
     engines: {node: '>=12.*'}
     dependencies:
       '@types/node': 20.9.3
