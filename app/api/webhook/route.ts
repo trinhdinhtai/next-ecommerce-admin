@@ -1,76 +1,77 @@
-import Stripe from "stripe";
-import { headers } from "next/headers";
-import { NextResponse } from "next/server";
+import { headers } from "next/headers"
+import { NextResponse } from "next/server"
+import Stripe from "stripe"
 
-import { stripe } from "@/lib/stripe";
-import { prisma } from "@/lib/prismadb";
+import { env } from "@/env.mjs"
+import { prisma } from "@/lib/prismadb"
+import { stripe } from "@/lib/stripe"
 
 export async function POST(req: Request) {
-  const body = await req.text();
-  const signature = headers().get("Stripe-Signature") as string;
+  const body = await req.text()
+  const signature = headers().get("Stripe-Signature") as string
 
-  let event: Stripe.Event;
+  let event: Stripe.Event
 
   try {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
+      env.STRIPE_WEBHOOK_SECRET
+    )
   } catch (error: any) {
-    return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
+    return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 })
   }
 
-  const session = event.data.object as Stripe.Checkout.Session;
-  const address = session?.customer_details?.address;
+  const session = event.data.object as Stripe.Checkout.Session
 
-  const addressComponents = [
-    address?.line1,
-    address?.line2,
-    address?.city,
-    address?.state,
-    address?.postal_code,
-    address?.country,
-  ];
+  switch (event.type) {
+    case "checkout.session.completed": {
+      const subscription = await stripe.subscriptions.retrieve(
+        session.subscription as string
+      )
 
-  const addressString = addressComponents.filter((c) => c !== null).join(", ");
+      if (!session?.metadata?.userId) {
+        return new NextResponse("User id is required", { status: 400 })
+      }
 
-  if (event.type === "checkout.session.completed") {
-    const customer = await prisma.customer.create({
-      data: {
-        name: session?.customer_details?.name || "",
-        phone: session?.customer_details?.phone || "",
-        email: session?.customer_details?.email || "",
-        address: addressString,
-      },
-    });
+      await prisma.userSubscription.create({
+        data: {
+          userId: session?.metadata?.userId,
+          planType: "Standard",
+          stripeSubscriptionId: subscription.id,
+          stripeCustomerId: subscription.customer as string,
+          stripePriceId: subscription.items.data[0].price.id,
+          stripeCurrentPeriodEnd: new Date(
+            subscription.current_period_end * 1000
+          ),
+        },
+      })
+      break
+    }
 
-    await prisma.order.update({
-      where: {
-        id: session?.metadata?.orderId,
-      },
-      data: {
-        isPaid: true,
-        customerId: customer.id,
-      },
-      include: {
-        orderItems: true,
-      },
-    });
+    case "invoice.payment_succeeded": {
+      const subscription = await stripe.subscriptions.retrieve(
+        session.subscription as string
+      )
 
-    // const productIds = order.orderItems.map((orderItem) => orderItem.productId);
+      await prisma.userSubscription.update({
+        where: {
+          stripeSubscriptionId: subscription.id,
+        },
+        data: {
+          stripePriceId: subscription.items.data[0].price.id,
+          stripeCurrentPeriodEnd: new Date(
+            subscription.current_period_end * 1000
+          ),
+        },
+      })
 
-    // await prisma.product.updateMany({
-    //   where: {
-    //     id: {
-    //       in: [...productIds],
-    //     },
-    //   },
-    //   data: {
-    //     isArchived: true,
-    //   },
-    // });
+      break
+    }
+
+    default:
+      console.warn(`Unhandled event type: ${event.type}`)
   }
 
-  return new NextResponse(null, { status: 200 });
+  return new NextResponse(null, { status: 200 })
 }

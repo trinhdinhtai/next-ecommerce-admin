@@ -189,8 +189,8 @@ model CartItem {
 }
 
 enum PLAN_TYPE {
-  FREE
-  STANDARD
-  PRO
-  ENTERPRISE
+  Free
+  Standard
+  Pro
+  Enterprise
 }

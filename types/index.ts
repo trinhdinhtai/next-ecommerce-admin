@@ -1,4 +1,4 @@
-import { Store } from "@prisma/client"
+import { PLAN_TYPE, Store } from "@prisma/client"
 import { LucideIcon } from "lucide-react"
 import { FileWithPath } from "react-dropzone"
 
@@ -46,7 +46,7 @@ export type CuratedStore = {
 }
 
 export interface SubscriptionPlan {
-  id: "basic" | "standard" | "pro" | "enterprise"
+  id: PLAN_TYPE
   name: string
   description: string
   features: string[]

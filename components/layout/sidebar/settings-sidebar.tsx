@@ -7,10 +7,6 @@ import { cn } from "@/lib/utils"
 
 export default function SettingsSidebar() {
   const segment = useSelectedLayoutSegment()
-  console.log(
-    "file: settings-sidebar.tsx:10 ~ SettingsSidebar ~ segment:",
-    segment
-  )
 
   const links = [
     {

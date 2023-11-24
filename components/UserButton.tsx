@@ -42,7 +42,6 @@ const UserButton = ({ user }: UserProps) => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          role="combobox"
           aria-label="User button"
           className="h-12 w-64 justify-between border-none bg-transparent text-base"
         >
