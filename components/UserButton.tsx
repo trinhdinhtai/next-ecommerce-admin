@@ -6,9 +6,10 @@ import { User } from "@/types"
 import { useClerk } from "@clerk/nextjs"
 import { ChevronDown, ExternalLink } from "lucide-react"
 
+import { cn } from "@/lib/utils"
 import { useCommandModal } from "@/hooks/useCommandModal"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -111,7 +112,12 @@ const UserButton = ({ user }: UserProps) => {
         <DropdownMenuSeparator className="mt-4" />
 
         <DropdownMenuLabel>
-          <Button className="w-full">Upgrade to Pro</Button>
+          <Link
+            href="/settings/billing"
+            className={cn(buttonVariants(), "w-full")}
+          >
+            Upgrade your plan
+          </Link>
         </DropdownMenuLabel>
       </DropdownMenuContent>
     </DropdownMenu>
