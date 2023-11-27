@@ -28,7 +28,6 @@ export default authMiddleware({
     "/api/webhook",
   ],
   afterAuth(auth, request) {
-    console.log("file: middleware.ts:25 ~ afterAuth ~ request:", request.url)
     const pathname = request.nextUrl.pathname
     const pathnameHasLocale = i18n.locales.some(
       (locale) =>
@@ -45,10 +44,6 @@ export default authMiddleware({
           request.url
         )
       )
-    }
-
-    if (!auth.userId) {
-      const locale = getLocale(request)
     }
 
     // if (auth.userId && auth.isPublicRoute) {
