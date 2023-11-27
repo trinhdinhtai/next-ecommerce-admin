@@ -1,6 +1,19 @@
 {
   "signIn": {
     "title": "Login",
-    "description": "Choose your preferred sign in method"
+    "description": "Choose your preferred sign in method",
+    "continueWith": "or continue with",
+    "noAccount": "Don't have an account?"
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "description": "Choose your preferred sign up method",
+    "continueWith": "or continue with",
+    "haveAccount": "Already have an account?"
+  },
+  "forgotPassword": {
+    "title": "Forgot Password",
+    "description": "Enter your email address to reset your password",
+    "submit": "Submit"
   }
 }

@@ -3,6 +3,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getStoresAction } from "@/_actions/store"
 import { auth } from "@clerk/nextjs"
+import { Rocket } from "lucide-react"
 
 import { env } from "@/env.mjs"
 import { getPlanFeatures } from "@/lib/subscription"
@@ -11,7 +12,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { buttonVariants } from "@/components/ui/button"
 import { Shell } from "@/components/ui/shell"
 import StoreCard from "@/components/cards/store-card"
-import { Icons } from "@/components/icons"
 import PageHeading from "@/components/PageHeading"
 import { getSubscriptionPlanAction } from "@/app/_actions/subscription-plan"
 
@@ -51,7 +51,7 @@ export default async function StoresPage() {
       </div>
 
       <Alert>
-        <Icons.rocket className="h-4 w-4" aria-hidden="true" />
+        <Rocket className="h-4 w-4" aria-hidden="true" />
         <AlertTitle>Heads up!</AlertTitle>
         <AlertDescription>
           You are currently on the{" "}

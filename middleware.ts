@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { i18n } from "@/i18n.config"
-import { authMiddleware, redirectToSignIn } from "@clerk/nextjs"
+import { authMiddleware } from "@clerk/nextjs"
 import { match as matchLocale } from "@formatjs/intl-localematcher"
 import Negotiator from "negotiator"
 
@@ -23,8 +23,10 @@ export default authMiddleware({
   publicRoutes: [
     "/",
     "/:locale",
-    "/:locale/sign-in",
-    "/:locale/sign-up",
+    "/:locale/sign-in(.*)",
+    "/:locale/sign-up(.*)",
+    "/:locale/sign-out(.*)",
+    "/sso-callback(.*)",
     "/api/webhook",
   ],
   afterAuth(auth, request) {
@@ -33,29 +35,24 @@ export default authMiddleware({
       (locale) =>
         pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
     )
+    const locale = getLocale(request)
 
     if (auth.isPublicRoute) {
-      if (pathnameHasLocale) return
-
-      const locale = getLocale(request)
-      return NextResponse.redirect(
-        new URL(
-          `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
-          request.url
-        )
-      )
+      if (auth.userId) {
+        let path = `${locale}/dashboard/stores`
+        const storeSelection = new URL(path, request.url)
+        return NextResponse.redirect(storeSelection)
+      }
     }
 
-    // if (auth.userId && auth.isPublicRoute) {
-    //   let path = `${locale}/dashboard/stores`
+    if (pathnameHasLocale) return NextResponse.next()
 
-    //   const storeSelection = new URL(path, request.url)
-    //   return NextResponse.redirect(storeSelection)
-    // }
-
-    // if (!auth.userId && !auth.isPublicRoute) {
-    //   return redirectToSignIn({ returnBackUrl: request.url })
-    // }
+    return NextResponse.redirect(
+      new URL(
+        `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
+        request.url
+      )
+    )
   },
 })
 
