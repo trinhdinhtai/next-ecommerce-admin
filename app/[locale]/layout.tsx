@@ -1,6 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs"
 
-import "./globals.css"
+import "../globals.css"
 
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
@@ -22,7 +22,7 @@ const fontInter = Inter({
 
 // Font files can be colocate inside of `pages`
 const fontHeading = localFont({
-  src: "../assets/fonts/CalSans-SemiBold.woff2",
+  src: "../../assets/fonts/CalSans-SemiBold.woff2",
   variable: "--font-heading",
 })
 

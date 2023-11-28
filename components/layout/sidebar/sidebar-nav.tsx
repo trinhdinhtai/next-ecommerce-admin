@@ -5,7 +5,6 @@ import { useSelectedLayoutSegment } from "next/navigation"
 import { NavItem } from "@/types"
 
 import { cn } from "@/lib/utils"
-import { Icons } from "@/components/icons"
 
 export interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {
   items: NavItem[]
@@ -17,7 +16,7 @@ const SidebarNav = ({ items, className, ...props }: SidebarNavProps) => {
   return (
     <div className={cn("flex flex-col space-y-2", className)} {...props}>
       {items.map((item, index) => {
-        const Icon = Icons[item.icon]
+        const Icon = item.icon
         return (
           <Link key={index} href={item.href}>
             <div className="flex items-center justify-center">

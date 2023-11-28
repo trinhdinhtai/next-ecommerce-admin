@@ -1,8 +1,7 @@
 "use client"
 
 import { Table } from "@tanstack/react-table"
-
-import { Icons } from "@/components/icons"
+import { Trash } from "lucide-react"
 
 import { Button } from "./button"
 
@@ -44,7 +43,7 @@ export default function DataTableDeleteButton<TData>({
       className="ml-auto hidden h-8 lg:flex"
       onClick={handleClick}
     >
-      <Icons.trash className="mr-2 h-4 w-4" />
+      <Trash className="mr-2 h-4 w-4" />
       Delete
     </Button>
   )

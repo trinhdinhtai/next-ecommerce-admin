@@ -5,9 +5,11 @@ import Cropper, { ReactCropperElement } from "react-cropper"
 
 import "cropperjs/dist/cropper.css"
 
+import { Cross2Icon } from "@radix-ui/react-icons"
+import { Crop, RotateCcw } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { Icons } from "@/components/icons"
 
 interface ImageUploadCardProps {
   index: number
@@ -95,7 +97,7 @@ export default function ImageUploadCard({
                 size="icon"
                 className="h-7 w-7"
               >
-                <Icons.crop className="h-4 w-4" aria-hidden="true" />
+                <Crop className="h-4 w-4" aria-hidden="true" />
                 <span className="sr-only">Crop image</span>
               </Button>
             </DialogTrigger>
@@ -131,10 +133,7 @@ export default function ImageUploadCard({
                       setIsOpen(false)
                     }}
                   >
-                    <Icons.crop
-                      className="mr-2 h-3.5 w-3.5"
-                      aria-hidden="true"
-                    />
+                    <Crop className="mr-2 h-3.5 w-3.5" aria-hidden="true" />
                     Crop image
                   </Button>
                   <Button
@@ -148,7 +147,7 @@ export default function ImageUploadCard({
                       setCropData(null)
                     }}
                   >
-                    <Icons.reset
+                    <RotateCcw
                       className="mr-2 h-3.5 w-3.5"
                       aria-hidden="true"
                     />
@@ -169,7 +168,7 @@ export default function ImageUploadCard({
             setFiles(files.filter((_, cropIndex) => cropIndex !== index))
           }}
         >
-          <Icons.cross2 className="h-4 w-4" aria-hidden="true" />
+          <Cross2Icon className="h-4 w-4" aria-hidden="true" />
           <span className="sr-only">Remove file</span>
         </Button>
       </div>

@@ -2,25 +2,23 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useAuth } from "@clerk/nextjs"
 import { useTheme } from "next-themes"
 import TypewriterComponent from "typewriter-effect"
 
 import { Button } from "@/components/ui/button"
 
 const LandingHero = () => {
-  const { isSignedIn } = useAuth()
   const { theme } = useTheme()
 
   return (
     <div className="space-y-10 px-4 py-36 text-center font-bold">
       <div className="space-y-5 text-5xl font-extrabold sm:text-5xl md:text-6xl lg:text-7xl">
-        <h1 className="font-heading flex flex-col gap-2">
+        <h1 className="flex flex-col gap-2 font-heading">
           <span>The Best</span>
           <span>E-commerce Management</span>
           <span>Platform</span>
         </h1>
-        <div className="font-heading bg-gradient-to-r from-[#1C79BD] to-[#5AA2D6] bg-clip-text py-4 text-transparent">
+        <div className="bg-gradient-to-r from-[#1C79BD] to-[#5AA2D6] bg-clip-text py-4 font-heading text-transparent">
           <TypewriterComponent
             options={{
               strings: [
@@ -44,7 +42,7 @@ const LandingHero = () => {
       </p>
 
       <div>
-        <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
+        <Link href="/sign-in">
           <Button
             variant="premium"
             className="rounded-full p-4 font-semibold md:p-6 md:text-lg"

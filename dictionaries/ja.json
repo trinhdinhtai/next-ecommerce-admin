@@ -1,0 +1,24 @@
+{
+  "signIn": {
+    "title": "ログイン",
+    "description": "好みのサインイン方法を選択してください",
+    "continueWith": "次で続行",
+    "noAccount": "アカウントをお持ちでない場合"
+  },
+  "signUp": {
+    "title": "作成",
+    "description": "好みのサインアップ方法を選択してください",
+    "continueWith": "次で続行",
+    "haveAccount": "アカウントをお持ちの場合"
+  },
+  "signOut": {
+    "title": "ログアウト",
+    "description": "ログアウトしますか？"
+  },
+  "forgotPassword": {
+    "title": "パスワードをお忘れですか？",
+    "description": "メールアドレスを入力してください",
+    "submit": "送信",
+    "cancel": "キャンセル"
+  }
+}

@@ -12,8 +12,9 @@
   "dependencies": {
     "@clerk/nextjs": "^4.27.1",
     "@clerk/themes": "^1.7.9",
+    "@formatjs/intl-localematcher": "^0.5.2",
     "@hookform/resolvers": "^3.3.0",
-    "@prisma/client": "^5.4.1",
+    "@prisma/client": "^5.6.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-avatar": "^1.0.3",
@@ -44,6 +45,7 @@
     "eslint-config-next": "13.4.19",
     "json-as-xlsx": "^2.5.4",
     "lucide-react": "^0.268.0",
+    "negotiator": "^0.6.3",
     "next": "^14.0.3",
     "next-themes": "^0.2.1",
     "postcss": "8.4.28",
@@ -72,12 +74,13 @@
   "devDependencies": {
     "@clerk/types": "^3.54.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
+    "@types/negotiator": "^0.6.3",
     "@types/node": "^20.9.1",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@types/uuid": "^9.0.4",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4",
-    "prisma": "^5.4.1"
+    "prisma": "^5.6.0"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "signIn": {
+    "title": "Đăng nhập",
+    "description": "Chọn phương thức đăng nhập của bạn",
+    "continueWith": "Hoặc tiếp tục với",
+    "noAccount": "Không có tài khoản?"
+  },
+  "signUp": {
+    "title": "Đăng ký",
+    "description": "Chọn phương thức đăng ký của bạn",
+    "continueWith": "Hoặc tiếp tục với",
+    "haveAccount": "Đã có tài khoản?"
+  },
+  "forgotPassword": {
+    "title": "Quên mật khẩu",
+    "description": "Nhập email của bạn để nhận liên kết đặt lại mật khẩu",
+    "emailAddress": "Địa chỉ email",
+    "sendLink": "Gửi liên kết",
+    "backTo": "Quay lại",
+    "signIn": "Đăng nhập"
+  }
+}

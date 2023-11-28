@@ -2,9 +2,20 @@
 
 import Link from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
+import {
+  Gauge,
+  LayoutDashboard,
+  Minimize2,
+  Monitor,
+  Palette,
+  ScrollText,
+  Settings,
+  ShoppingBasket,
+  User,
+  Zap,
+} from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Icons } from "@/components/icons"
 
 interface StoreSidebarLinksProps {
   storeId: string
@@ -17,61 +28,61 @@ const StoreSidebarLinks = ({ storeId }: StoreSidebarLinksProps) => {
     {
       label: "Dashboard",
       href: `/dashboard/stores/${storeId}`,
-      icon: Icons.gauge,
+      icon: Gauge,
       isActive: segment === null,
     },
     {
       label: "Billboards",
       href: `/dashboard/stores/${storeId}/billboards`,
-      icon: Icons.monitor,
+      icon: Monitor,
       isActive: segment === "billboards",
     },
     {
       label: "Categories",
       href: `/dashboard/stores/${storeId}/categories`,
-      icon: Icons.layoutDashboard,
+      icon: LayoutDashboard,
       isActive: segment === "categories",
     },
     {
       label: "Products",
       href: `/dashboard/stores/${storeId}/products`,
-      icon: Icons.shoppingBasket,
+      icon: ShoppingBasket,
       isActive: segment === "products",
     },
     {
       label: "Sizes",
       href: `/dashboard/stores/${storeId}/sizes`,
-      icon: Icons.minimize2,
+      icon: Minimize2,
       isActive: segment === "sizes",
     },
     {
       label: "Colors",
       href: `/dashboard/stores/${storeId}/colors`,
-      icon: Icons.palette,
+      icon: Palette,
       isActive: segment === "colors",
     },
     {
       label: "Orders",
       href: `/dashboard/stores/${storeId}/orders`,
-      icon: Icons.scrollText,
+      icon: ScrollText,
       isActive: segment === "orders",
     },
     {
       label: "Customers",
       href: `/dashboard/stores/${storeId}/customers`,
-      icon: Icons.users,
+      icon: User,
       isActive: segment === "customers",
     },
     {
       label: "APIs",
       href: `/dashboard/stores/${storeId}/api-list`,
-      icon: Icons.zap,
+      icon: Zap,
       isActive: segment === "api-list",
     },
     {
       label: "Settings",
       href: `/dashboard/stores/${storeId}/settings`,
-      icon: Icons.settings,
+      icon: Settings,
       isActive: segment === "settings",
     },
   ]
