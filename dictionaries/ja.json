@@ -9,7 +9,7 @@
     "title": "作成",
     "description": "好みのサインアップ方法を選択してください",
     "continueWith": "次で続行",
-    "noAccount": "アカウントをお持ちの場合"
+    "haveAccount": "アカウントをお持ちの場合"
   },
   "signOut": {
     "title": "ログアウト",

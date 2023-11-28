@@ -9,7 +9,7 @@
     "title": "Đăng ký",
     "description": "Chọn phương thức đăng ký của bạn",
     "continueWith": "Hoặc tiếp tục với",
-    "noAccount": "Không có tài khoản?"
+    "haveAccount": "Đã có tài khoản?"
   },
   "forgotPassword": {
     "title": "Quên mật khẩu",
