@@ -26,7 +26,7 @@ export default function AuthLayout({
           href="/"
           className="absolute left-8 top-6 z-20 flex items-center text-lg font-bold tracking-tight"
         >
-          <LogoIcon className="h-10" />
+          <LogoIcon className="h-10 text-white" />
         </Link>
       </AspectRatio>
 

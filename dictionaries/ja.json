@@ -20,5 +20,11 @@
     "description": "メールアドレスを入力してください",
     "submit": "送信",
     "cancel": "キャンセル"
+  },
+  "resetPassword": {
+    "title": "パスワードをリセット",
+    "description": "新しいパスワードを入力してください。確認コードを送信します。",
+    "newPassword": "新しいパスワード",
+    "continue": "続行"
   }
 }

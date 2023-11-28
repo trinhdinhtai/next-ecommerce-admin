@@ -18,5 +18,11 @@
     "sendLink": "Gửi liên kết",
     "backTo": "Quay lại",
     "signIn": "Đăng nhập"
+  },
+  "resetPassword": {
+    "title": "Đặt lại mật khẩu",
+    "description": "Nhập địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn mã xác minh",
+    "newPassword": "Mật khẩu mới",
+    "continue": "Tiếp tục"
   }
 }

@@ -64,7 +64,7 @@ export default async function SignInPage({
 
           <Link
             aria-label="Reset password"
-            href="/sign-in/reset-password"
+            href="/reset-password"
             className="text-sm text-primary underline-offset-4 transition-colors hover:underline"
           >
             {t.forgotPassword.title}

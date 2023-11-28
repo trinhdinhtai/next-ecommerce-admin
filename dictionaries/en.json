@@ -15,5 +15,11 @@
     "title": "Forgot Password",
     "description": "Enter your email address to reset your password",
     "submit": "Submit"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "description": "Enter your email address and we will send you a verification code",
+    "newPassword": "New Password",
+    "continue": "Continue"
   }
 }

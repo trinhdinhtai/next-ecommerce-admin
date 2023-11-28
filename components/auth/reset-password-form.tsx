@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation"
 import { useSignIn } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { z } from "zod"
 
 import { catchClerkError } from "@/lib/error"
-import { authSchema } from "@/lib/validations/auth"
+import { checkEmailSchema } from "@/lib/validations/auth"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -20,20 +21,18 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
-import { PasswordInput } from "@/components/input/password-input"
 
-type FormInput = z.infer<typeof authSchema>
+type FormInput = z.infer<typeof checkEmailSchema>
 
-export default function SignInForm() {
+export default function ResetPasswordForm() {
   const router = useRouter()
-  const { isLoaded, signIn, setActive } = useSignIn()
+  const { isLoaded, signIn } = useSignIn()
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<FormInput>({
-    resolver: zodResolver(authSchema),
+    resolver: zodResolver(checkEmailSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   })
 
@@ -42,18 +41,16 @@ export default function SignInForm() {
 
     startTransition(async () => {
       try {
-        const result = await signIn.create({
+        const firstFactor = await signIn.create({
+          strategy: "reset_password_email_code",
           identifier: data.email,
-          password: data.password,
         })
 
-        if (result.status === "complete") {
-          await setActive({ session: result.createdSessionId })
-
-          router.push("dashboard/stores")
-        } else {
-          /*Investigate why the login hasn't completed */
-          console.log(result)
+        if (firstFactor.status === "needs_first_factor") {
+          router.push("/reset-password/step2")
+          toast.message("Check your email", {
+            description: "We sent you a 6-digit verification code.",
+          })
         }
       } catch (err) {
         catchClerkError(err)
@@ -74,21 +71,7 @@ export default function SignInForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="example@gmail.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder="**********" {...field} />
+                <Input placeholder="example@gmail.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -97,8 +80,10 @@ export default function SignInForm() {
 
         <Button type="submit" disabled={isPending}>
           {isPending && <Icons.Loading className="mr-2" aria-hidden="true" />}
-          Sign in
-          <span className="sr-only">Sign in</span>
+          Continue
+          <span className="sr-only">
+            Continue to reset password verification
+          </span>
         </Button>
       </form>
     </Form>
