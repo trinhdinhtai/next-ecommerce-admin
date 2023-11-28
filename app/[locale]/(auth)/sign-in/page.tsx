@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Locale } from "@/i18n.config"
+import { useTranslation } from "@/i18n/server"
 
 import {
   Card,
@@ -12,19 +12,17 @@ import {
 import { Shell } from "@/components/ui/shell"
 import OAuthSignIn from "@/components/auth/oath-sign-in"
 import SignInForm from "@/components/auth/sign-in-form"
-import { getDictionary } from "@/app/[locale]/dictionaries"
 
 interface SignInPageProps {
   params: {
-    locale: Locale
+    locale: string
   }
 }
 
 export default async function SignInPage({
   params: { locale },
 }: SignInPageProps) {
-  const t = await getDictionary(locale)
-
+  const { t } = await useTranslation({ locale })
   return (
     <Shell className="max-w-xl">
       <Card>
