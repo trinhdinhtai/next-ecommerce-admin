@@ -59,7 +59,7 @@ export default function OAuthSignIn() {
             disabled={selectedStrategy !== null}
           >
             {selectedStrategy === strategy ? (
-              <Icons.loading className="mr-2" aria-hidden="true" />
+              <Icons.Loading className="mr-2" aria-hidden="true" />
             ) : (
               <Icon className="mr-2 h-4 w-4" aria-hidden="true" />
             )}

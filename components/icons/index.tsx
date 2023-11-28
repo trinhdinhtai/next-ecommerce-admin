@@ -7,5 +7,5 @@ export const Icons = {
   google: GoogleIcon,
   facebook: FacebookIcon,
   github: GithubIcon,
-  loading: LoadingDots,
+  Loading: LoadingDots,
 }
