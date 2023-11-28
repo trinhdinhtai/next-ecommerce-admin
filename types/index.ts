@@ -2,12 +2,10 @@ import { PLAN_TYPE, Store } from "@prisma/client"
 import { LucideIcon } from "lucide-react"
 import { FileWithPath } from "react-dropzone"
 
-import { Icons } from "@/components/icons"
-
 export interface NavItem {
   title: string
   href: string
-  icon: keyof typeof Icons
+  icon: LucideIcon
   disabled?: boolean
 }
 

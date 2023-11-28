@@ -1,4 +1,5 @@
 import { NavItem } from "@/types"
+import { CreditCard, Store, User } from "lucide-react"
 
 export interface DashboardConfig {
   sidebarNav: NavItem[]
@@ -9,17 +10,17 @@ export const dashboardConfig: DashboardConfig = {
     {
       title: "Stores",
       href: "/dashboard/stores",
-      icon: "store",
+      icon: Store,
     },
     {
       title: "Billing",
       href: "/dashboard/billing",
-      icon: "credit",
+      icon: CreditCard,
     },
     {
       title: "Account",
       href: "/dashboard/account",
-      icon: "user",
+      icon: User,
     },
   ],
 }

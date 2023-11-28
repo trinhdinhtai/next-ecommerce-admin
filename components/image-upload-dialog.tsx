@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from "react"
 import { FileWithPreview } from "@/types"
+import { Trash, Upload } from "lucide-react"
 import {
   useDropzone,
   type Accept,
@@ -19,7 +20,6 @@ import { cn, formatBytes } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import ImageUploadCard from "@/components/cards/image-upload-card"
-import { Icons } from "@/components/icons"
 
 interface ImageUploadDialogProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -109,7 +109,7 @@ export default function ImageUploadDialog<TFieldValues extends FieldValues>({
     if (isUploading)
       return (
         <div className="group grid w-full place-items-center gap-1 sm:px-10">
-          <Icons.upload
+          <Upload
             className="h-9 w-9 animate-pulse text-muted-foreground"
             aria-hidden="true"
           />
@@ -119,7 +119,7 @@ export default function ImageUploadDialog<TFieldValues extends FieldValues>({
     if (isDragActive)
       return (
         <div className="grid place-items-center gap-2 text-muted-foreground sm:px-5">
-          <Icons.upload
+          <Upload
             className={cn("h-8 w-8", isDragActive && "animate-bounce")}
             aria-hidden="true"
           />
@@ -129,10 +129,7 @@ export default function ImageUploadDialog<TFieldValues extends FieldValues>({
 
     return (
       <div className="grid place-items-center gap-1 sm:px-5">
-        <Icons.upload
-          className="h-8 w-8 text-muted-foreground"
-          aria-hidden="true"
-        />
+        <Upload className="h-8 w-8 text-muted-foreground" aria-hidden="true" />
         <p className="mt-2 text-base font-medium text-muted-foreground">
           Drag & drop file here, or click to select file
         </p>
@@ -200,7 +197,7 @@ export default function ImageUploadDialog<TFieldValues extends FieldValues>({
                 className="mt-2.5 w-full"
                 onClick={() => setFiles(null)}
               >
-                <Icons.trash className="mr-2 h-4 w-4" aria-hidden="true" />
+                <Trash className="mr-2 h-4 w-4" aria-hidden="true" />
                 Remove All
                 <span className="sr-only">Remove all</span>
               </Button>
