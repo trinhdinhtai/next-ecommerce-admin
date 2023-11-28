@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { AspectRatio } from "@/components/ui/aspect-ratio"
+import LogoIcon from "@/components/icons/logo"
 
 export default function AuthLayout({
   children,
@@ -20,15 +21,12 @@ export default function AuthLayout({
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-black/60 md:to-black/40" />
-        <Link href="/" className="absolute left-8 top-6 ">
-          <Image
-            src="/logo.png"
-            alt="Logo"
-            width={100}
-            height={40}
-            priority
-            className="object-cover"
-          />
+
+        <Link
+          href="/"
+          className="absolute left-8 top-6 z-20 flex items-center text-lg font-bold tracking-tight"
+        >
+          <LogoIcon className="h-10" />
         </Link>
       </AspectRatio>
 
