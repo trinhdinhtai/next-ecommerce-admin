@@ -1,13 +1,11 @@
-import LandingContent from "@/components/landing/landing-content";
-import LandingHero from "@/components/landing/landing-hero";
+import LandingContent from "@/components/landing/landing-content"
+import LandingHero from "@/components/landing/landing-hero"
 
-const LandingPage = () => {
+export default async function LandingPage() {
   return (
     <div className="h-full">
       <LandingHero />
       <LandingContent />
     </div>
-  );
-};
-
-export default LandingPage;
+  )
+}
