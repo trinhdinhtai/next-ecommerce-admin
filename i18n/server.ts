@@ -21,8 +21,8 @@ const initI18next = async (locale: any, namespace: any) => {
 
 export async function useTranslation(
   locale: any,
-  namespace: any,
-  options: any = {}
+  namespace?: any,
+  options?: any
 ) {
   const i18nextInstance = await initI18next(locale, namespace)
   return {
