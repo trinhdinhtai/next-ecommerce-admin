@@ -5,8 +5,6 @@ import "../globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import localFont from "next/font/local"
-import { languages } from "@/i18n/settings"
-import { dir } from "i18next"
 
 import { env } from "@/env.mjs"
 import { cn } from "@/lib/utils"
@@ -28,10 +26,6 @@ const fontHeading = localFont({
   variable: "--font-heading",
 })
 
-export async function generateStaticParams() {
-  return languages.map((lang) => ({ lang }))
-}
-
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
   title: "GMAdmin",
@@ -40,16 +34,12 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode
-  params: { lang: string }
 }
 
-export default function RootLayout({
-  children,
-  params: { lang },
-}: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <ClerkProvider>
-      <html lang={lang}>
+      <html lang="en">
         <body
           className={cn(fontInter.variable, fontHeading.variable, "font-sans")}
         >

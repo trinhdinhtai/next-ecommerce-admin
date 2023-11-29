@@ -1,6 +1,3 @@
-import React from "react"
-import { useTranslation } from "@/i18n/server"
-
 import {
   Card,
   CardContent,
@@ -20,14 +17,12 @@ interface ResetPasswordPageProps {
 export default async function ResetPasswordPage({
   params: { locale },
 }: ResetPasswordPageProps) {
-  const { t } = await useTranslation(locale, "auth")
-
   return (
     <Shell className="max-w-xl">
       <Card>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">{t("resetPassword.title")}</CardTitle>
-          <CardDescription>{t("resetPassword.description")}</CardDescription>
+          <CardTitle className="text-2xl">{"resetPassword.title"}</CardTitle>
+          <CardDescription>{"resetPassword.description"}</CardDescription>
         </CardHeader>
         <CardContent>
           <ResetPasswordForm />

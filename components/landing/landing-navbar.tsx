@@ -1,16 +1,19 @@
-"use client"
-
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { useTranslation } from "@/i18n/client"
+import { Locale } from "@/i18n/config"
 
-import { Button } from "@/components/ui/button"
+import { getDictionary } from "@/lib/dictionary"
+import { cn } from "@/lib/utils"
+import { Button, buttonVariants } from "@/components/ui/button"
 import LogoIcon from "@/components/icons/logo"
 
-const LandingNavbar = () => {
-  const params = useParams()
-  const { t } = useTranslation(params.locale)
+interface LandingNavbarProps {
+  dictionary: Record<string, any>
+}
 
+export default async function LandingNavbar({
+  dictionary,
+}: LandingNavbarProps) {
   return (
     <nav className="sticky top-0 z-30 bg-background p-4 shadow-sm dark:border-b dark:shadow-none">
       <div className="mx-auto flex h-full w-full max-w-screen-xl items-center justify-between">
@@ -18,15 +21,14 @@ const LandingNavbar = () => {
           <LogoIcon className="h-8 text-purple-500" />
         </Link>
         <div className="flex items-center gap-x-2">
-          <Link href="/sign-in">
-            <Button variant="outline" className="rounded-full">
-              {t("login")}
-            </Button>
+          <Link
+            href="/sign-in"
+            className={cn(buttonVariants(), "rounded-full")}
+          >
+            {dictionary.login}
           </Link>
         </div>
       </div>
     </nav>
   )
 }
-
-export default LandingNavbar

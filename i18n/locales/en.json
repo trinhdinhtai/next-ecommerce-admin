@@ -21,5 +21,16 @@
     "description": "Enter your email address and we will send you a verification code",
     "newPassword": "New Password",
     "continue": "Continue"
+  },
+  "landing": {
+    "title": "The Best E-commerce Platform Management System",
+    "description": "E-commerce management platform with essential commerce features",
+    "typeWriter": {
+      "text-1": "Understand User Needs",
+      "text-2": "Data Analytics and Reporting",
+      "text-3": "Performance and Speed",
+      "text-4": "Scalability",
+      "text-5": "Security"
+    }
   }
 }
