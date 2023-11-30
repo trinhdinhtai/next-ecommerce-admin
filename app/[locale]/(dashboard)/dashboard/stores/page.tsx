@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getStoresAction } from "@/_actions/store"
+import { getScopedI18n } from "@/i18n/server"
 import { auth } from "@clerk/nextjs"
 import { Rocket } from "lucide-react"
 
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
 }
 
 export default async function StoresPage() {
+  const storesScope = await getScopedI18n("dashboard.stores")
   const { userId } = auth()
 
   if (!userId) redirect("/sign-in")
@@ -39,14 +41,17 @@ export default async function StoresPage() {
     <Shell>
       <div className="flex space-x-4">
         <div className="flex-1">
-          <PageHeading title="Stores" description="Manage your stores" />
+          <PageHeading
+            title={storesScope("title")}
+            description={storesScope("description")}
+          />
         </div>
 
         <Link
           href="/dashboard/stores/new"
           className={cn(buttonVariants({ size: "sm" }))}
         >
-          Create store
+          {storesScope("create")}
         </Link>
       </div>
 

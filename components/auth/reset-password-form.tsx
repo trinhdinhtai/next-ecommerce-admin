@@ -2,6 +2,7 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { useI18n } from "@/i18n/client"
 import { useSignIn } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -25,6 +26,7 @@ import { Icons } from "@/components/icons"
 type FormInput = z.infer<typeof checkEmailSchema>
 
 export default function ResetPasswordForm() {
+  const t = useI18n()
   const router = useRouter()
   const { isLoaded, signIn } = useSignIn()
   const [isPending, startTransition] = useTransition()
@@ -80,7 +82,7 @@ export default function ResetPasswordForm() {
 
         <Button type="submit" disabled={isPending}>
           {isPending && <Icons.Loading className="mr-2" aria-hidden="true" />}
-          Continue
+          {t("button.continue")}
           <span className="sr-only">
             Continue to reset password verification
           </span>

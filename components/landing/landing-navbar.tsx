@@ -1,19 +1,12 @@
 import Link from "next/link"
-import { useParams } from "next/navigation"
-import { Locale } from "@/i18n/config"
+import { getI18n } from "@/i18n/server"
 
-import { getDictionary } from "@/lib/dictionary"
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import LogoIcon from "@/components/icons/logo"
 
-interface LandingNavbarProps {
-  dictionary: Record<string, any>
-}
-
-export default async function LandingNavbar({
-  dictionary,
-}: LandingNavbarProps) {
+export default async function LandingNavbar() {
+  const t = await getI18n()
   return (
     <nav className="sticky top-0 z-30 bg-background p-4 shadow-sm dark:border-b dark:shadow-none">
       <div className="mx-auto flex h-full w-full max-w-screen-xl items-center justify-between">
@@ -25,7 +18,7 @@ export default async function LandingNavbar({
             href="/sign-in"
             className={cn(buttonVariants(), "rounded-full")}
           >
-            {dictionary.login}
+            {t("signIn.title")}
           </Link>
         </div>
       </div>

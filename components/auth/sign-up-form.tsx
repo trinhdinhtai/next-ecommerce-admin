@@ -2,6 +2,7 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { useI18n } from "@/i18n/client"
 import { useSignUp } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -26,6 +27,7 @@ import { PasswordInput } from "@/components/input/password-input"
 type FormInput = z.infer<typeof authSchema>
 
 export default function SignUpForm() {
+  const t = useI18n()
   const router = useRouter()
   const { isLoaded, signUp } = useSignUp()
   const [isPending, startTransition] = useTransition()
@@ -99,8 +101,8 @@ export default function SignUpForm() {
 
         <Button type="submit" disabled={isPending}>
           {isPending && <Icons.Loading className="mr-2" aria-hidden="true" />}
-          Sign up
-          <span className="sr-only">Sign up</span>
+          {t("signUp.title")}
+          <span className="sr-only">Sign in</span>
         </Button>
       </form>
     </Form>
