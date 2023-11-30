@@ -31,7 +31,7 @@ export default authMiddleware({
     "/:locale/sign-up(.*)",
     "/:locale/sign-out(.*)",
     "/sso-callback(.*)",
-    "/api/webhook",
+    "/api/:path*",
   ],
   afterAuth(auth, request) {
     const pathname = request.nextUrl.pathname
@@ -41,6 +41,8 @@ export default authMiddleware({
     )
 
     const locale = getLocale(request)
+    if (pathname.startsWith("/api")) return NextResponse.next()
+
     if (auth.isPublicRoute) {
       if (auth.userId) {
         let path = `${locale}/dashboard/stores`
