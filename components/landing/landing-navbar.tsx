@@ -8,7 +8,7 @@ import LogoIcon from "@/components/icons/logo"
 export default async function LandingNavbar() {
   const t = await getI18n()
   return (
-    <nav className="sticky top-0 z-30 bg-background p-4 shadow-sm dark:border-b dark:shadow-none">
+    <nav className="duration-slow sticky top-0 z-30 bg-background p-4 shadow-sm animate-in fade-in slide-in-from-top-full dark:border-b dark:shadow-none">
       <div className="mx-auto flex h-full w-full max-w-screen-xl items-center justify-between">
         <Link href="/" className="flex items-center">
           <LogoIcon className="h-8 text-purple-500" />

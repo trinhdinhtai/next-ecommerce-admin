@@ -18,6 +18,11 @@ module.exports = {
       },
     },
     extend: {
+      animationDuration: {
+        medium: "500ms",
+        slow: "700ms",
+        "really-slow": "1000ms",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

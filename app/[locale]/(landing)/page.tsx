@@ -7,7 +7,7 @@ export default async function LandingPage() {
   return (
     <>
       <LandingNavbar />
-      <main className="h-full overflow-auto">
+      <main className="duration-really-slow h-full overflow-auto animate-in fade-in slide-in-from-bottom-8">
         <div className="mx-auto h-full w-full max-w-screen-xl">
           <div className="h-full">
             <LandingHero />
