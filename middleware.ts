@@ -1,5 +1,4 @@
-// middleware.ts
-import { NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 import { i18n } from "@/i18n/config"
 import { authMiddleware } from "@clerk/nextjs"
 import { createI18nMiddleware } from "next-international/middleware"
@@ -20,7 +19,6 @@ export default authMiddleware({
     "/api/:path*",
   ],
   afterAuth(auth, request) {
-    console.log("test")
     const pathname = request.nextUrl.pathname
     if (pathname.startsWith("/api")) return NextResponse.next()
 

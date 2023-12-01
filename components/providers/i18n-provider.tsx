@@ -9,9 +9,5 @@ type ProviderProps = {
 }
 
 export default function I18nProvider({ locale, children }: ProviderProps) {
-  return (
-    <I18nProviderClient locale={locale} fallback={<p>Loading...</p>}>
-      {children}
-    </I18nProviderClient>
-  )
+  return <I18nProviderClient locale={locale}>{children}</I18nProviderClient>
 }
