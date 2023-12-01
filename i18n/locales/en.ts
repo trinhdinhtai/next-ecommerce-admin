@@ -4,7 +4,6 @@ export default {
     description: "Sign in to your account",
     email: "Email",
     password: "Password",
-    signIn: "Sign in",
     forgotPassword: "Forgot password?",
     noAccount: "Don't have an account?",
   },
@@ -13,7 +12,6 @@ export default {
     description: "Create your account",
     email: "Email",
     password: "Password",
-    signUp: "Sign up",
     alreadyHaveAnAccount: "Already have an account?",
   },
   forgotPassword: {
@@ -66,6 +64,4 @@ export default {
     },
   },
   continueWith: "or continue with",
-  "hello.world": "Hello world!",
-  welcome: "Hello {name}!",
 } as const
