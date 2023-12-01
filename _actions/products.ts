@@ -5,6 +5,7 @@ import { StoredFile } from "@/types"
 import { z } from "zod"
 
 import { prisma } from "@/lib/prismadb"
+import { dashboardProductsSearchParamsSchema } from "@/lib/validations/params"
 import { productSchema } from "@/lib/validations/product"
 
 export async function getProductById(id: string) {
@@ -20,10 +21,30 @@ export async function getProductById(id: string) {
   return product
 }
 
-export async function getProductByStoreIdAction(storeId: string) {
+export async function getProductByStoreIdAction(
+  storeId: string,
+  params: z.infer<typeof dashboardProductsSearchParamsSchema>
+) {
+  const { page, per_page, name } = params
+
+  // Fallback page for invalid page numbers
+  const pageAsNumber = Number(page)
+  const fallbackPage =
+    isNaN(pageAsNumber) || pageAsNumber < 1 ? 1 : pageAsNumber
+
+  // Number of items per page
+  const perPageAsNumber = Number(per_page)
+  const limit = isNaN(perPageAsNumber) ? 10 : perPageAsNumber
+
+  // Number of items to skip
+  const offset = fallbackPage > 0 ? (fallbackPage - 1) * limit : 0
+
   const products = await prisma.product.findMany({
     where: {
       storeId,
+      name: {
+        search: name,
+      },
     },
     include: {
       category: true,
@@ -31,6 +52,8 @@ export async function getProductByStoreIdAction(storeId: string) {
       color: true,
       images: true,
     },
+    skip: offset,
+    take: limit,
     orderBy: {
       createdAt: "desc",
     },

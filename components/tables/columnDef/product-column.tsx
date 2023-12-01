@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { ProductColumn } from "@/types/columns"

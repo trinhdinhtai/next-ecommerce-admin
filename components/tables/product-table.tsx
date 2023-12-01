@@ -9,7 +9,7 @@ import { ProductColumn } from "@/types/columns"
 import { catchError } from "@/lib/error"
 import { fetcher } from "@/lib/fetcher"
 import DataTable from "@/components/ui/data-table"
-import { productColumns } from "@/components/tables/columnDef/product"
+import { productColumns } from "@/components/tables/columnDef/product-column"
 
 interface ProductsTableProps {
   storeId: string

@@ -3,6 +3,7 @@ import { formatter } from "@/helpers/utils"
 import { format } from "date-fns"
 
 import { ProductColumn } from "@/types/columns"
+import { dashboardProductsSearchParamsSchema } from "@/lib/validations/params"
 import { Shell } from "@/components/ui/shell"
 import PageHeading from "@/components/PageHeading"
 import ProductsTable from "@/components/tables/product-table"
@@ -11,12 +12,18 @@ interface ProductsPageProps {
   params: {
     storeId: string
   }
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
 }
 
-const ProductsPage = async ({ params }: ProductsPageProps) => {
+const ProductsPage = async ({ params, searchParams }: ProductsPageProps) => {
   const { storeId } = params
 
-  const products = await getProductByStoreIdAction(storeId)
+  const parseSearchParams =
+    dashboardProductsSearchParamsSchema.parse(searchParams)
+
+  const products = await getProductByStoreIdAction(storeId, parseSearchParams)
 
   const formattedProducts: ProductColumn[] = products.map((item) => ({
     id: item.id,
