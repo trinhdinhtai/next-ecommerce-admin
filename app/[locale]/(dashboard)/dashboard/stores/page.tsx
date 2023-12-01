@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
@@ -69,13 +70,19 @@ export default async function StoresPage() {
       </Alert>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {allStores.map((store) => (
-          <StoreCard
-            key={store.id}
-            store={store}
-            href={`/dashboard/stores/${store.id}`}
-          />
-        ))}
+        <Suspense
+          fallback={Array.from({ length: 4 }).map((_, i) => (
+            <StoreCard.Skeleton key={i} />
+          ))}
+        >
+          {allStores.map((store) => (
+            <StoreCard
+              key={store.id}
+              store={store}
+              href={`/dashboard/stores/${store.id}`}
+            />
+          ))}
+        </Suspense>
       </section>
     </Shell>
   )

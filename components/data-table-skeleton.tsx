@@ -17,7 +17,7 @@ interface DataTableLoadingProps {
   filterableFieldCount?: number
 }
 
-export function DataTableLoading({
+export function DataTableSkeleton({
   columnCount,
   rowCount = 5,
   searchableFieldCount = 1,

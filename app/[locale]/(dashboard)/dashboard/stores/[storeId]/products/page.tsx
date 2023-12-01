@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { getProductByStoreIdAction } from "@/_actions/products"
 import { formatter } from "@/helpers/utils"
 import { format } from "date-fns"
@@ -5,6 +6,7 @@ import { format } from "date-fns"
 import { ProductColumn } from "@/types/columns"
 import { dashboardProductsSearchParamsSchema } from "@/lib/validations/params"
 import { Shell } from "@/components/ui/shell"
+import { DataTableSkeleton } from "@/components/data-table-skeleton"
 import PageHeading from "@/components/PageHeading"
 import ProductsTable from "@/components/tables/product-table"
 
@@ -44,7 +46,14 @@ const ProductsPage = async ({ params, searchParams }: ProductsPageProps) => {
         title="Products"
         description="Manage products for your store"
       />
-      <ProductsTable data={formattedProducts} storeId={storeId} />
+
+      <Suspense
+        fallback={
+          <DataTableSkeleton columnCount={11} filterableFieldCount={1} />
+        }
+      >
+        <ProductsTable data={formattedProducts} storeId={storeId} />
+      </Suspense>
     </Shell>
   )
 }
