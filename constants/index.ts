@@ -33,3 +33,5 @@ export const statuses = [
     icon: CrossCircledIcon,
   },
 ]
+
+export const PARAM_VALUE_SEPARATOR = ","

@@ -32,6 +32,7 @@ import {
 
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
+import { PARAM_VALUE_SEPARATOR } from "@/constants"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -112,6 +113,7 @@ export default function DataTable<TData, TValue>({
     return filterableColumns.find((column) => column.id === filter.id)
   })
 
+  // Filter by searchable columns
   useEffect(() => {
     for (const column of debouncedSearchableColumnFilters) {
       if (typeof column.value === "string") {
@@ -145,6 +147,41 @@ export default function DataTable<TData, TValue>({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchableColumnFilters])
+
+  // Filter by filterable columns
+  useEffect(() => {
+    for (const column of filterableColumnFilters) {
+      if (typeof column.value === "object" && Array.isArray(column.value)) {
+        router.push(
+          `${pathname}?${createQueryString({
+            page: 1,
+            [column.id]: column.value.join(PARAM_VALUE_SEPARATOR),
+          })}`,
+          {
+            scroll: false,
+          }
+        )
+      }
+    }
+
+    for (const key of searchParams.keys()) {
+      if (
+        filterableColumns.find((column) => column.id === key) &&
+        !filterableColumnFilters.find((column) => column.id === key)
+      ) {
+        router.push(
+          `${pathname}?${createQueryString({
+            page: 1,
+            [key]: null,
+          })}`,
+          {
+            scroll: false,
+          }
+        )
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterableColumnFilters])
 
   return (
     <div className="space-y-4">

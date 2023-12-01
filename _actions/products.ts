@@ -1,6 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { PARAM_VALUE_SEPARATOR } from "@/constants"
 import { StoredFile } from "@/types"
 import { z } from "zod"
 
@@ -25,7 +26,8 @@ export async function getProductByStoreIdAction(
   storeId: string,
   params: z.infer<typeof dashboardProductsSearchParamsSchema>
 ) {
-  const { page, per_page, name } = params
+  const { page, per_page, name, category } = params
+  const categories = category?.split(PARAM_VALUE_SEPARATOR)
 
   // Fallback page for invalid page numbers
   const pageAsNumber = Number(page)
@@ -45,6 +47,13 @@ export async function getProductByStoreIdAction(
       name: {
         search: name,
       },
+      category: categories?.length
+        ? {
+            name: {
+              in: categories,
+            },
+          }
+        : undefined,
     },
     include: {
       category: true,
