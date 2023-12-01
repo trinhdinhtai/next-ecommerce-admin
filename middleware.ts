@@ -6,6 +6,7 @@ import { createI18nMiddleware } from "next-international/middleware"
 const I18nMiddleware = createI18nMiddleware({
   locales: i18n.locales,
   defaultLocale: i18n.defaultLocale,
+  urlMappingStrategy: "rewrite",
 })
 
 export default authMiddleware({

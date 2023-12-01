@@ -45,7 +45,7 @@ export default {
     resendVerificationEmail: "Resend verification email",
   },
   landing: {
-    title: "The Best E-commerce Platform Management System",
+    title: "The Best E-commerce Management System",
     description:
       "E-commerce management platform with essential commerce features",
     typeWriter: {
