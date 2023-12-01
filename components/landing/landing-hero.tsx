@@ -3,17 +3,17 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useI18n, useScopedI18n } from "@/i18n/client"
+import { ChevronRight } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Balancer } from "react-wrap-balancer"
-import TypewriterComponent from "typewriter-effect"
 
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 
 const LandingHero = () => {
   const { theme } = useTheme()
   const t = useI18n()
   const landingScopeT = useScopedI18n("landing")
-  const typeWriterScopeT = useScopedI18n("landing.typeWriter")
 
   return (
     <div className="space-y-10 px-4 py-36 text-center font-bold">
@@ -22,39 +22,39 @@ const LandingHero = () => {
           as="p"
           className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
         >
-          <span>{landingScopeT("title")}</span>
+          <h1 className="bg-heading-gradient-dark dark:bg-heading-gradient-light bg-clip-text text-center font-heading text-4xl tracking-tight text-transparent md:text-6xl md:leading-snug">
+            {landingScopeT("title", {
+              prefix: (
+                <>
+                  <br className="md:block" /> {t("landing.prefix")}
+                </>
+              ),
+              siteName: (
+                <span className="bg-primary-gradient bg-clip-text text-transparent">
+                  GM Admin
+                </span>
+              ),
+            })}
+          </h1>
         </Balancer>
-        <div className="bg-gradient-to-r from-[#1C79BD] to-[#5AA2D6] bg-clip-text py-4 font-heading text-2xl text-transparent sm:text-4xl md:text-5xl lg:text-6xl">
-          <TypewriterComponent
-            options={{
-              strings: [
-                typeWriterScopeT("text1"),
-                typeWriterScopeT("text2"),
-                typeWriterScopeT("text3"),
-                typeWriterScopeT("text4"),
-                typeWriterScopeT("text5"),
-              ],
-              autoStart: true,
-              loop: true,
-            }}
-          />
-        </div>
       </div>
 
       <p className="flex flex-col text-center font-normal text-muted-foreground">
         <span>{landingScopeT("description")}</span>
       </p>
 
-      <div>
-        <Link href="/sign-in">
-          <Button
-            variant="premium"
-            className="rounded-full p-4 font-semibold md:p-6 md:text-lg"
-          >
-            {t("button.start")}
-          </Button>
-        </Link>
-      </div>
+      <Link
+        href="/sign-in"
+        className={cn(
+          buttonVariants({ variant: "premium", size: "lg" }),
+          "h-12 gap-2 rounded-full pr-2"
+        )}
+      >
+        <span>{t("button.start")}</span>
+        <span className="right-0 inline-block rounded-full bg-white/50 p-[0.5rem]">
+          <ChevronRight className="h-6 w-6 text-muted-foreground" />
+        </span>
+      </Link>
 
       <div className="relative mt-10 aspect-[32/18] rounded-2xl">
         <Image

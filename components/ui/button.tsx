@@ -19,7 +19,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         premium:
-          "bg-gradient-to-r from-[#1C79BD] via-purple-500 to-[#5AA2D6] text-white border-0",
+          "text-white bg-primary-gradient rounded-full hover:bg-primary-gradient-2 hover:shadow-[0px_4px_30px] hover:shadow-[rgb(247_176_253_/_50%)] transition-shadow duration-300 [&_.highlight]:ml-2",
         gradient: "bg-gradient-to-r from-pink-500 to-purple-500 text-white",
         warning:
           "border border-input bg-background text-red-600 hover:border-red-600 hover:bg-background",

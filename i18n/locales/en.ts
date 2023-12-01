@@ -43,16 +43,10 @@ export default {
     resendVerificationEmail: "Resend verification email",
   },
   landing: {
-    title: "The Best E-commerce Management System",
+    prefix: "with",
+    title: "E-commerce Management {prefix} {siteName}",
     description:
       "E-commerce management platform with essential commerce features",
-    typeWriter: {
-      text1: "Understand User Needs",
-      text2: "Data Analytics and Reporting",
-      text3: "Performance and Speed",
-      text4: "Scalability",
-      text5: "Security",
-    },
   },
   dashboard: {
     title: "Dashboard",

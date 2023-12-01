@@ -43,16 +43,10 @@ export default {
     resendVerificationEmail: "Gửi lại email xác minh",
   },
   landing: {
-    title: "Hệ thống quản lý bán hàng tốt nhất",
+    prefix: "với",
+    title: "Quản lý thương mại điện tử {prefix} {siteName}",
     description:
       "Nền tảng quản lý bán hàng với các tính năng bán hàng cần thiết",
-    typeWriter: {
-      text1: "Hiểu nhu cầu của người dùng",
-      text2: "Phân tích và báo cáo dữ liệu",
-      text3: "Hiệu suất và tốc độ",
-      text4: "Khả năng mở rộng",
-      text5: "Bảo mật",
-    },
   },
   dashboard: {
     title: "Bảng điều khiển",

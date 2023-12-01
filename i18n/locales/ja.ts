@@ -43,15 +43,9 @@ export default {
     resendVerificationEmail: "確認メールを再送信",
   },
   landing: {
-    title: "最高のECサイト管理システム",
+    prefix: "による",
+    title: "{siteName} {prefix} 電子商取引管理",
     description: "必要なECサイト機能を備えたECサイト管理プラットフォーム",
-    typeWriter: {
-      text1: "ユーザーのニーズを理解する",
-      text2: "データ分析とレポート",
-      text3: "パフォーマンスとスピード",
-      text4: "スケーラビリティ",
-      text5: "セキュリティ",
-    },
     dashboard: {
       title: "ダッシュボード",
       stores: {
