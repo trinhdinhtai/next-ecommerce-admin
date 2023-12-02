@@ -46,6 +46,10 @@ export default {
     prefix: "による",
     title: "{siteName} {prefix} 電子商取引管理",
     description: "必要なECサイト機能を備えたECサイト管理プラットフォーム",
+    testimonials: {
+      title: "お客様の声",
+      description: "{siteName} についてお客様がおっしゃること",
+    },
     dashboard: {
       title: "ダッシュボード",
       stores: {

@@ -47,6 +47,10 @@ export default {
     title: "Quản lý thương mại điện tử {prefix} {siteName}",
     description:
       "Nền tảng quản lý bán hàng với các tính năng bán hàng cần thiết",
+    testimonials: {
+      title: "Cảm nhận",
+      description: "Người dùng nói gì về {siteName}",
+    },
   },
   dashboard: {
     title: "Bảng điều khiển",

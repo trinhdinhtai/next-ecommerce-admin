@@ -47,6 +47,10 @@ export default {
     title: "E-commerce Management {prefix} {siteName}",
     description:
       "E-commerce management platform with essential commerce features",
+    testimonials: {
+      title: "Testimonials",
+      description: "What our users say about {siteName}",
+    },
   },
   dashboard: {
     title: "Dashboard",
