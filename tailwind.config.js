@@ -106,10 +106,31 @@ module.exports = {
             opacity: ".2",
           },
         },
+        "image-rotate": {
+          "0%": { transform: "rotateX(25deg)" },
+          "25%": { transform: "rotateX(25deg) scale(0.9)" },
+          "60%": { transform: "none" },
+          "100%": { transform: "none" },
+        },
+        "image-glow": {
+          "0%": {
+            opacity: 0,
+            "animation-timing-function": "cubic-bezier(0.74,0.25,0.76,1)",
+          },
+          "10%": {
+            opacity: 1,
+            "animation-timing-function": "cubic-bezier(0.12,0.01,0.08,0.99)",
+          },
+          "100%": {
+            opacity: 0.2,
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "image-rotate": "image-rotate 1400ms ease forwards",
+        "image-glow": "image-glow 4100ms 600ms ease-out forwards",
       },
     },
   },
