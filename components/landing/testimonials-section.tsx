@@ -39,7 +39,7 @@ export default function TestimonialsSection() {
   ]
 
   return (
-    <div className="mb-5 grid grid-cols-1 items-stretch gap-10 p-4 md:grid-cols-2 xl:grid-cols-4">
+    <div className="mb-5 grid grid-cols-1 items-stretch gap-10 p-4 md:grid-cols-2">
       {testimonials.map((item) => (
         <TestimonialCard key={item.description} item={item} />
       ))}

@@ -1,17 +1,15 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { useI18n, useScopedI18n } from "@/i18n/client"
 import { ChevronRight } from "lucide-react"
-import { useTheme } from "next-themes"
 import { Balancer } from "react-wrap-balancer"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { HeroImage } from "@/components/landing/hero-image"
 
 const LandingHero = () => {
-  const { theme } = useTheme()
   const t = useI18n()
   const landingScopeT = useScopedI18n("landing")
 
@@ -57,14 +55,7 @@ const LandingHero = () => {
       </Link>
 
       <div className="relative mt-10 aspect-[32/18] rounded-2xl">
-        <Image
-          fill
-          src={
-            theme === "light" ? "/screenshot-light.png" : "/screenshot-dark.png"
-          }
-          alt="hero-banner"
-          className="rounded-3xl object-cover"
-        />
+        <HeroImage />
       </div>
     </div>
   )
