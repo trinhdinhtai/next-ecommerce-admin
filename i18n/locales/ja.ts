@@ -50,6 +50,27 @@ export default {
       title: "お客様の声",
       description: "{siteName} についてお客様がおっしゃること",
     },
+    billing: {
+      title: "課金",
+      highlight: "開始",
+      description: "{highlight} する準備ができました",
+      plans: {
+        free: "無料",
+        growth: "成長",
+        enterprise: "エンタープライズ",
+      },
+      features: {
+        unlimitedProducts: "無制限の商品",
+        unlimitedStores: "無制限のストア",
+        unlimitedStorage: "無制限のストレージ",
+        chatSupport: "チャットサポート",
+        dedicatedAccountManager: "専任アカウントマネージャー",
+        customReports: "カスタムレポート",
+        customOnboarding: "カスタムオンボーディング",
+      },
+      comparePlans: "プランを比較",
+      startFreeTrial: "無料トライアルを開始",
+    },
     dashboard: {
       title: "ダッシュボード",
       stores: {

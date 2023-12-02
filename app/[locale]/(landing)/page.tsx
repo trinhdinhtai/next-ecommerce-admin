@@ -1,3 +1,4 @@
+import BillingSection from "@/components/landing/billing-section"
 import LandingContent from "@/components/landing/landing-content"
 import LandingFooter from "@/components/landing/landing-footer"
 import LandingHero from "@/components/landing/landing-hero"
@@ -12,6 +13,7 @@ export default async function LandingPage() {
           <div className="h-full">
             <LandingHero />
             <LandingContent />
+            <BillingSection />
           </div>
         </div>
       </main>

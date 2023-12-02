@@ -1,6 +1,6 @@
 "use client"
 
-import { useI18n, useScopedI18n } from "@/i18n/client"
+import { useScopedI18n } from "@/i18n/client"
 
 import TestimonialsSection from "@/components/landing/testimonials-section"
 

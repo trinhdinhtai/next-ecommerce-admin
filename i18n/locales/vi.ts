@@ -51,6 +51,17 @@ export default {
       title: "Cảm nhận",
       description: "Người dùng nói gì về {siteName}",
     },
+    billing: {
+      title: "Thanh toán",
+      highlight: "bắt đầu",
+      description: "Sẵn sàng để {highlight}",
+      plans: {
+        free: "Miễn phí",
+        growth: "Tăng trưởng",
+        enterprise: "Doanh nghiệp",
+      },
+      compare: "So sánh các gói",
+    },
   },
   dashboard: {
     title: "Bảng điều khiển",

@@ -7,7 +7,6 @@ import { CheckIcon } from "lucide-react"
 import { env } from "@/env.mjs"
 import { storeSubscriptionPlans } from "@/config/subscriptions"
 import { formatDate } from "@/lib/formatter"
-import { prisma } from "@/lib/prismadb"
 import { cn, formatPrice } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import {

@@ -51,6 +51,16 @@ export default {
       title: "Testimonials",
       description: "What our users say about {siteName}",
     },
+    billing: {
+      title: "Billing",
+      highlight: "started",
+      description: "Ready to {highlight}",
+      plans: {
+        free: "Free",
+        growth: "Growth",
+        enterprise: "Enterprise",
+      },
+    },
   },
   dashboard: {
     title: "Dashboard",
