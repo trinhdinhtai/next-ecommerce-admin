@@ -1,23 +1,13 @@
 import BillingSection from "@/components/landing/billing-section"
-import LandingContent from "@/components/landing/landing-content"
-import LandingFooter from "@/components/landing/landing-footer"
-import LandingHero from "@/components/landing/landing-hero"
-import LandingNavbar from "@/components/landing/landing-navbar"
+import HeroSection from "@/components/landing/hero-section"
+import TestimonialsSection from "@/components/landing/testimonials-section"
 
 export default async function LandingPage() {
   return (
-    <>
-      <LandingNavbar />
-      <main className="duration-really-slow h-full overflow-auto animate-in fade-in slide-in-from-bottom-8">
-        <div className="mx-auto h-full w-full max-w-screen-xl">
-          <div className="h-full">
-            <LandingHero />
-            <LandingContent />
-            <BillingSection />
-          </div>
-        </div>
-      </main>
-      <LandingFooter />
-    </>
+    <div className="mx-auto h-full w-full max-w-screen-xl space-y-24">
+      <HeroSection />
+      <TestimonialsSection />
+      <BillingSection />
+    </div>
   )
 }

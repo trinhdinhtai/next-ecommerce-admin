@@ -1,12 +1,15 @@
-import { getAvatarFallback } from "@/helpers/utils"
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
+"use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useScopedI18n } from "@/i18n/client"
+import { motion } from "framer-motion"
+
 import TestimonialCard, {
   Testimonial,
 } from "@/components/landing/testimonial-card"
 
 export default function TestimonialsSection() {
+  const testimonialsScope = useScopedI18n("landing.testimonials")
+
   const testimonials: Testimonial[] = [
     {
       name: "Phung Tu Linh",
@@ -39,10 +42,38 @@ export default function TestimonialsSection() {
   ]
 
   return (
-    <div className="mb-5 grid grid-cols-1 items-stretch gap-10 p-4 md:grid-cols-2">
-      {testimonials.map((item) => (
-        <TestimonialCard key={item.description} item={item} />
-      ))}
-    </div>
+    <section className="space-y-10">
+      <motion.h2
+        initial={{
+          opacity: 0,
+          y: 20,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.5,
+        }}
+        viewport={{
+          once: true,
+        }}
+        className="mb-10 text-center text-4xl font-extrabold"
+      >
+        {testimonialsScope("description", {
+          siteName: (
+            <span className="bg-primary-gradient bg-clip-text text-transparent">
+              GM Admin
+            </span>
+          ),
+        })}
+      </motion.h2>
+
+      <div className="mb-5 grid grid-cols-1 items-stretch gap-10 p-4 md:grid-cols-2">
+        {testimonials.map((item) => (
+          <TestimonialCard key={item.description} item={item} />
+        ))}
+      </div>
+    </section>
   )
 }
