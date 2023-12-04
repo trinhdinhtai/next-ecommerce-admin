@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useScopedI18n } from "@/i18n/client"
 import { User } from "@/types"
 import { useClerk } from "@clerk/nextjs"
 import { ChevronDown, ExternalLink } from "lucide-react"
@@ -30,6 +31,7 @@ const UserButton = ({ user }: UserProps) => {
   const { signOut } = useClerk()
   const { onOpen } = useCommandModal()
   const router = useRouter()
+  const userMenuScope = useScopedI18n("userMenu")
 
   const fullName = `${user?.firstName} ${user?.lastName}`
   const displayName = fullName || user?.username
@@ -65,10 +67,10 @@ const UserButton = ({ user }: UserProps) => {
       <DropdownMenuContent className="w-64">
         <DropdownMenuGroup className="mt-2 space-y-3">
           <DropdownMenuItem onClick={() => router.push("/dashboard/stores")}>
-            Stores
+            {userMenuScope("stores")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => router.push("/settings/account")}>
-            Settings
+            {userMenuScope("settings")}
           </DropdownMenuItem>
         </DropdownMenuGroup>
 
@@ -79,14 +81,14 @@ const UserButton = ({ user }: UserProps) => {
             className="mt-4 flex items-center justify-between"
             onClick={handleOpenCommandModal}
           >
-            <span>Command Menu</span>
+            <span>{userMenuScope("commandMenu")}</span>
             <DropdownMenuShortcut className="space-x-1">
               <span className="rounded-sm border p-1">⌘</span>
               <span className="rounded-sm border p-1">K</span>
             </DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex justify-between">
-            Theme
+            {userMenuScope("theme")}
             <ThemeDialog />
           </DropdownMenuItem>
         </DropdownMenuGroup>
@@ -96,7 +98,7 @@ const UserButton = ({ user }: UserProps) => {
         <DropdownMenuGroup className="mt-4 space-y-3">
           <DropdownMenuItem className="mt-4 flex items-center justify-between">
             <Link href="https://gm-group.vn/" target="_blank">
-              Homepage
+              {userMenuScope("homepage")}
             </Link>
             <ExternalLink className="h-4 w-4" />
           </DropdownMenuItem>
@@ -104,7 +106,7 @@ const UserButton = ({ user }: UserProps) => {
             className="flex justify-between"
             onClick={() => signOut()}
           >
-            Logout
+            {userMenuScope("signOut")}
           </DropdownMenuItem>
         </DropdownMenuGroup>
 
@@ -115,7 +117,7 @@ const UserButton = ({ user }: UserProps) => {
             href="/settings/billing"
             className={cn(buttonVariants(), "w-full")}
           >
-            Upgrade your plan
+            {userMenuScope("upgrade")}
           </Link>
         </DropdownMenuLabel>
       </DropdownMenuContent>

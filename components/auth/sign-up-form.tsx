@@ -2,7 +2,7 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { useI18n } from "@/i18n/client"
+import { useI18n, useScopedI18n } from "@/i18n/client"
 import { useSignUp } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -28,6 +28,7 @@ type FormInput = z.infer<typeof authSchema>
 
 export default function SignUpForm() {
   const t = useI18n()
+  const signUpScope = useScopedI18n("signUp")
   const router = useRouter()
   const { isLoaded, signUp } = useSignUp()
   const [isPending, startTransition] = useTransition()
@@ -76,7 +77,7 @@ export default function SignUpForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{signUpScope("email")}</FormLabel>
               <FormControl>
                 <Input type="text" placeholder="example@gmail.com" {...field} />
               </FormControl>
@@ -90,7 +91,7 @@ export default function SignUpForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{signUpScope("password")}</FormLabel>
               <FormControl>
                 <PasswordInput placeholder="**********" {...field} />
               </FormControl>

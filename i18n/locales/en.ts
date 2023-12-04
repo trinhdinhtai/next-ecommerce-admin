@@ -42,6 +42,7 @@ export default {
     confirm: "Confirm",
     resendVerificationEmail: "Resend verification email",
   },
+
   landing: {
     prefix: "with",
     title: "E-commerce Management {prefix} {siteName}",
@@ -62,14 +63,60 @@ export default {
       },
     },
   },
+  sidebar: {
+    dashboard: "Dashboard",
+    billboards: "Billboards",
+    categories: "Categories",
+    products: "Products",
+    sizes: "Sizes",
+    colors: "Colors",
+    orders: "Orders",
+    customers: "Customers",
+    api: "APIs",
+    settings: "Settings",
+  },
   dashboard: {
     title: "Dashboard",
+    description: "Manage your stores",
+    tabs: {
+      overview: {
+        title: "Overview",
+        totalRevenue: "Total Revenue",
+        sales: "Sales",
+        productInStock: "Products In Stock",
+        growRateByMonth: "{rate} from last month",
+        growRateByHour: "{rate} from last hour",
+        recentOrders: {
+          title: "Recent Orders",
+          description: "You made {salesCount} sales this month.",
+        },
+      },
+      analytics: "Analytics",
+      reports: "Reports",
+      notifications: "Notifications",
+    },
     stores: {
       title: "Stores",
       description: "Manage your stores",
       create: "Create store",
       empty: "You don't have any stores yet",
+      currentPlan:
+        "You are currently on the {planName} plan. You can create up to {maxStore} stores and {maxProduct} products on this plan.",
     },
+  },
+  userMenu: {
+    stores: "Stores",
+    settings: "Settings",
+    commandMenu: "Command Menu",
+    theme: "Theme",
+    themeOptions: {
+      light: "Light",
+      dark: "Dark",
+      system: "System",
+    },
+    homepage: "Homepage",
+    signOut: "Log out",
+    upgrade: "Upgrade your plan",
   },
   continueWith: "or continue with",
 } as const

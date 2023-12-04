@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
+import { useScopedI18n } from "@/i18n/client"
 import {
   Gauge,
   LayoutDashboard,
@@ -23,64 +24,59 @@ interface StoreSidebarLinksProps {
 
 const StoreSidebarLinks = ({ storeId }: StoreSidebarLinksProps) => {
   const segment = useSelectedLayoutSegment()
+  const sidebarScope = useScopedI18n("sidebar")
 
   const links = [
     {
-      label: "Dashboard",
+      label: sidebarScope("dashboard"),
       href: `/dashboard/stores/${storeId}`,
       icon: Gauge,
       isActive: segment === null,
     },
     {
-      label: "Billboards",
+      label: sidebarScope("billboards"),
       href: `/dashboard/stores/${storeId}/billboards`,
       icon: Monitor,
       isActive: segment === "billboards",
     },
     {
-      label: "Categories",
+      label: sidebarScope("categories"),
       href: `/dashboard/stores/${storeId}/categories`,
       icon: LayoutDashboard,
       isActive: segment === "categories",
     },
     {
-      label: "Products",
+      label: sidebarScope("products"),
       href: `/dashboard/stores/${storeId}/products`,
       icon: ShoppingBasket,
       isActive: segment === "products",
     },
     {
-      label: "Sizes",
+      label: sidebarScope("sizes"),
       href: `/dashboard/stores/${storeId}/sizes`,
       icon: Minimize2,
       isActive: segment === "sizes",
     },
     {
-      label: "Colors",
+      label: sidebarScope("colors"),
       href: `/dashboard/stores/${storeId}/colors`,
       icon: Palette,
       isActive: segment === "colors",
     },
     {
-      label: "Orders",
+      label: sidebarScope("orders"),
       href: `/dashboard/stores/${storeId}/orders`,
       icon: ScrollText,
       isActive: segment === "orders",
     },
     {
-      label: "Customers",
+      label: sidebarScope("customers"),
       href: `/dashboard/stores/${storeId}/customers`,
       icon: User,
       isActive: segment === "customers",
     },
     {
-      label: "APIs",
-      href: `/dashboard/stores/${storeId}/api-list`,
-      icon: Zap,
-      isActive: segment === "api-list",
-    },
-    {
-      label: "Settings",
+      label: sidebarScope("settings"),
       href: `/dashboard/stores/${storeId}/settings`,
       icon: Settings,
       isActive: segment === "settings",

@@ -58,14 +58,18 @@ export default async function StoresPage() {
 
       <Alert>
         <Rocket className="h-4 w-4" aria-hidden="true" />
-        <AlertTitle>Heads up!</AlertTitle>
         <AlertDescription>
-          You are currently on the{" "}
-          <span className="font-semibold">{subscriptionPlan?.planType}</span>{" "}
-          plan. You can create up to{" "}
-          <span className="font-semibold">{maxStoreCount}</span> stores and{" "}
-          <span className="font-semibold">{maxProductCount}</span> products on
-          this plan.
+          {storesScope("currentPlan", {
+            planName: (
+              <span className="font-semibold">
+                {subscriptionPlan?.planType}
+              </span>
+            ),
+            maxStore: <span className="font-semibold">{maxStoreCount}</span>,
+            maxProduct: (
+              <span className="font-semibold">{maxProductCount}</span>
+            ),
+          })}
         </AlertDescription>
       </Alert>
 

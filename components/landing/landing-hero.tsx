@@ -17,23 +17,21 @@ const LandingHero = () => {
     <div className="space-y-10 px-4 py-36 text-center font-bold">
       <div className="space-y-5 text-5xl font-extrabold sm:text-5xl md:text-6xl lg:text-7xl">
         <Balancer
-          as="p"
-          className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
+          as="h1"
+          className="bg-heading-gradient-dark dark:bg-heading-gradient-light bg-clip-text text-center font-heading text-4xl tracking-tight text-transparent md:text-6xl md:leading-snug"
         >
-          <h1 className="bg-heading-gradient-dark dark:bg-heading-gradient-light bg-clip-text text-center font-heading text-4xl tracking-tight text-transparent md:text-6xl md:leading-snug">
-            {landingScopeT("title", {
-              prefix: (
-                <>
-                  <br className="md:block" /> {t("landing.prefix")}
-                </>
-              ),
-              siteName: (
-                <span className="bg-primary-gradient bg-clip-text text-transparent">
-                  GM Admin
-                </span>
-              ),
-            })}
-          </h1>
+          {landingScopeT("title", {
+            prefix: (
+              <>
+                <br className="md:block" /> {t("landing.prefix")}
+              </>
+            ),
+            siteName: (
+              <span className="bg-primary-gradient bg-clip-text text-transparent">
+                GM Admin
+              </span>
+            ),
+          })}
         </Balancer>
       </div>
 

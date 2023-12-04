@@ -63,13 +63,45 @@ export default {
       compare: "So sánh các gói",
     },
   },
+  sidebar: {
+    dashboard: "Bảng điều khiển",
+    billboards: "Chiến dịch quảng cáo",
+    categories: "Danh mục",
+    products: "Sản phẩm",
+    sizes: "Kích cỡ",
+    colors: "Màu sắc",
+    orders: "Đơn hàng",
+    customers: "Khách hàng",
+    api: "APIs",
+    settings: "Cài đặt",
+  },
   dashboard: {
     title: "Bảng điều khiển",
+    description: "Quản lý cửa hàng của bạn",
+    tabs: {
+      overview: {
+        title: "Tổng quan",
+        totalRevenue: "Tổng doanh thu",
+        sales: "Doanh số",
+        productInStock: "Sản phẩm tồn kho",
+        growRateByMonth: "{rate} so với tháng trước",
+        growRateByHour: "{rate} so với giờ trước",
+        recentOrders: {
+          title: "Đơn hàng gần đây",
+          description: "Bạn có {salesCount} đơn hàng trong tháng này.",
+        },
+      },
+      analytics: "Phân tích",
+      reports: "Báo cáo",
+      notifications: "Thông báo",
+    },
     stores: {
       title: "Cửa hàng",
       description: "Quản lý các cửa hàng của bạn",
       create: "Tạo cửa hàng",
       empty: "Bạn chưa có cửa hàng nào",
+      currentPlan:
+        "Bạn hiện đang sử dụng {planName}. Bạn có thể tạo tối đa {maxStore} cửa hàng và {maxProduct} sản phẩm trong gói này.",
     },
     products: {
       title: "Sản phẩm",
@@ -86,6 +118,20 @@ export default {
     settings: {
       title: "Cài đặt",
     },
+  },
+  userMenu: {
+    stores: "Cửa hàng",
+    settings: "Cài đặt tài khoản",
+    commandMenu: "Menu lệnh",
+    theme: "Giao diện",
+    themeOptions: {
+      light: "Sáng",
+      dark: "Tối",
+      system: "Hệ thống",
+    },
+    homepage: "Trang chủ",
+    signOut: "Đăng xuất",
+    upgrade: "Nâng cấp",
   },
   continueWith: "Hoặc tiếp tục với",
 } as const
