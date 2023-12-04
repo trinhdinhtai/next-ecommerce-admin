@@ -2,6 +2,7 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { useScopedI18n } from "@/i18n/client"
 import { useSignIn } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -28,6 +29,7 @@ export default function SignInForm() {
   const router = useRouter()
   const { isLoaded, signIn, setActive } = useSignIn()
   const [isPending, startTransition] = useTransition()
+  const signInScope = useScopedI18n("signIn")
 
   const form = useForm<FormInput>({
     resolver: zodResolver(authSchema),
@@ -72,7 +74,7 @@ export default function SignInForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{signInScope("email")}</FormLabel>
               <FormControl>
                 <Input type="text" placeholder="example@gmail.com" {...field} />
               </FormControl>
@@ -86,7 +88,7 @@ export default function SignInForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{signInScope("password")}</FormLabel>
               <FormControl>
                 <PasswordInput placeholder="**********" {...field} />
               </FormControl>
@@ -97,7 +99,7 @@ export default function SignInForm() {
 
         <Button type="submit" disabled={isPending}>
           {isPending && <Icons.Loading className="mr-2" aria-hidden="true" />}
-          Sign in
+          {signInScope("title")}
           <span className="sr-only">Sign in</span>
         </Button>
       </form>

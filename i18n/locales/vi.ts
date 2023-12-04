@@ -87,5 +87,14 @@ export default {
       title: "Cài đặt",
     },
   },
+  userMenu: {
+    stores: "Cửa hàng",
+    settings: "Cài đặt tài khoản",
+    commandMenu: "Menu lệnh",
+    theme: "Giao diện",
+    homepage: "Trang chủ",
+    signOut: "Đăng xuất",
+    upgrade: "Nâng cấp",
+  },
   continueWith: "Hoặc tiếp tục với",
 } as const

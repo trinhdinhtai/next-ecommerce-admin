@@ -6,6 +6,8 @@ import {
 } from "@/_actions/dashboard"
 import { getGraphRevenue } from "@/_actions/graph"
 import { formatter } from "@/helpers/utils"
+import { useScopedI18n } from "@/i18n/client"
+import { getScopedI18n } from "@/i18n/server"
 import { format } from "date-fns"
 
 import { OrderColumn } from "@/types/columns"
@@ -20,6 +22,8 @@ interface DashboardPageProps {
 }
 
 export default async function DashboardPage({ params }: DashboardPageProps) {
+  const dashboardScope = await getScopedI18n("dashboard")
+
   const response = await Promise.all([
     getTotalRevenue(params.storeId),
     getSalesCount(params.storeId),
@@ -54,7 +58,9 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
   return (
     <Shell>
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+        <h2 className="text-3xl font-bold tracking-tight">
+          {dashboardScope("title")}
+        </h2>
         <DateRangePicker />
       </div>
       <DashboardTabs

@@ -71,5 +71,14 @@ export default {
       empty: "You don't have any stores yet",
     },
   },
+  userMenu: {
+    stores: "Stores",
+    settings: "Settings",
+    commandMenu: "Command Menu",
+    theme: "Theme",
+    homepage: "Homepage",
+    signOut: "Log out",
+    upgrade: "Upgrade your plan",
+  },
   continueWith: "or continue with",
 } as const

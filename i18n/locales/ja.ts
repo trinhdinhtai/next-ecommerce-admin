@@ -1,10 +1,10 @@
 export default {
   signIn: {
-    title: "ログイン",
-    description: "アカウントにログインする",
+    title: "サインイン",
+    description: "アカウントにサインインする",
     email: "メールアドレス",
     password: "パスワード",
-    forgotPassword: "パスワードを忘れた方はこちら",
+    forgotPassword: "パスワードを忘れたら",
     noAccount: "アカウントをお持ちでない方はこちら",
   },
   signUp: {
@@ -118,6 +118,15 @@ export default {
         cancel: "キャンセル",
         archived: "アーカイブ",
       },
+    },
+    userMenu: {
+      stores: "ストア",
+      settings: "設定",
+      commandMenu: "コマンドメニュー",
+      theme: "テーマ",
+      homepage: "ホームページ",
+      signOut: "ログアウト",
+      upgrade: "プランをアップグレード",
     },
   },
   continueWith: "または続行する",
