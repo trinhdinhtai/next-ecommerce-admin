@@ -104,6 +104,9 @@ dependencies:
   eslint-config-next:
     specifier: 13.4.19
     version: 13.4.19(eslint@8.47.0)(typescript@5.1.6)
+  flag-icons:
+    specifier: ^7.0.2
+    version: 7.0.2
   json-as-xlsx:
     specifier: ^2.5.4
     version: 2.5.4
@@ -3455,6 +3458,10 @@ packages:
     dependencies:
       locate-path: 6.0.0
       path-exists: 4.0.0
+    dev: false
+
+  /flag-icons@7.0.2:
+    resolution: {integrity: sha512-d54NSa0t4GcKflhZWzxjpxj315DScbtdzqVdZKJl+R0zjtHNiLLuUl9Lis+UJRRL/YJbJ80JXP9FYQ4u/eGXAg==}
     dev: false
 
   /flat-cache@3.0.4:

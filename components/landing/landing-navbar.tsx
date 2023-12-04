@@ -4,6 +4,7 @@ import { getI18n } from "@/i18n/server"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import LogoIcon from "@/components/icons/logo"
+import LocaleSwitcher from "@/components/locale-switcher"
 
 export default async function LandingNavbar() {
   const t = await getI18n()
@@ -14,6 +15,7 @@ export default async function LandingNavbar() {
           <LogoIcon className="h-8 text-purple-500" />
         </Link>
         <div className="flex items-center gap-x-2">
+          <LocaleSwitcher />
           <Link
             href="/sign-in"
             className={cn(

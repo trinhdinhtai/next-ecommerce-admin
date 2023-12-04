@@ -1,4 +1,10 @@
 export default {
+  chooseLanguage: "Choose language",
+  locales: {
+    en: "English",
+    vi: "Vietnamese",
+    ja: "Japanese",
+  },
   signIn: {
     title: "Sign in",
     description: "Sign in to your account",
@@ -42,7 +48,6 @@ export default {
     confirm: "Confirm",
     resendVerificationEmail: "Resend verification email",
   },
-
   landing: {
     prefix: "with",
     title: "E-commerce Management {prefix} {siteName}",

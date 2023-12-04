@@ -1,4 +1,10 @@
 export default {
+  chooseLanguage: "言語を選択",
+  locales: {
+    en: "英語",
+    vi: "ベトナム",
+    ja: "日本語",
+  },
   signIn: {
     title: "サインイン",
     description: "アカウントにサインインする",

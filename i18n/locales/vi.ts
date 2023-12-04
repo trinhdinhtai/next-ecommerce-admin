@@ -1,4 +1,10 @@
 export default {
+  chooseLanguage: "Chọn ngôn ngữ",
+  locales: {
+    en: "Tiếng Anh",
+    vi: "Tiếng Việt",
+    ja: "Tiếng Nhật",
+  },
   signIn: {
     title: "Đăng nhập",
     description: "Đăng nhập vào tài khoản của bạn",
