@@ -20,7 +20,9 @@ interface DashboardPageProps {
   }
 }
 
-export default async function DashboardPage({ params }: DashboardPageProps) {
+export default async function DashboardPage({
+  params,
+}: Readonly<DashboardPageProps>) {
   const dashboardScope = await getScopedI18n("dashboard")
 
   const response = await Promise.all([
@@ -42,9 +44,9 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
     products: order.orderItems
       .map((orderItem) => orderItem.product.name)
       .join(", "),
-    customerName: order.customer?.name || "",
-    phone: order.customer?.phone || "",
-    address: order.customer?.address || "",
+    customerName: order.customer?.name ?? "",
+    phone: order.customer?.phone ?? "",
+    address: order.customer?.address ?? "",
     totalPrice: formatter.format(
       order.orderItems.reduce((total, item) => {
         return total + Number(item.product.price)
