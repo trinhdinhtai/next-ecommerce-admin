@@ -1,10 +1,10 @@
 "use client"
 
-import { deleteStore } from "@/_actions/store"
 import { toast } from "sonner"
 
 import { useAction } from "@/hooks/use-action"
 import LoadingButton from "@/components/ui/loading-button"
+import { deleteStore } from "@/app/_actions/stores/delete-store"
 
 interface DeleteStoreSectionProps {
   storeId: string

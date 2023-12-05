@@ -1,5 +1,6 @@
 export default {
   chooseLanguage: "Chọn ngôn ngữ",
+  account: "Tài khoản",
   locales: {
     en: "Tiếng Anh",
     vi: "Tiếng Việt",
@@ -35,6 +36,7 @@ export default {
     forgotPassword: "Quên mật khẩu?",
     resetPassword: "Đặt lại mật khẩu",
     createAccount: "Tạo tài khoản",
+    updateAccount: "Cập nhật tài khoản",
     verifyEmail: "Xác minh email",
     backToSignIn: "Quay lại đăng nhập",
     changePassword: "Thay đổi mật khẩu",
@@ -107,7 +109,7 @@ export default {
       create: "Tạo cửa hàng",
       empty: "Bạn chưa có cửa hàng nào",
       currentPlan:
-        "Bạn hiện đang sử dụng {planName}. Bạn có thể tạo tối đa {maxStore} cửa hàng và {maxProduct} sản phẩm trong gói này.",
+        "Bạn hiện đang sử dụng gói {planName}. Bạn có thể tạo tối đa {maxStore} cửa hàng và {maxProduct} sản phẩm trong gói này.",
     },
     products: {
       title: "Sản phẩm",
@@ -140,4 +142,36 @@ export default {
     upgrade: "Nâng cấp",
   },
   continueWith: "Hoặc tiếp tục với",
+  settings: {
+    account: {
+      title: "Tài khoản",
+      description: "Quản lý tài khoản của bạn",
+      email: "Email",
+      password: "Mật khẩu",
+      changePassword: "Thay đổi mật khẩu",
+      changeEmail: "Thay đổi email",
+      change: "Thay đổi",
+      save: "Lưu",
+      cancel: "Hủy",
+      delete: "Xóa",
+      confirm: "Xác nhận",
+    },
+  },
+  form: {
+    label: {
+      firstName: "Tên",
+      lastName: "Họ",
+      dob: "Ngày sinh",
+      language: "Ngôn ngữ",
+    },
+    placeholder: {
+      firstName: "Nhập tên của bạn",
+      lastName: "Nhập họ của bạn",
+      dob: "Chọn ngày",
+      language: "Chọn ngôn ngữ",
+    },
+    description: {
+      language: "Đây là ngôn ngữ sẽ được sử dụng trong bảng điều khiển.",
+    },
+  },
 } as const

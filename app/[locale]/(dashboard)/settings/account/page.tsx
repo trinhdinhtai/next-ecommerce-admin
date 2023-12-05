@@ -1,8 +1,11 @@
 import { Metadata } from "next"
+import { redirect } from "next/navigation"
+import { getScopedI18n } from "@/i18n/server"
+import { currentUser } from "@clerk/nextjs"
 
 import { env } from "@/env.mjs"
 import { Shell } from "@/components/ui/shell"
-import { UserProfile } from "@/components/auth/user-profile"
+import UpdateAccountForm from "@/components/forms/update-account-form"
 import PageHeading from "@/components/PageHeading"
 
 export const metadata: Metadata = {
@@ -11,16 +14,25 @@ export const metadata: Metadata = {
   description: "Manage your account settings",
 }
 
-const AccountPage = () => {
+export default async function AccountPage() {
+  const accountScope = await getScopedI18n("settings.account")
+  const user = await currentUser()
+
+  if (!user) return redirect("/sign-in")
+
+  const formattedUser = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+  }
+
   return (
     <Shell>
-      <PageHeading title="Account" description="Manage your account settings" />
+      <PageHeading
+        title={accountScope("title")}
+        description={accountScope("description")}
+      />
 
-      <section>
-        <UserProfile />
-      </section>
+      <UpdateAccountForm user={formattedUser} />
     </Shell>
   )
 }
-
-export default AccountPage

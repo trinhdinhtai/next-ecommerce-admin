@@ -6,6 +6,7 @@ import { createI18nMiddleware } from "next-international/middleware"
 const I18nMiddleware = createI18nMiddleware({
   locales: i18n.locales,
   defaultLocale: i18n.defaultLocale,
+  urlMappingStrategy: "rewrite",
 })
 
 // https://clerk.com/docs/references/nextjs/auth-middleware
@@ -20,9 +21,6 @@ export default authMiddleware({
     "/api/:path*",
   ],
   afterAuth(auth, request) {
-    const pathname = request.nextUrl.pathname
-    if (pathname.startsWith("/api")) return NextResponse.next()
-
     if (auth.isPublicRoute) {
       if (auth.userId) {
         let path = `/dashboard/stores`
@@ -32,6 +30,8 @@ export default authMiddleware({
     }
   },
   beforeAuth(request) {
+    const pathname = request.nextUrl.pathname
+    if (pathname.startsWith("/api")) return NextResponse.next()
     // Execute next-intl middleware before Clerk's auth middleware
     return I18nMiddleware(request)
   },

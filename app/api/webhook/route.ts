@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prismadb"
 import { stripe } from "@/lib/stripe"
 
 export async function POST(req: Request) {
+  console.log("file: route.ts:10 ~ POST ~ req:", req)
   const body = await req.text()
   const signature = headers().get("Stripe-Signature") as string
 
@@ -28,6 +29,11 @@ export async function POST(req: Request) {
     case "checkout.session.completed": {
       const subscription = await stripe.subscriptions.retrieve(
         session.subscription as string
+      )
+
+      console.log(
+        "file: route.ts:34 ~ POST ~ userId:",
+        session?.metadata?.userId
       )
 
       if (!session?.metadata?.userId) {

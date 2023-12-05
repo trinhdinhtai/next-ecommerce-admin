@@ -1,15 +1,12 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
-import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
 import { storeSchema } from "@/lib/validations/store"
-import { useCreateStoreModal } from "@/hooks/use-create-store"
+import { useAction } from "@/hooks/use-action"
 import {
   Form,
   FormControl,
@@ -21,20 +18,19 @@ import {
 import { Input } from "@/components/ui/input"
 import LoadingButton from "@/components/ui/loading-button"
 import { Textarea } from "@/components/ui/textarea"
+import { createStore } from "@/app/_actions/stores/create-store"
 
 type CreateStoreFormInput = z.infer<typeof storeSchema>
 
 const CreateStoreForm = () => {
-  const router = useRouter()
-  const { onClose } = useCreateStoreModal()
-  const { mutate: createStore, isPending } = useMutation({
-    mutationFn: async (values: CreateStoreFormInput) => {
-      const response = await axios.post("/api/stores", values)
-      return response.data
+  const { execute, isLoading } = useAction(createStore, {
+    onSuccess: () => {
+      toast.success("Store created")
+    },
+    onError: (error) => {
+      toast.error(error)
     },
   })
-
-  const { setIsFirstCreate } = useCreateStoreModal()
 
   const form = useForm<CreateStoreFormInput>({
     resolver: zodResolver(storeSchema),
@@ -45,19 +41,7 @@ const CreateStoreForm = () => {
   })
 
   const onCreateStore = async (values: CreateStoreFormInput) => {
-    createStore(values, {
-      onSuccess: (data) => {
-        toast.success("Store created successfully!")
-        onClose()
-        router.refresh()
-        router.push(`/dashboard/stores/${data.store.id}`)
-        setIsFirstCreate(data.isFirstStore)
-      },
-      onError: (error) => {
-        console.error(error)
-        toast.error("Something went wrong!")
-      },
-    })
+    execute(values)
   }
 
   return (
@@ -85,7 +69,7 @@ const CreateStoreForm = () => {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
-                  disabled={isPending}
+                  disabled={isLoading}
                   placeholder="Type store description here."
                   {...field}
                 />
@@ -95,7 +79,7 @@ const CreateStoreForm = () => {
           )}
         />
 
-        <LoadingButton type="submit" isLoading={isPending}>
+        <LoadingButton type="submit" isLoading={isLoading}>
           Create store
         </LoadingButton>
       </form>

@@ -1,5 +1,6 @@
 export default {
   chooseLanguage: "言語を選択",
+  account: "アカウント",
   locales: {
     en: "英語",
     vi: "ベトナム",
@@ -35,6 +36,7 @@ export default {
     forgotPassword: "パスワードを忘れた方はこちら",
     resetPassword: "パスワードをリセット",
     createAccount: "アカウントを作成",
+    updateAccount: "アカウントを更新",
     verifyEmail: "メールアドレスを確認",
     backToSignIn: "ログインに戻る",
     changePassword: "パスワードを変更",
@@ -174,4 +176,36 @@ export default {
     upgrade: "プランをアップグレード",
   },
   continueWith: "または続行する",
+  settings: {
+    account: {
+      title: "アカウント",
+      description: "アカウントを管理する",
+      email: "メールアドレス",
+      password: "パスワード",
+      changePassword: "パスワードを変更",
+      changeEmail: "メールアドレスを変更",
+      change: "変更",
+      save: "保存",
+      cancel: "キャンセル",
+      delete: "削除",
+      confirm: "確認",
+    },
+  },
+  form: {
+    label: {
+      firstName: "名前",
+      lastName: "苗字",
+      dob: "生年月日",
+      language: "言語",
+    },
+    placeholder: {
+      firstName: "名前を入力してください",
+      lastName: "苗字を入力してください",
+      dob: "日付を選択してください",
+      language: "言語を選択してください",
+    },
+    description: {
+      language: "これはダッシュボードで使用される言語です。",
+    },
+  },
 } as const

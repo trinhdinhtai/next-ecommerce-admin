@@ -16,5 +16,8 @@ export const deleteStoreSchema = z.object({
   id: z.string(),
 })
 
+export type StoreFormValues = z.infer<typeof storeSchema>
+export type StoreResponse = ActionState<StoreFormValues, Store>
+
 export type DeleteStoreInput = z.infer<typeof deleteStoreSchema>
 export type DeleteStoreResponse = ActionState<DeleteStoreInput, Store>

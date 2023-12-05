@@ -1,5 +1,6 @@
 export default {
   chooseLanguage: "Choose language",
+  account: "Account",
   locales: {
     en: "English",
     vi: "Vietnamese",
@@ -35,6 +36,7 @@ export default {
     forgotPassword: "Forgot password?",
     resetPassword: "Reset password",
     createAccount: "Create account",
+    updateAccount: "Update account",
     verifyEmail: "Verify email",
     backToSignIn: "Back to sign in",
     changePassword: "Change password",
@@ -124,4 +126,37 @@ export default {
     upgrade: "Upgrade your plan",
   },
   continueWith: "or continue with",
+  settings: {
+    account: {
+      title: "Account",
+      description: "Manage your account settings",
+      email: "Email",
+      password: "Password",
+      changePassword: "Change password",
+      changeEmail: "Change email",
+      deleteAccount: "Delete account",
+      deleteAccountWarning:
+        "Deleting your account will delete all your stores and data. This action is irreversible.",
+      deleteAccountConfirmation:
+        "Are you sure you want to delete your account?",
+      deleteAccountSuccess: "Your account has been deleted.",
+    },
+  },
+  form: {
+    label: {
+      firstName: "First name",
+      lastName: "Last name",
+      dob: "Date of birth",
+      language: "Language",
+    },
+    placeholder: {
+      firstName: "Enter your first name",
+      lastName: "Enter your last name",
+      dob: "Pick a date",
+      language: "Select a language",
+    },
+    description: {
+      language: "This is the language that will be used in the dashboard.",
+    },
+  },
 } as const

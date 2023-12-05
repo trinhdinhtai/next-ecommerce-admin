@@ -2,13 +2,13 @@
 
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Store } from "@prisma/client"
-import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { storeSchema } from "@/lib/validations/store"
+import { StoreFormValues, storeSchema } from "@/lib/validations/store"
+import { useAction } from "@/hooks/use-action"
+import { createStore } from "@/app/_actions/stores/create-store"
 
 import {
   Form,
@@ -26,8 +26,7 @@ type UpdateStoreFormInput = z.infer<typeof storeSchema>
 
 const AddStoreForm = () => {
   const router = useRouter()
-
-  const form = useForm<UpdateStoreFormInput>({
+  const form = useForm<StoreFormValues>({
     resolver: zodResolver(storeSchema),
     defaultValues: {
       name: "",
@@ -35,70 +34,65 @@ const AddStoreForm = () => {
     },
   })
 
-  const {
-    control,
-    reset,
-    formState: { isSubmitting },
-  } = form
+  const { execute, isLoading } = useAction(createStore, {
+    onSuccess: ({ name }) => {
+      form.reset()
+      toast.success(`Store ${name} created successfully.`)
+      router.push("/dashboard/stores")
+    },
+    onError: (error) => {
+      toast.error(error)
+    },
+  })
 
   const onSubmit = async (values: UpdateStoreFormInput) => {
-    try {
-      await axios.post(`/api/stores`, values)
-      reset()
-      toast.success("Store added successfully!")
-      router.push("/dashboard/stores")
-      router.refresh()
-    } catch (error) {
-      throw error
-    }
+    execute(values)
   }
 
   return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={isSubmitting}
-                    placeholder="Type store name here."
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input
+                  disabled={isLoading}
+                  placeholder="Type store name here."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea
-                    disabled={isSubmitting}
-                    placeholder="Type store description here."
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  disabled={isLoading}
+                  placeholder="Type store description here."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <LoadingButton type="submit" isLoading={isSubmitting}>
-            Create Store
-          </LoadingButton>
-        </form>
-      </Form>
-    </>
+        <LoadingButton type="submit" isLoading={isLoading}>
+          Create Store
+        </LoadingButton>
+      </form>
+    </Form>
   )
 }
 
