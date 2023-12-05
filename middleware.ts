@@ -6,9 +6,9 @@ import { createI18nMiddleware } from "next-international/middleware"
 const I18nMiddleware = createI18nMiddleware({
   locales: i18n.locales,
   defaultLocale: i18n.defaultLocale,
-  urlMappingStrategy: "rewrite",
 })
 
+// https://clerk.com/docs/references/nextjs/auth-middleware
 export default authMiddleware({
   publicRoutes: [
     "/",
@@ -30,7 +30,9 @@ export default authMiddleware({
         return NextResponse.redirect(storeSelection)
       }
     }
-
+  },
+  beforeAuth(request) {
+    // Execute next-intl middleware before Clerk's auth middleware
     return I18nMiddleware(request)
   },
 })
