@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useScopedI18n } from "@/i18n/client"
+import { motion } from "framer-motion"
 import { CheckIcon } from "lucide-react"
 
 import { storeSubscriptionPlans } from "@/config/subscriptions"
@@ -16,11 +17,27 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-export default function BillingSection() {
+export default function PricingSection() {
   const billingScope = useScopedI18n("landing.billing")
 
   return (
-    <div className="px-10 pb-20">
+    <motion.section
+      initial={{
+        opacity: 0,
+        y: 20,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.5,
+      }}
+      viewport={{
+        once: true,
+      }}
+      className="px-10 pb-20"
+    >
       <h2 className="mb-10 text-center text-4xl font-extrabold">
         {billingScope("description", {
           highlight: (
@@ -80,6 +97,6 @@ export default function BillingSection() {
           </Card>
         ))}
       </div>
-    </div>
+    </motion.section>
   )
 }

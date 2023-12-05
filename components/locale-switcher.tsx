@@ -2,9 +2,8 @@
 
 import "/node_modules/flag-icons/css/flag-icons.min.css"
 
-import { usePathname, useRouter } from "next/navigation"
-import { useCurrentLocale, useI18n } from "@/i18n/client"
-import { i18n } from "@/i18n/config"
+import { useChangeLocale, useCurrentLocale, useI18n } from "@/i18n/client"
+import { i18n, Locale } from "@/i18n/config"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -19,13 +18,12 @@ import {
 import LocaleFlag from "@/components/icons/locale-flag"
 
 export default function LocaleSwitcher() {
-  const router = useRouter()
-  const pathname = usePathname()
   const locale = useCurrentLocale()
+  const changeLocale = useChangeLocale()
   const t = useI18n()
 
-  const handleChangeLocale = (newLocale: string) => {
-    router.push(`${pathname}${newLocale}`)
+  const handleChangeLocale = (newLocale: Locale) => {
+    changeLocale(newLocale)
   }
 
   return (
@@ -46,7 +44,7 @@ export default function LocaleSwitcher() {
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
           value={locale}
-          onValueChange={(newLocale) => handleChangeLocale(newLocale)}
+          onValueChange={(newLocale) => handleChangeLocale(newLocale as Locale)}
         >
           {i18n.locales.map((locale) => (
             <DropdownMenuRadioItem key={locale} value={locale} className="flex">
