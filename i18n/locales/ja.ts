@@ -208,4 +208,20 @@ export default {
       language: "これはダッシュボードで使用される言語です。",
     },
   },
+  toast: {
+    success: {
+      title: "Success",
+      description: "Your action has been completed.",
+    },
+    errors: {
+      description: "何かが間違っていました。もう一度やり直してください。",
+      sameName: "同名の店舗が既に存在します。",
+      maxStores:
+        "ストアの最大数に達しました。 プランをアップグレードしてください。",
+    },
+    warning: {
+      title: "Warning",
+      description: "Something went wrong.",
+    },
+  },
 } as const

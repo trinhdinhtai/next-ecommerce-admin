@@ -31,11 +31,6 @@ export async function POST(req: Request) {
         session.subscription as string
       )
 
-      console.log(
-        "file: route.ts:34 ~ POST ~ userId:",
-        session?.metadata?.userId
-      )
-
       if (!session?.metadata?.userId) {
         return new NextResponse("User id is required", { status: 400 })
       }
@@ -50,6 +45,13 @@ export async function POST(req: Request) {
           stripeCurrentPeriodEnd: new Date(
             subscription.current_period_end * 1000
           ),
+        },
+      })
+
+      await prisma.userPlan.create({
+        data: {
+          userId: session?.metadata?.userId,
+          planId: 1,
         },
       })
       break

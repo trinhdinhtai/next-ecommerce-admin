@@ -174,4 +174,20 @@ export default {
       language: "Đây là ngôn ngữ sẽ được sử dụng trong bảng điều khiển.",
     },
   },
+  toast: {
+    success: {
+      title: "Success",
+      description: "Your action has been completed.",
+    },
+    errors: {
+      description: "Đã xảy ra lỗi, vui lòng thử lại.",
+      sameName: "Một cửa hàng có cùng tên đã tồn tại, vui lòng đặt tên khác",
+      maxStores:
+        "Bạn đã đạt đến số lượng cửa hàng tối đa. Vui lòng nâng cấp gói",
+    },
+    warning: {
+      title: "Warning",
+      description: "Something went wrong.",
+    },
+  },
 } as const

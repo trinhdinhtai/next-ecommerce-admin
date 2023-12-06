@@ -159,4 +159,19 @@ export default {
       language: "This is the language that will be used in the dashboard.",
     },
   },
+  toast: {
+    success: {
+      title: "Success",
+      description: "Your action has been completed.",
+    },
+    errors: {
+      description: "Something went wrong, please try again.",
+      sameName: "A store with the same name already exists.",
+      maxStores: "You have reached the maximum number of stores.",
+    },
+    warning: {
+      title: "Warning",
+      description: "Something went wrong.",
+    },
+  },
 } as const
