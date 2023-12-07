@@ -49,6 +49,8 @@ export default {
     delete: "Delete",
     confirm: "Confirm",
     resendVerificationEmail: "Resend verification email",
+    updateStore: "Update store",
+    deleteStore: "Delete store",
   },
   landing: {
     prefix: "with",
@@ -109,6 +111,27 @@ export default {
       empty: "You don't have any stores yet",
       currentPlan:
         "You are currently on the {planName} plan. You can create up to {maxStore} stores and {maxProduct} products on this plan.",
+      settings: {
+        title: "Store settings",
+        description: "Manage your store preferences",
+        updateStore: "Update store",
+        updateStoreDescription: "Update your store preferences",
+        deleteStore: "Delete store permanently",
+        deleteStoreWarning:
+          "Note that deleting your store is irreversible. All your products and orders will be deleted.",
+        name: "Name",
+        domain: "Domain",
+        currency: "Currency",
+        timezone: "Timezone",
+        language: "Language",
+        theme: "Theme",
+        themeOptions: {
+          light: "Light",
+          dark: "Dark",
+        },
+        deleteStoreConfirmation: "Are you sure you want to delete your store?",
+        deleteStoreSuccess: "Your store has been deleted.",
+      },
     },
   },
   userMenu: {
@@ -144,16 +167,20 @@ export default {
   },
   form: {
     label: {
+      name: "Name",
       firstName: "First name",
       lastName: "Last name",
       dob: "Date of birth",
       language: "Language",
+      description: "Description",
     },
     placeholder: {
       firstName: "Enter your first name",
       lastName: "Enter your last name",
       dob: "Pick a date",
       language: "Select a language",
+      storeName: "Enter your store name",
+      storeDescription: "Enter your store description",
     },
     description: {
       language: "This is the language that will be used in the dashboard.",
@@ -163,6 +190,7 @@ export default {
     success: {
       title: "Success",
       description: "Your action has been completed.",
+      storeUpdated: "Your store has been updated.",
     },
     errors: {
       description: "Something went wrong, please try again.",

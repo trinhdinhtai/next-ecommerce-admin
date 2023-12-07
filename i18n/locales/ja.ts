@@ -49,6 +49,8 @@ export default {
     delete: "削除",
     confirm: "確認",
     resendVerificationEmail: "確認メールを再送信",
+    updateStore: "ストアを更新",
+    deleteStore: "ストアを削除",
   },
   landing: {
     prefix: "による",
@@ -140,6 +142,21 @@ export default {
       updateSuccess: "ストアを更新しました",
       deleteSuccess: "ストアを削除しました",
       searchPlaceholder: "ストア名を入力してください",
+      settings: {
+        title: "ストア設定",
+        description: "ストアの設定を管理する",
+        updateStore: "ストアを更新",
+        updateStoreDescription: "ストアの設定を更新する",
+        deleteStore: "ストアを完全に削除する",
+        deleteStoreWarning:
+          "ストアを削除すると、すべてのデータが削除されます。この操作は取り消せません。",
+        name: "ストア名",
+        domain: "ドメイン",
+        update: "更新",
+        cancel: "キャンセル",
+        delete: "削除",
+        confirm: "確認",
+      },
     },
     products: {
       title: "商品",
@@ -193,16 +210,20 @@ export default {
   },
   form: {
     label: {
+      name: "名前",
       firstName: "名前",
       lastName: "苗字",
       dob: "生年月日",
       language: "言語",
+      description: "説明",
     },
     placeholder: {
       firstName: "名前を入力してください",
       lastName: "苗字を入力してください",
       dob: "日付を選択してください",
       language: "言語を選択してください",
+      storeName: "ストア名を入力してください",
+      storeDescription: "ストアの説明を入力してください",
     },
     description: {
       language: "これはダッシュボードで使用される言語です。",
@@ -212,6 +233,7 @@ export default {
     success: {
       title: "Success",
       description: "Your action has been completed.",
+      storeUpdated: "ストアを更新しました。",
     },
     errors: {
       description: "何かが間違っていました。もう一度やり直してください。",

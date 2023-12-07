@@ -1,3 +1,5 @@
+import { getScopedI18n } from "@/i18n/server"
+
 import { prisma } from "@/lib/prismadb"
 import {
   Card,
@@ -17,7 +19,9 @@ interface SettingsPageProps {
   }
 }
 
-const SettingsPage = async ({ params }: SettingsPageProps) => {
+export default async function SettingsPage({ params }: SettingsPageProps) {
+  const storeSettingsScope = await getScopedI18n("dashboard.stores.settings")
+
   const store = await prisma.store.findFirst({
     where: {
       id: params.storeId,
@@ -28,7 +32,10 @@ const SettingsPage = async ({ params }: SettingsPageProps) => {
 
   return (
     <Shell>
-      <PageHeading title="Settings" description="Manage store preferences" />
+      <PageHeading
+        title={storeSettingsScope("title")}
+        description={storeSettingsScope("description")}
+      />
 
       <Card
         as="section"
@@ -36,9 +43,11 @@ const SettingsPage = async ({ params }: SettingsPageProps) => {
         aria-labelledby="update-store-heading"
       >
         <CardHeader className="space-y-2">
-          <CardTitle className="text-2xl">Update your store</CardTitle>
+          <CardTitle className="text-2xl">
+            {storeSettingsScope("updateStore")}
+          </CardTitle>
           <CardDescription>
-            Update your store name and description, or delete it
+            {storeSettingsScope("updateStoreDescription")}
           </CardDescription>
         </CardHeader>
 
@@ -51,5 +60,3 @@ const SettingsPage = async ({ params }: SettingsPageProps) => {
     </Shell>
   )
 }
-
-export default SettingsPage

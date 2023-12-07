@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { useScopedI18n } from "@/i18n/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Store } from "@prisma/client"
 import axios from "axios"
@@ -29,6 +30,8 @@ interface UpdateStoreFormProps {
 }
 
 const UpdateStoreForm = ({ store }: UpdateStoreFormProps) => {
+  const formScope = useScopedI18n("form")
+  const buttonScope = useScopedI18n("button")
   const router = useRouter()
 
   const form = useForm<UpdateStoreFormInput>({
@@ -62,11 +65,11 @@ const UpdateStoreForm = ({ store }: UpdateStoreFormProps) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{formScope("label.name")}</FormLabel>
               <FormControl>
                 <Input
                   disabled={isSubmitting}
-                  placeholder="Type store name here."
+                  placeholder={formScope("placeholder.storeName")}
                   {...field}
                 />
               </FormControl>
@@ -80,11 +83,11 @@ const UpdateStoreForm = ({ store }: UpdateStoreFormProps) => {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>{formScope("label.description")}</FormLabel>
               <FormControl>
                 <Textarea
                   disabled={isSubmitting}
-                  placeholder="Type store description here."
+                  placeholder={formScope("placeholder.storeDescription")}
                   {...field}
                 />
               </FormControl>
@@ -95,7 +98,7 @@ const UpdateStoreForm = ({ store }: UpdateStoreFormProps) => {
 
         <div className="flex gap-2">
           <LoadingButton type="submit" isLoading={isSubmitting}>
-            Update store
+            {buttonScope("updateStore")}
           </LoadingButton>
         </div>
       </form>

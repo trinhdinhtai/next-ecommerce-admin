@@ -49,6 +49,8 @@ export default {
     delete: "Xóa",
     confirm: "Xác nhận",
     resendVerificationEmail: "Gửi lại email xác minh",
+    updateStore: "Cập nhật cửa hàng",
+    deleteStore: "Xóa cửa hàng",
   },
   landing: {
     prefix: "với",
@@ -110,6 +112,27 @@ export default {
       empty: "Bạn chưa có cửa hàng nào",
       currentPlan:
         "Bạn hiện đang sử dụng gói {planName}. Bạn có thể tạo tối đa {maxStore} cửa hàng và {maxProduct} sản phẩm trong gói này.",
+      settings: {
+        title: "Cài đặt cửa hàng",
+        description: "Manage your store preferences",
+        updateStore: "Update store",
+        updateStoreDescription: "Update your store preferences",
+        deleteStore: "Delete store",
+        deleteStoreWarning:
+          "Deleting your store will delete all your data. This action is irreversible.",
+        name: "Name",
+        domain: "Domain",
+        currency: "Currency",
+        timezone: "Timezone",
+        language: "Language",
+        theme: "Theme",
+        themeOptions: {
+          light: "Light",
+          dark: "Dark",
+        },
+        deleteStoreConfirmation: "Are you sure you want to delete your store?",
+        deleteStoreSuccess: "Your store has been deleted.",
+      },
     },
     products: {
       title: "Sản phẩm",
@@ -159,16 +182,20 @@ export default {
   },
   form: {
     label: {
+      name: "Tên",
       firstName: "Tên",
       lastName: "Họ",
       dob: "Ngày sinh",
       language: "Ngôn ngữ",
+      description: "Mô tả",
     },
     placeholder: {
       firstName: "Nhập tên của bạn",
       lastName: "Nhập họ của bạn",
       dob: "Chọn ngày",
       language: "Chọn ngôn ngữ",
+      storeName: "Nhập tên cửa hàng",
+      storeDescription: "Nhập mô tả cửa hàng",
     },
     description: {
       language: "Đây là ngôn ngữ sẽ được sử dụng trong bảng điều khiển.",
@@ -178,6 +205,7 @@ export default {
     success: {
       title: "Success",
       description: "Your action has been completed.",
+      storeUpdated: "Your store has been updated.",
     },
     errors: {
       description: "Đã xảy ra lỗi, vui lòng thử lại.",

@@ -1,5 +1,6 @@
 "use client"
 
+import { useScopedI18n } from "@/i18n/client"
 import { toast } from "sonner"
 
 import { useAction } from "@/hooks/use-action"
@@ -13,6 +14,9 @@ interface DeleteStoreSectionProps {
 export default function DeleteStoreSection({
   storeId,
 }: DeleteStoreSectionProps) {
+  const storeSettingsScope = useScopedI18n("dashboard.stores.settings")
+  const buttonScope = useScopedI18n("button")
+
   const { execute, isLoading } = useAction(deleteStore, {
     onSuccess: ({ name }) => {
       toast.success(`Store ${name} deleted successfully`)
@@ -29,13 +33,10 @@ export default function DeleteStoreSection({
       <div className="flex flex-col justify-between space-y-2 px-3 py-4 lg:flex-row lg:items-center lg:space-x-12">
         <div>
           <h2 className="mb-1 font-semibold text-red-600">
-            Delete your store permanently
+            {storeSettingsScope("deleteStore")}
           </h2>
 
-          <p className="text-sm">
-            Note that deleting your store is irreversible. All your products and
-            orders will be deleted.
-          </p>
+          <p className="text-sm">{storeSettingsScope("deleteStoreWarning")}</p>
         </div>
 
         <LoadingButton
@@ -45,7 +46,7 @@ export default function DeleteStoreSection({
           onClick={() => execute({ id: storeId })}
           className="mt-4"
         >
-          Delete store
+          {buttonScope("deleteStore")}
         </LoadingButton>
       </div>
     </div>
