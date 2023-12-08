@@ -13,7 +13,6 @@ const I18nMiddleware = createI18nMiddleware({
 export default authMiddleware({
   publicRoutes: [
     "/",
-    "/:locale",
     "/:locale/sign-in(.*)",
     "/:locale/sign-up(.*)",
     "/:locale/sign-out(.*)",
@@ -21,6 +20,9 @@ export default authMiddleware({
     "/api/:path*",
   ],
   afterAuth(auth, request) {
+    const pathname = request.nextUrl.pathname
+    if (pathname.startsWith("/api")) return NextResponse.next()
+
     if (auth.isPublicRoute) {
       if (auth.userId) {
         let path = `/dashboard/stores`
