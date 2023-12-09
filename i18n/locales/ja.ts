@@ -1,6 +1,13 @@
 export default {
   chooseLanguage: "言語を選択",
   account: "アカウント",
+  entities: {
+    store: "ストア",
+    product: "商品",
+    category: "カテゴリー",
+    size: "サイズ",
+    color: "カラー",
+  },
   locales: {
     en: "英語",
     vi: "ベトナム",
@@ -209,6 +216,16 @@ export default {
     },
   },
   form: {
+    heading: {
+      title: {
+        create: "{entity}を作成",
+        update: "{entity}を更新",
+      },
+      description: {
+        create: "{entity}を作成",
+        update: "{entity}を更新",
+      },
+    },
     label: {
       name: "名前",
       firstName: "名前",

@@ -6,6 +6,13 @@ export default {
     vi: "Vietnamese",
     ja: "Japanese",
   },
+  entities: {
+    store: "store",
+    product: "product",
+    category: "category",
+    size: "size",
+    color: "color",
+  },
   signIn: {
     title: "Sign in",
     description: "Sign in to your account",
@@ -166,6 +173,16 @@ export default {
     },
   },
   form: {
+    heading: {
+      title: {
+        create: "New {entity}",
+        update: "Update {entity}",
+      },
+      description: {
+        create: "Create a new {entity}",
+        update: "Update your {entity}",
+      },
+    },
     label: {
       name: "Name",
       firstName: "First name",

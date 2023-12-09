@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation"
+import { getScopedI18n } from "@/i18n/server"
 import { auth } from "@clerk/nextjs"
 
 import { Card, CardContent } from "@/components/ui/card"
@@ -7,6 +8,8 @@ import AddStoreForm from "@/components/forms/add-store-form"
 import PageHeading from "@/components/PageHeading"
 
 export default async function NewStorePage() {
+  const formHeadingScope = await getScopedI18n("form.heading")
+  const entitiesScope = await getScopedI18n("entities")
   const { userId } = auth()
 
   if (!userId) {
@@ -16,8 +19,12 @@ export default async function NewStorePage() {
   return (
     <Shell>
       <PageHeading
-        title="New Store"
-        description="Add a new store to your account"
+        title={formHeadingScope("title.create", {
+          entity: entitiesScope("store"),
+        })}
+        description={formHeadingScope("description.create", {
+          entity: entitiesScope("store"),
+        })}
       />
 
       <Card as="section">

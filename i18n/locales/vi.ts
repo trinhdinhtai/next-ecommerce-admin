@@ -1,6 +1,13 @@
 export default {
   chooseLanguage: "Chọn ngôn ngữ",
   account: "Tài khoản",
+  entities: {
+    store: "cửa hàng",
+    product: "sản phẩm",
+    category: "danh mục",
+    size: "kích cỡ",
+    color: "màu sắc",
+  },
   locales: {
     en: "Tiếng Anh",
     vi: "Tiếng Việt",
@@ -181,6 +188,16 @@ export default {
     },
   },
   form: {
+    heading: {
+      title: {
+        create: "Tạo {entity} mới",
+        update: "Cập nhật {entity}",
+      },
+      description: {
+        create: "Tạo {entity} mới",
+        update: "Cập nhật {entity} của bạn",
+      },
+    },
     label: {
       name: "Tên",
       firstName: "Tên",
